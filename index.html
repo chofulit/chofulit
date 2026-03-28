@@ -588,13 +588,22 @@
       opacity: 0.9;
     }
     .new-release-title {
-      font-family: 'Unbounded', sans-serif;
+      font-family: "Yu Gothic", "游ゴシック", YuGothic, "Noto Sans JP", sans-serif;
       font-size: clamp(2rem, 5vw, 4rem);
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
       line-height: 1;
       margin-bottom: 1.2rem;
     }
+    .nr-countdown { margin-top: 1.5rem; }
+    .nr-countdown-label { font-size: 0.5rem; letter-spacing: 0.4em; opacity: 0.35; text-transform: uppercase; margin-bottom: 0.8rem; }
+    .nr-countdown-grid { display: flex; align-items: flex-start; gap: 1rem; }
+    .nr-cd-item { text-align: center; }
+    .nr-cd-num { font-family: 'Unbounded', sans-serif; font-size: clamp(1.2rem, 2.5vw, 2rem); font-weight: 700; line-height: 1; display: block; min-width: 2ch; }
+    .nr-cd-unit { font-size: 0.4rem; letter-spacing: 0.3em; opacity: 0.35; text-transform: uppercase; margin-top: 0.4rem; display: block; }
+    .nr-cd-sep { font-family: 'Unbounded', sans-serif; font-size: 1.2rem; opacity: 0.2; padding-top: 0.1em; }
+    .nr-released { font-family: 'Unbounded', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent); text-transform: uppercase; margin-top: 1.5rem; }
     .new-release-date {
       font-size: 0.65rem;
       letter-spacing: 0.3em;
@@ -670,6 +679,19 @@
         <p class="new-release-badge">New Album</p>
         <h2 class="new-release-title">EDGEEARTH</h2>
         <p class="new-release-date">2026 / 4 / 1 Release</p>
+        <div class="nr-countdown" id="nr-countdown-block">
+          <div class="nr-countdown-label">Until Release</div>
+          <div class="nr-countdown-grid">
+            <div class="nr-cd-item"><span class="nr-cd-num" id="nr-days">--</span><span class="nr-cd-unit">Days</span></div>
+            <span class="nr-cd-sep">:</span>
+            <div class="nr-cd-item"><span class="nr-cd-num" id="nr-hours">--</span><span class="nr-cd-unit">Hours</span></div>
+            <span class="nr-cd-sep">:</span>
+            <div class="nr-cd-item"><span class="nr-cd-num" id="nr-mins">--</span><span class="nr-cd-unit">Mins</span></div>
+            <span class="nr-cd-sep">:</span>
+            <div class="nr-cd-item"><span class="nr-cd-num" id="nr-secs">--</span><span class="nr-cd-unit">Secs</span></div>
+          </div>
+        </div>
+        <div id="nr-released-msg" style="display:none;" class="nr-released">Out Now</div>
       </div>
     </div>
 
@@ -748,6 +770,32 @@
     });
   }, { threshold: 0.05 });
   reveals.forEach(el => observer.observe(el));
+
+  // Countdown to EDGEEARTH release 2026-04-01 JST
+  (function(){
+    const target = new Date('2026-04-01T00:00:00+09:00').getTime();
+    const block = document.getElementById('nr-countdown-block');
+    const msg   = document.getElementById('nr-released-msg');
+    function pad(n){ return String(n).padStart(2,'0'); }
+    function tick(){
+      const diff = target - Date.now();
+      if(diff <= 0){
+        block.style.display = 'none';
+        msg.style.display = 'block';
+        return;
+      }
+      const d = Math.floor(diff/86400000);
+      const h = Math.floor((diff%86400000)/3600000);
+      const m = Math.floor((diff%3600000)/60000);
+      const s = Math.floor((diff%60000)/1000);
+      document.getElementById('nr-days').textContent  = pad(d);
+      document.getElementById('nr-hours').textContent = pad(h);
+      document.getElementById('nr-mins').textContent  = pad(m);
+      document.getElementById('nr-secs').textContent  = pad(s);
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
 </script>
 </body>
 </html>
