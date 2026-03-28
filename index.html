@@ -592,13 +592,14 @@
       font-size: clamp(2rem, 5vw, 4rem);
       font-weight: 700;
       letter-spacing: 0.1em;
-      white-space: nowrap;
       line-height: 1;
       margin-bottom: 1.2rem;
+      white-space: nowrap;
     }
+    /* Countdown */
     .nr-countdown { margin-top: 1.5rem; }
     .nr-countdown-label { font-size: 0.5rem; letter-spacing: 0.4em; opacity: 0.35; text-transform: uppercase; margin-bottom: 0.8rem; }
-    .nr-countdown-grid { display: flex; align-items: flex-start; gap: 1rem; }
+    .nr-countdown-grid { display: flex; align-items: flex-start; gap: 1.2rem; }
     .nr-cd-item { text-align: center; }
     .nr-cd-num { font-family: 'Unbounded', sans-serif; font-size: clamp(1.2rem, 2.5vw, 2rem); font-weight: 700; line-height: 1; display: block; min-width: 2ch; }
     .nr-cd-unit { font-size: 0.4rem; letter-spacing: 0.3em; opacity: 0.35; text-transform: uppercase; margin-top: 0.4rem; display: block; }
@@ -691,7 +692,7 @@
             <div class="nr-cd-item"><span class="nr-cd-num" id="nr-secs">--</span><span class="nr-cd-unit">Secs</span></div>
           </div>
         </div>
-        <div id="nr-released-msg" style="display:none;" class="nr-released">Out Now</div>
+        <div id="nr-released-msg" class="nr-released" style="display:none;">Out Now</div>
       </div>
     </div>
 
@@ -771,23 +772,23 @@
   }, { threshold: 0.05 });
   reveals.forEach(el => observer.observe(el));
 
-  // Countdown to EDGEEARTH release 2026-04-01 JST
-  (function(){
-    const target = new Date('2026-04-01T00:00:00+09:00').getTime();
-    const block = document.getElementById('nr-countdown-block');
-    const msg   = document.getElementById('nr-released-msg');
-    function pad(n){ return String(n).padStart(2,'0'); }
-    function tick(){
-      const diff = target - Date.now();
-      if(diff <= 0){
-        block.style.display = 'none';
-        msg.style.display = 'block';
+  // EDGEEARTH release countdown (2026-04-01 00:00 JST)
+  (function() {
+    var target = new Date('2026-04-01T00:00:00+09:00').getTime();
+    var block = document.getElementById('nr-countdown-block');
+    var msg   = document.getElementById('nr-released-msg');
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function tick() {
+      var diff = target - Date.now();
+      if (diff <= 0) {
+        if (block) block.style.display = 'none';
+        if (msg)   msg.style.display   = 'block';
         return;
       }
-      const d = Math.floor(diff/86400000);
-      const h = Math.floor((diff%86400000)/3600000);
-      const m = Math.floor((diff%3600000)/60000);
-      const s = Math.floor((diff%60000)/1000);
+      var d = Math.floor(diff / 86400000);
+      var h = Math.floor((diff % 86400000) / 3600000);
+      var m = Math.floor((diff % 3600000)  / 60000);
+      var s = Math.floor((diff % 60000)    / 1000);
       document.getElementById('nr-days').textContent  = pad(d);
       document.getElementById('nr-hours').textContent = pad(h);
       document.getElementById('nr-mins').textContent  = pad(m);
