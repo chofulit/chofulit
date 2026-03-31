@@ -482,7 +482,12 @@
       .footer-section { grid-template-columns: 1fr; padding: 4rem 1.5rem; }
       .socials { align-items: flex-start; }
       .footer-bottom { padding: 1.5rem; flex-direction: column; gap: 0.5rem; }
-      .hero-photo { object-position: center center; }
+      .hero-photo {
+        object-fit: contain;
+        object-position: center center;
+        mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.9) 15%, rgba(0,0,0,0.9) 85%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.9) 15%, rgba(0,0,0,0.9) 85%, transparent 100%);
+      }
     }
 
     .streaming-links {
