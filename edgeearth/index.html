@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EDGEEARTH — CHOFU LIT</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2V6NTJNEEY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2V6NTJNEEY');
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;400;700;900&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
   <style>
@@ -223,16 +231,23 @@
       gap: 0;
     }
     .track-item {
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+    .track-header {
       display: flex;
       align-items: baseline;
       gap: 1.2rem;
       padding: 1.1rem 0;
-      border-bottom: 1px solid var(--line);
+      cursor: pointer;
       font-family: 'Unbounded', sans-serif;
       font-size: clamp(0.75rem, 1.8vw, 1rem);
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      user-select: none;
+      transition: opacity 0.2s;
     }
+    .track-header:hover { opacity: 0.7; }
     .track-num {
       font-size: 0.55rem;
       opacity: 0.3;
@@ -248,6 +263,43 @@
       opacity: 0.45;
       letter-spacing: 0.3em;
       font-weight: 200;
+    }
+    .track-arrow {
+      font-size: 0.5rem;
+      opacity: 0.3;
+      transition: transform 0.3s ease;
+      margin-left: auto;
+      padding-left: 1rem;
+    }
+    .track-item.open .track-arrow { transform: rotate(180deg); }
+    .track-detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .track-item.open .track-detail { max-height: 2000px; }
+    .track-detail-inner {
+      padding: 0 0 2.5rem 2.7rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .track-credits, .track-lyrics {
+      font-size: 0.65rem;
+      line-height: 1.9;
+      letter-spacing: 0.05em;
+      opacity: 0.6;
+    }
+    .track-credits-title, .track-lyrics-title {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.45rem;
+      letter-spacing: 0.4em;
+      opacity: 0.35;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .track-lyrics {
+      white-space: pre-line;
     }
 
     /* Footer */
@@ -392,32 +444,579 @@
   <div class="section-num">02 — Tracks</div>
   <div class="tracks-list">
     <div class="track-item">
-      <span class="track-num">1.</span>
-      <span class="track-name">MYPACE</span> <span class="track-feat">feat. Chion</span>
+      <div class="track-header">
+        <span class="track-num">1.</span>
+        <span class="track-name">MYPACE</span> <span class="track-feat">feat. Chion</span>
+        <span class="track-arrow">▼</span>
+      </div>
+      <div class="track-detail">
+        <div class="track-detail-inner">
+          <div class="track-credits">
+            <div class="track-credits-title">Credits</div>
+            Vocal: Motoi, Chion<br>
+            Music, Lyrics, Produced by Motoi<br>
+            Mix, Mastering by Motoi
+          </div>
+          <div class="track-lyrics">
+            <div class="track-lyrics-title">Lyrics</div>
+            ありきたりもひねくれてもダメで
+裸になればしっくりくるのさ
+この世界は何も分かってないよ
+ただ見つめるお互いの砂時計
+どこに行っても同じ僕らのペース
+
+
+のんきでゆったりなあの子に言うように
+せっかちで急いじゃってる俺にも
+マイペースでいいねって言ってよ
+日付超えてもいいからいつでも
+不器用なやつ見ると sympathy 
+偉い人も裏の顔はチンパンジー
+先に弱みも晒すよみんなに
+音だけは遅れず鳴らすシンフォニー
+背伸びしなくて済むように
+背伸びして買うバレンシアガ
+空気読めない君の悪い噂
+が囁かれるまことしやか
+俺分かってるつもりだから
+言ってよいつでももしなんか
+誰かになんか言われたら知らん顔
+しないから
+
+
+ありきたりもひねくれてもダメで
+裸になればしっくりくるのさ
+この世界は何も分かってないよ
+ただ見つめるお互いの砂時計
+どこに行っても同じ僕らのペース
+
+
+東京のど真ん中ここはこの世界の隅っこ
+あちこちで求められるスキルで合わせたりするTPO
+いまだにし続けてる大人になればわかるはずだった質問
+年相応ってなに？モヒート飲むパーティ？
+ノイズの中を泳いでる
+俺ら以外俺ら止められない
+オキシトシンとアドレナリン
+行ったり来たりやばいこれなに
+君のそのペースに合わせたい
+与えられたスペース幅狭い
+手繋いでペース配分手伝って
+ YESって言って
+
+
+ありきたりもひねくれてもダメで
+裸になればしっくりくるのさ
+この世界は何も分かってないよ
+ただ見つめるお互いの砂時計
+どこに行っても同じ僕らのペース
+
+
+俺はやれる時は死ぬほどやる
+無理な時は無理　
+みんな俺にさbetしときな
+でも今日はベッドから出れない
+めちゃ無駄に気を使ってtired
+見方を変えちゃったならliar
+そろそろもう諦めてわがままに我がままに
+1998からもう27さ　
+乗りこなしてぇ、そろぼちこの体
+HAND INA DI AIRとか言えるタチじゃなかった
+から無理せずはにかんで peace sign
+yo やっぱノーマル
+俺ちゃんてばノーマルじゃん
+なら普通に普通で居られるように
+聞き直すこのBPM
+
+
+ありきたりもひねくれてもダメで
+裸になればしっくりくるのさ
+この世界は何も分かってないよ
+ただ見つめるお互いの砂時計
+どこに行っても同じ僕らのペース
+          </div>
+        </div>
+      </div>
     </div>
     <div class="track-item">
-      <span class="track-num">2.</span>
-      <span class="track-name">BROWN SOCKS</span> <span class="track-feat">feat. Joshua WK</span>
+      <div class="track-header">
+        <span class="track-num">2.</span>
+        <span class="track-name">BROWN SOCKS</span> <span class="track-feat">feat. Joshua WK</span>
+        <span class="track-arrow">▼</span>
+      </div>
+      <div class="track-detail">
+        <div class="track-detail-inner">
+          <div class="track-credits">
+            <div class="track-credits-title">Credits</div>
+            Vocal: Motoi, Joshua WK<br>
+            Music, Lyrics, Produced by Motoi<br>
+            Mix, Mastering by Motoi
+          </div>
+          <div class="track-lyrics">
+            <div class="track-lyrics-title">Lyrics</div>
+            曖昧なストーリーで
+進む lonely road
+ハナから決まってるにしては
+出来の悪いシナリオ
+
+
+靴紐結ぶランシュー
+走ればいいのあと何周
+自販機で買うのさ缶ジュース
+ドア開けた時に決めた距離まで走ったら
+そしたら俺の勝ちだな
+白かったはずの靴下履いて
+両のかかとはもう血だらけ
+今までありがとう
+昨日までの俺もういないよ
+割り切ったら簡単さ意外と、意外と
+見たことない色してる目の前の信号のライト
+悪態つく前にまず自分の目を疑ってみないと
+（ちゃんと見ないと）
+midnight また迷子
+きっとまた開かないよ
+文字に起こす瞼の色したマイホーム
+
+
+曖昧なストーリーで
+進む lonely road
+ハナから決まってるにしては
+出来の悪いシナリオ
+
+
+Baby I'm dying to know what you're thinking 
+Maybe I'm asking too much for your liking 
+いつかのタイミングで疲れたtrying 
+ギリギリclimbingしてるみたい
+I feel lost it's been a while since I've been feeling on top
+はたからはdumb but did not stop 
+履き古したおれのbrown sock
+おれの相棒おれの相棒
+On and on if it ain't broke then why would we stop
+夢からfalling off したくはないおれまだ覚めない
+この状態を続けていたい
+まだ将来わかんない曖昧
+Recしてるmidnight またドライアイ
+うまくいかないときもあるよsigh
+
+
+曖昧なストーリーで
+進む lonely road
+ハナから決まってるにしては
+出来の悪いシナリオ
+
+
+今までありがとう
+今までありがとう
+昨日までの俺もういないよ
+今までありがとう
+今までありがとう
+履き古したおれのbrown sock
+おれの相棒おれの相棒
+On and on if it ain't broke then why would we stop
+          </div>
+        </div>
+      </div>
     </div>
     <div class="track-item">
-      <span class="track-num">3.</span>
-      <span class="track-name">IT'S A FLAT WORLD</span>
+      <div class="track-header">
+        <span class="track-num">3.</span>
+        <span class="track-name">IT'S A FLAT WORLD</span>
+        <span class="track-arrow">▼</span>
+      </div>
+      <div class="track-detail">
+        <div class="track-detail-inner">
+          <div class="track-credits">
+            <div class="track-credits-title">Credits</div>
+            Vocal: Motoi<br>
+            Music, Lyrics, Produced by Motoi<br>
+            Mix, Mastering by Motoi
+          </div>
+          <div class="track-lyrics">
+            <div class="track-lyrics-title">Lyrics</div>
+            人目も憚らず
+押し通すとっておきのわがまま
+巡る時代とは裏腹に
+君はいつまでも変わらない
+俺らいつまでも変わらない
+というより変われない
+もっと言うと分からない
+変わっても何しでかすか分からない
+優しい言葉だけじゃ
+生き延びれないのさ
+優しい言葉がなけりゃ
+もう明日からは会えなくなるのさ
+どんな言葉を
+選んだら今も
+隣にいたんだろう
+
+
+この世界は
+迷えるほどに
+彷徨えるほど広い
+迷子にはなれても
+かくれんぼはできない
+隠れ場所なんかないのさ
+隠れ場所なんかないよ
+この平たい世界には 
+
+
+一度見た道はもう歩けない
+同じ数 hello goodbye
+You don't wanna be alone tonight
+飛んで火に入る夏の
+カラフルなバタフライ
+I don't wanna be alone tonight
+
+
+しのごの言わずに
+やってればいいのにって
+ギリ聞こえない程度に
+言わないでもいいのに
+しのごのとかつべこべを音に変えるメロディ
+ミュージックやるため働いてるんじゃなくて
+生きるためにミュージックやってる
+Message in a bottle 放つレッドオーシャン
+もしや無駄かも誰もみなきゃおじゃん
+無茶したこと振り返るスローモーション
+明日が来るスピードは倍速どうしよう
+広がる宇宙と狭い部屋
+そこ知れぬ空と窮屈な街
+逃げれると思って消えないでよ
+正しい言葉じゃなくても
+
+
+この世界は
+迷えるほどに　
+彷徨えるほど広い
+迷子にはなれても
+かくれんぼはできない
+隠れ場所なんかないのさ
+
+
+この世界は
+迷えるほどに
+彷徨えるほど広い
+迷子にはなれても
+かくれんぼはできない
+隠れ場所なんかないのさ
+隠れ場所なんかないよ
+この平たい世界には
+          </div>
+        </div>
+      </div>
     </div>
     <div class="track-item">
-      <span class="track-num">4.</span>
-      <span class="track-name">FLOWER IN THE DESERT</span>
+      <div class="track-header">
+        <span class="track-num">4.</span>
+        <span class="track-name">FLOWER IN THE DESERT</span>
+        <span class="track-arrow">▼</span>
+      </div>
+      <div class="track-detail">
+        <div class="track-detail-inner">
+          <div class="track-credits">
+            <div class="track-credits-title">Credits</div>
+            Vocal: Motoi<br>
+            Music, Lyrics, Produced by Motoi<br>
+            Mix, Mastering by Motoi
+          </div>
+          <div class="track-lyrics">
+            <div class="track-lyrics-title">Lyrics</div>
+            荒野に咲いた一輪の花
+本当は持って帰りたかった
+でもその場にずっといたんだ
+摘み取ったらいけない気がして
+雨降ってさした相合傘
+夜が更けてもこのまま
+気づいたら寝てた道端
+周りから見たらただの酔っぱらい
+わかんないよ、わかんないよ
+通りすがりじゃ分かんないよ
+説明なんかする気もないんだ
+色目、色眼鏡気にしない界隈
+ビルの隙間から差し込む日が
+ここでは feels like it's illegal
+知らないな君が心配
+してること聞けたらいいな
+
+
+場所は正面にあれど
+君を向かえに
+行くのにgood timing いつ
+相性合うよ面倒くさいとこも
+君に伝えに
+行くのにgood timing いつ
+
+
+分かんないよ
+分かんないよ
+分かんないよ
+横にいても分かんないよ
+分かんないよ
+分かんないよ
+分かんないよ
+横にいるともっと分かんないよ
+
+
+痛い視線
+紫外線
+一歩外に出れば危険
+イヤホンで耳塞いで
+見つからない君 hiding
+Try and error
+覗いてる mirror
+I need right now 今
+I need right now 今
+どちらにしようかな
+神様の言うとおりにしなよ
+俺らの言うことなんか無視しなよ
+わかんないよ、わかんないよ
+通りすがりじゃ分かんないよ
+わかんないよ、わかんないよ
+分かったら即終了 I love you
+俺が分かったふりしたら
+君が喜ぶふりする
+罠にかかったら即終了 I love you
+（分かったら即終了 I love you）
+語彙だけでする会話の限界
+もういい加減にする退化の免罪符
+君は認めたがらないだろうけど
+俺ら似てる
+多少は
+多少、多少
+
+場所は正面にあれど
+君を向かえに
+行くのにgood timing いつ
+相性合うよ面倒くさいとこも
+君に伝えに
+行くのにgood timing いつ
+          </div>
+        </div>
+      </div>
     </div>
     <div class="track-item">
-      <span class="track-num">5.</span>
-      <span class="track-name">GOOD NIGHT</span>
+      <div class="track-header">
+        <span class="track-num">5.</span>
+        <span class="track-name">GOOD NIGHT</span>
+        <span class="track-arrow">▼</span>
+      </div>
+      <div class="track-detail">
+        <div class="track-detail-inner">
+          <div class="track-credits">
+            <div class="track-credits-title">Credits</div>
+            Vocal: Motoi<br>
+            Background Vocals: Riki K<br>
+            Music, Lyrics, Produced by Motoi<br>
+            Mix, Mastering by Motoi
+          </div>
+          <div class="track-lyrics">
+            <div class="track-lyrics-title">Lyrics</div>
+            どうやってこんなに
+遠くへ来たんだろう
+JR新宿、改札で顰蹙
+かってるアメリカ人
+出口探していたらしい
+分かるよ
+この街難しすぎるよな
+君の顔少しでも長く見たいよ
+今晩見る夢をマシにしたくてさ
+もう行かなきゃな
+
+
+眠らない街に抗うのさ
+踊れない夜は頭の中慌ただしいんだ
+らららら、らららら
+のんきに歌えれば
+全部いらない街に何かあるのかい
+Good night, good night
+Good night, good night, good night
+Good night, good night
+Good night, good night, good night
+
+
+見切り発車、飛び出して
+迷子になってしまっても
+元からここはどこでもないし
+Oh
+時々頭よぎんだ
+あの頃にもう一回
+戻れたらなって思う lonely night
+寝ないで bad idea 繋いでは泣いて
+タイムマシンの使い道を
+間違えそうになったら
+まだ会えるうちに早く思い出さして
+僕らにしか分からないような話で
+君の声少しでも長く聞きたいよ
+今晩見る夢をマシにしたくてさ
+でももう行かなきゃ
+行かなきゃな
+
+
+眠らない街に抗うのさ
+踊れない夜は頭の中慌ただしいんだ
+らららら
+らららら
+のんきに歌えれば
+全部いらない街に何かあるのかい
+Good night, good night
+Good night, good night, good night
+Good night, good night
+Good night, good night, good night
+
+Good night, good night
+Good night, good night, good night
+Good night, good night
+Good night, good night, good night
+          </div>
+        </div>
+      </div>
     </div>
     <div class="track-item">
-      <span class="track-num">6.</span>
-      <span class="track-name">BLACK ROOM</span>
+      <div class="track-header">
+        <span class="track-num">6.</span>
+        <span class="track-name">BLACK ROOM</span>
+        <span class="track-arrow">▼</span>
+      </div>
+      <div class="track-detail">
+        <div class="track-detail-inner">
+          <div class="track-credits">
+            <div class="track-credits-title">Credits</div>
+            Vocal: Motoi<br>
+            Background Vocals: Riki K<br>
+            Music, Lyrics, Produced by Motoi<br>
+            Mix, Mastering by Motoi
+          </div>
+          <div class="track-lyrics">
+            <div class="track-lyrics-title">Lyrics</div>
+            うたた寝の合間に見てた変な夢
+日暮れ跨いで目覚める
+束の間のgetaway
+日暮れ跨いで目覚める
+重力任せ閉じた目
+束の間のgetaway
+束の間のgetaway
+
+
+また始まっては終わる瞬く間に
+来ては去ってく一人二人
+布団入っては一人不安に
+気づいたら12時過ぎたり
+黒い部屋に一人standing
+メロディになってく耳鳴り
+星探す東京の空に
+神様教えて次何？
+          </div>
+        </div>
+      </div>
     </div>
     <div class="track-item">
-      <span class="track-num">7.</span>
-      <span class="track-name">NEW LIFE</span>
+      <div class="track-header">
+        <span class="track-num">7.</span>
+        <span class="track-name">NEW LIFE</span>
+        <span class="track-arrow">▼</span>
+      </div>
+      <div class="track-detail">
+        <div class="track-detail-inner">
+          <div class="track-credits">
+            <div class="track-credits-title">Credits</div>
+            Vocal: Motoi<br>
+            Music, Lyrics, Produced by Motoi<br>
+            Mix, Mastering by Motoi
+          </div>
+          <div class="track-lyrics">
+            <div class="track-lyrics-title">Lyrics</div>
+            また繰り返す up and down
+空に浮かぶハテナ
+手を伸ばし終わらせんだ
+派手に転んではまた歩きだし
+サイを転がしてはまたも振り出し
+でもなぜか分かる全部うまくいく
+Everything's gonna be alright
+Everything's gonna be alright
+
+
+I gotta keep trying
+I gotta keep trying
+I gotta keep trying until I die, until I die yeah
+I gotta keep trying
+I gotta keep trying
+I gotta keep trying until I die, 
+until I die, until I die again
+繋いでくれる人と手を繋いで
+帰るべきホームベース飛び込んでヘッドスライディング
+ちゃんと帰れたら嫌な思い出も消さないで
+済むはず
+進むはず
+PDCA 回すミスってやり直す
+必死で枯らす声をまた治す
+これ学校行ってなくても分かる算数
+ゲームとは違うライフの残数
+朝起きてから寝るまでが人生
+目を開けたら閉じるまでが人生
+明日はまた新しい人生
+乗ったら最後走ってる freeway
+I gotta keep trying
+I gotta keep trying
+時間はあんまない
+今頑張らないと
+チャンスでスタンバイ
+できなきゃグッバイ
+夢もろとも粉砕
+分かってるうるさい
+明日から、てか tonight
+まだまだ足りてない
+削るしかないベッドタイム
+楽しいから問題ない
+立った入り口は地獄か天界
+君の隣で答えたい
+
+
+
+また繰り返す up and down
+空に浮かぶハテナ
+手を伸ばし終わらせんだ
+派手に転んではまた歩きだし
+サイを転がしてはまたも振り出し
+でもなぜか分かる全部うまくいく
+I know
+Everything's gonna be alright
+Everything's gonna be alright
+
+
+
+知らんまに変わる景色右から左
+入れ替わり立ち替わり一人また一人
+何考えてるのかあんま分かんない人々
+一日中混み合った道のり
+雑踏でもう見えないここまで歩いて来た道
+読む前に捨てた誰かの書いたシナリオ
+フラつく足取りで世界の端っこに
+でも立ち止まる暇はない信号は緑
+過ぎた日々の元には戻れない
+振り返ったままじゃどこにも飛べない
+毎朝新鮮に始める人生
+自分のビジネスに真面目な人間
+増えるアイデアまた描いて
+はまた切り裂いてはまた描いて
+まだゆくday by day 
+食らいつきたくて
+あらゆる手立てで
+プライズ狙ってる
+
+
+また up and down
+空に浮かぶハテナ
+手を伸ばし終わらせんだ
+派手に転んではまた歩きだし
+サイを転がしてはまたも振り出し
+でもなぜか分かる全部うまくいく 
+I know
+Everything's gonna be alright
+Everything's gonna be alright
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -428,5 +1027,16 @@
   <span style="font-family:'Unbounded',sans-serif;font-size:0.5rem;letter-spacing:0.3em;opacity:0.2;text-transform:uppercase;">© 2026 Chofu Lit</span>
 </footer>
 
+
+<script>
+  document.querySelectorAll('.track-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const item = header.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.track-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
 </body>
 </html>
