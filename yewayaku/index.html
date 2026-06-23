@@ -277,9 +277,13 @@ body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-se
 
   #main { margin-left: 0; padding-top: 54px; padding-bottom: 80px; }
 
-  /* Prev/Next nav: stack vertically and align with content padding */
-  .song-nav { flex-direction: column; margin: 16px 20px 56px; }
-  .song-nav-btn.next { text-align: left; align-items: flex-start; }
+  /* Prev/Next nav: keep side-by-side, just compact to fit */
+  .song-nav { margin: 16px 20px 56px; gap: 10px; }
+  .song-nav-btn { padding: 12px 14px; gap: 3px; }
+  .song-nav-dir { font-size: 10px; letter-spacing: 1px; }
+  .song-nav-album { font-size: 10px; }
+  .song-nav-track { font-size: 13px; line-height: 1.3; }
+  .song-nav-num { font-size: 10px; }
 
   /* Content paddings */
   .song-hdr, .album-hdr-main { padding: 32px 20px 28px; }
