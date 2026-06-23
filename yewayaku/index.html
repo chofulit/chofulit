@@ -307,6 +307,21 @@ body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-se
   /* Glossary popup fits screen */
   #term-pop { max-width: calc(100vw - 32px); }
 }
+
+/* ── Prev / Next song navigation ── */
+.song-nav { display: flex; gap: 14px; max-width: 820px; margin: 8px 64px 64px; }
+.song-nav-btn { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 5px; padding: 16px 20px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; text-align: left; font-family: inherit; transition: border-color .18s, transform .18s, box-shadow .18s; }
+.song-nav-btn.next { text-align: right; align-items: flex-end; }
+.song-nav-btn:hover { border-color: var(--red); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.07); }
+.song-nav-dir { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--red); }
+.song-nav-album { font-size: 11px; color: var(--dim); font-weight: 600; }
+.song-nav-track { font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.35; }
+.song-nav-num { font-size: 11px; color: var(--mid); font-weight: 600; }
+.song-nav-empty { flex: 1 1 0; }
+@media (max-width: 640px) {
+  .song-nav { flex-direction: column; margin: 8px 20px 48px; }
+  .song-nav-btn.next { text-align: left; align-items: flex-start; }
+}
 </style>
 </head>
 <body>
@@ -4049,7 +4064,7 @@ function renderContent() {
   else if (view.startsWith('lr-song:')) {
     const id = view.replace('lr-song:','');
     const song = LR_SONGS.find(s=>s.id===id);
-    c.innerHTML = song ? renderSong(song,'Late Registration','2. Late Registration') : '';
+    c.innerHTML = song ? renderSong(song,'Late Registration','2. Late Registration') + songNav('Late Registration', song.num) : '';
   }
   else if (view.startsWith('lr-track:')) {
     const num = view.replace('lr-track:','');
@@ -4068,7 +4083,7 @@ function renderContent() {
         <div class="cs-rule"></div>
         <div class="cs-title">和訳・注釈制作中</div>
         <div class="cs-body">このトラックの和訳・注釈はまだ準備中です。完成次第このページに追加されます。</div>
-      </div>` : '';
+      </div>` + songNav('Late Registration', num) : '';
     applyTermPopListeners(); return;
   }
   else if (view === 'cd-overview') { c.innerHTML = renderCDOverview(); }
@@ -4097,13 +4112,13 @@ function renderContent() {
         <div class="cs-rule"></div>
         <div class="cs-title">和訳・注釈制作中</div>
         <div class="cs-body">このトラックの和訳・注釈はまだ準備中です。完成次第このページに追加されます。</div>
-      </div>` : '';
+      </div>` + (_alb && _track ? songNav(_alb.title, _track.num) : '') : '';
     applyTermPopListeners(); return;
   }
   else if (view.startsWith('cd-track:')) {
     const num = view.replace('cd-track:','');
     const track = CD_TRACKS.find(t=>t.num===num);
-    c.innerHTML = track ? renderCDTrack(track) : '';
+    c.innerHTML = track ? renderCDTrack(track) + songNav('The College Dropout', num) : '';
   }
   applyTermPopListeners();
 }
@@ -4372,6 +4387,51 @@ function renderSong(song, albumName, albumFolder) {
   });
   html += `</div>`;
   return html;
+}
+
+// 全アルバムを収録順に並べたチェーンを構築。各曲に遷移先(target)を持たせる。
+function buildAlbumChain() {
+  const chain = [];
+  chain.push({ name:'The College Dropout', tracks: CD_TRACKS.map(t=>({num:t.num, title:t.title, target:`cd-track:${t.num}`})) });
+  const lr = LR_SONGS.slice().sort((a,b)=>a.num.localeCompare(b.num)).map(s=>({num:s.num, title:s.title, target:`lr-song:${s.id}`}));
+  chain.push({ name:'Late Registration', tracks: lr });
+  OTHER_ALBUMS.forEach(a=>{
+    chain.push({ name:a.title, tracks:a.tracks.map(t=>({num:t.num, title:t.title, target:`other-track:${a.id}:${t.num}`})) });
+  });
+  return chain;
+}
+
+// 前後の曲ナビ。アルバム境界では隣接アルバムの曲を案内する。
+function songNav(albumName, num) {
+  const chain = buildAlbumChain();
+  const ai = chain.findIndex(al=>al.name===albumName);
+  if (ai < 0) return '';
+  const al = chain[ai];
+  const ti = al.tracks.findIndex(t=>t.num===num);
+  if (ti < 0) return '';
+  let prev=null, next=null;
+  if (ti > 0) {
+    const p = al.tracks[ti-1];
+    prev = { dir:'前の曲', album:null, num:p.num, title:p.title, target:p.target };
+  } else if (ai > 0) {
+    const pa = chain[ai-1], p = pa.tracks[pa.tracks.length-1];
+    prev = { dir:'前のアルバムへ', album:pa.name, num:p.num, title:p.title, target:p.target };
+  }
+  if (ti < al.tracks.length-1) {
+    const n = al.tracks[ti+1];
+    next = { dir:'次の曲', album:null, num:n.num, title:n.title, target:n.target };
+  } else if (ai < chain.length-1) {
+    const na = chain[ai+1], n = na.tracks[0];
+    next = { dir:'次のアルバムへ', album:na.name, num:n.num, title:n.title, target:n.target };
+  }
+  const btn = (d, side) => d ? `
+    <button class="song-nav-btn ${side}" onclick="navigate('${d.target}')">
+      <span class="song-nav-dir">${side==='prev'?'‹ ':''}${esc(d.dir)}${side==='next'?' ›':''}</span>
+      ${d.album?`<span class="song-nav-album">${esc(d.album)}</span>`:''}
+      <span class="song-nav-num">Track ${esc(d.num)}</span>
+      <span class="song-nav-track">${esc(d.title)}</span>
+    </button>` : `<span class="song-nav-empty"></span>`;
+  return `<div class="song-nav">${btn(prev,'prev')}${btn(next,'next')}</div>`;
 }
 
 // ══════════════════════════════════════════
