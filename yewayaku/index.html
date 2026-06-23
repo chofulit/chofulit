@@ -205,6 +205,11 @@ body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-se
   transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
   display: flex; align-items: center; justify-content: center;
 }
+.home-card-img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.home-card:hover .home-card-img { transform: scale(1.06); }
 .home-card:hover .home-card-art { transform: scale(1.06); }
 .home-card-ph-text {
   font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
@@ -2296,12 +2301,11 @@ function renderHome() {
   const totalCount = _all.reduce((s,a)=>s+a.tracks,0);
   const cards = _all.map(a=>{
     const artSrc = artMap[a.view];
-    const artStyle = artSrc
-      ? 'background-image:url("' + artSrc + '");background-size:cover;background-position:center;'
-      : 'background:#1a1a1a;';
-    const phText = !artSrc ? '<span class="home-card-ph-text">' + esc(a.artText||a.title) + '</span>' : '';
+    const imgEl = artSrc
+      ? '<img class="home-card-img" src="' + encodeURI(artSrc) + '" alt="' + esc(a.title) + '" loading="lazy" onerror="this.style.display=\'none\'">'
+      : '<div class="home-card-art"><span class="home-card-ph-text">' + esc(a.artText||a.title) + '</span></div>';
     return '<button class="home-card" data-view="' + a.view + '">'
-      + '<div class="home-card-art" style="' + artStyle + '">' + phText + '</div>'
+      + imgEl
       + '<div class="home-card-overlay">'
       + '<div class="home-card-num">' + a.num + ' · ' + a.year + '</div>'
       + '<div class="home-card-title">' + esc(a.title) + '</div>'
