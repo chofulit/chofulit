@@ -271,10 +271,21 @@ body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-se
   .hdr-meta-item { margin-right: 20px; }
 
   /* Samples stack vertically */
-  .sample-tracks { grid-template-columns: 1fr; }
-  .sample-track { padding: 18px 20px; }
-  .sample-connector { padding: 4px 0; }
-  .sample-connector .sample-arrow { transform: rotate(90deg); }
+  /* Samples stay side-by-side & compact on mobile */
+  .sample-tracks { grid-template-columns: 1fr 24px 1fr; align-items: start; }
+  .sample-track { padding: 12px 8px; }
+  .sample-role { font-size: 8px; letter-spacing: 2px; margin-bottom: 8px; }
+  .sample-embed { margin-bottom: 8px; }
+  .sample-track-info { gap: 8px; margin-bottom: 8px; }
+  .sample-track-name { font-size: 12px; }
+  .sample-artist { font-size: 11px; }
+  .sample-album { font-size: 10px; }
+  .sample-ts { gap: 6px; padding-top: 8px; }
+  .sample-ts-label { display: none; }
+  .sample-ts-time { font-size: 13px; }
+  .sample-ts-link { font-size: 10px; padding: 4px 8px; }
+  .sample-connector { display: flex; }
+  .sample-arrow { width: 22px; height: 22px; font-size: 11px; }
   .sample-toggle, .sample-item-hdr { padding-left: 20px; padding-right: 20px; }
   .wayaku-section .sample-embed { max-width: 100%; }
 
