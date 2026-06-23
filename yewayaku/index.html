@@ -137,9 +137,9 @@ body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-se
 .sample-track-name { font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.3; margin-bottom: 4px; }
 .sample-artist { font-size: 12px; color: var(--mid); margin-bottom: 5px; }
 .sample-album { font-size: 11px; color: var(--dim); line-height: 1.7; }
-.sample-ts { display: flex; align-items: center; gap: 10px; border-top: 1px solid var(--border); padding-top: 14px; }
-.sample-ts-label { font-size: 10px; color: var(--dim); }
-.sample-ts-time { font-size: 20px; font-weight: 700; color: var(--ink); letter-spacing: -1px; }
+.sample-ts { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; border-top: 1px solid var(--border); padding-top: 14px; }
+.sample-ts-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--dim); font-weight: 600; }
+.sample-ts-time { font-size: 16px; font-weight: 700; color: var(--ink); letter-spacing: -0.5px; }
 .sample-ts-link { font-size: 11px; color: var(--red); text-decoration: none; border: 1px solid var(--red); padding: 5px 12px; font-weight: 600; flex-shrink: 0; transition: background 0.12s, color 0.12s; background: none; font-family: 'DM Sans', sans-serif; cursor: pointer; border-radius: 3px; }
 .sample-ts-link:hover { background: var(--red); color: #fff; }
 .sample-connector { display: flex; align-items: center; justify-content: center; }
@@ -291,7 +291,7 @@ const LR_SONGS = [
       {artist:"Gil Scott-Heron",title:"Home Is Where The Hatred Is",year:1971,album:"Pieces of a Man",
        url:"https://www.whosampled.com/sample/314/Kanye-West-Common-My-Way-Home-Gil-Scott-Heron-Home-Is-Where-the-Hatred-Is/",
        youtubeUrl:"https://www.youtube.com/watch?v=nSpBs1ghyoo",
-       useTime:0, srcTime:49}
+       useTimes:[0,5], useNote:"全編", srcTimes:[0,15]}
     ],
     whosampledUrl:"https://www.whosampled.com/Kanye-West/My-Way-Home/",
     albumArt:"2. Late Registration/Late Registration artwork.jpg",
@@ -2356,8 +2356,10 @@ function renderSong(song, albumName, albumFolder) {
                       <div class="sample-album">${esc(albumName)}<br>${esc(song.label||'Roc-A-Fella / Def Jam')} · ${(song.year||'2005').replace('年','')}</div>
                     </div>
                   </div>
-                  ${(song.youtubeUrl && src.useTime!=null)?`<div class="sample-ts">
-                    <button class="sample-ts-link" onclick="sampleJump('${useId}',${src.useTime})">▶ サンプル箇所へ (${fmtTime(src.useTime)})</button>
+                  ${(song.youtubeUrl && src.useTimes)?`<div class="sample-ts">
+                    <span class="sample-ts-label">サンプル登場</span>
+                    <span class="sample-ts-time">${src.useTimes.map(fmtTime).join('〜')}${src.useNote?'（'+esc(src.useNote)+'）':''}</span>
+                    <button class="sample-ts-link" onclick="sampleJump('${useId}',${src.useTimes[0]})">▶ サンプル箇所へ</button>
                   </div>`:''}
                 </div>
                 <div class="sample-connector"><div class="sample-arrow">←</div></div>
@@ -2372,8 +2374,10 @@ function renderSong(song, albumName, albumFolder) {
                       <div class="sample-album">${src.album?esc(src.album)+'<br>':''}${src.year?src.year+'年':''}</div>
                     </div>
                   </div>
-                  ${(src.youtubeUrl && src.srcTime!=null)?`<div class="sample-ts">
-                    <button class="sample-ts-link" onclick="sampleJump('${srcId}',${src.srcTime})">▶ サンプル箇所へ (${fmtTime(src.srcTime)})</button>
+                  ${(src.youtubeUrl && src.srcTimes)?`<div class="sample-ts">
+                    <span class="sample-ts-label">サンプル登場</span>
+                    <span class="sample-ts-time">${src.srcTimes.map(fmtTime).join('〜')}${src.srcNote?'（'+esc(src.srcNote)+'）':''}</span>
+                    <button class="sample-ts-link" onclick="sampleJump('${srcId}',${src.srcTimes[0]})">▶ サンプル箇所へ</button>
                   </div>`:''}
                 </div>
               </div>
