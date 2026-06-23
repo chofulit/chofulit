@@ -144,6 +144,11 @@ body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-se
 .sample-ts-link:hover { background: var(--red); color: #fff; }
 .sample-connector { display: flex; align-items: center; justify-content: center; }
 .sample-arrow { width: 28px; height: 28px; background: var(--red); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; }
+.sample-embed { position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 16px; background: #000; border-radius: 4px; overflow: hidden; }
+.sample-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+.sample-tracks-stacked { grid-template-columns: 1fr; }
+.sample-tracks-stacked .sample-connector { padding: 6px 0; }
+.sample-tracks-stacked .sample-arrow { width: 32px; height: 32px; border-radius: 50%; }
 .sample-footer { border-top: 1px solid var(--border); padding: 10px 28px; display: flex; align-items: center; justify-content: space-between; background: var(--bg); font-size: 11px; color: var(--dim); }
 .sample-footer-link { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--mid); text-decoration: none; border-bottom: 1px solid var(--border); transition: color 0.12s; }
 .sample-footer-link:hover { color: var(--ink); border-bottom-color: var(--ink); }
@@ -283,6 +288,7 @@ const LR_SONGS = [
   {
     id:"lr-my-way-home", num:"07", title:"My Way Home", feat:"feat. Common",
     producer:"Kanye West",
+    youtubeUrl:"https://www.youtube.com/watch?v=q6UqUDhSUCc",
     sample:'Gil Scott-Heron「Home Is Where The Hatred Is」(1971)',
     sampleSources:[
       {artist:"Gil Scott-Heron",title:"Home Is Where The Hatred Is",year:1971,album:"Pieces of a Man",
@@ -2289,6 +2295,18 @@ function renderCDTrack(track) {
     </div>`;
 }
 
+function ytId(url) {
+  if (!url) return null;
+  const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]{11})/);
+  return m ? m[1] : null;
+}
+function ytEmbed(url, title) {
+  const id = ytId(url);
+  if (!id) return '';
+  return '<div class="sample-embed"><iframe src="https://www.youtube.com/embed/' + id +
+    '" title="' + esc(title||'') + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>';
+}
+
 function renderSong(song, albumName, albumFolder) {
   let html = `
     <div class="song-hdr">
@@ -2307,21 +2325,23 @@ function renderSong(song, albumName, albumFolder) {
 
   if (song.sampleSources && song.sampleSources.length > 0) {
     html += `
-      <div class="sample-section">
+      <div class="sample-section${song.youtubeUrl?' open':''}">
         <button class="sample-toggle" onclick="this.closest('.sample-section').classList.toggle('open')">
           <span class="sample-toggle-label">Samples</span>
           <span class="sample-toggle-chevron">▶</span>
         </button>
         <div class="sample-body">
           <div class="sample-heading"><span class="sample-label">サンプル元</span></div>
-          ${song.sampleSources.map((src, i) => `
+          ${song.sampleSources.map((src, i) => {
+            const stacked = song.youtubeUrl || src.youtubeUrl;
+            return `
             <div class="sample-item">
-              <div class="sample-tracks">
+              <div class="sample-tracks${stacked?' sample-tracks-stacked':''}">
                 <div class="sample-track">
                   <div class="sample-role">使用曲</div>
+                  ${song.youtubeUrl?ytEmbed(song.youtubeUrl, song.title):''}
                   <div class="sample-track-info">
-                    <img class="sample-art" src="${esc(song.artwork||'late-registration-artwork.jpg')}" alt="${esc(albumName)}"
-                         onerror="this.style.display='none'">
+                    ${song.youtubeUrl?'':`<img class="sample-art" src="${esc(song.artwork||'late-registration-artwork.jpg')}" alt="${esc(albumName)}" onerror="this.style.display='none'">`}
                     <div class="sample-meta">
                       <div class="sample-track-name">${esc(song.title)}</div>
                       <div class="sample-artist">Kanye West${song.feat?' '+esc(song.feat):''}</div>
@@ -2332,11 +2352,12 @@ function renderSong(song, albumName, albumFolder) {
                     <a class="sample-ts-link" href="${esc(src.url)}" target="_blank">WhoSampled</a>
                   </div>
                 </div>
-                <div class="sample-connector"><div class="sample-arrow">←</div></div>
+                <div class="sample-connector"><div class="sample-arrow">${stacked?'↓':'←'}</div></div>
                 <div class="sample-track">
                   <div class="sample-role">サンプル元${song.sampleSources.length>1?' ('+(i+1)+'/'+song.sampleSources.length+')':''}</div>
+                  ${src.youtubeUrl?ytEmbed(src.youtubeUrl, src.title):''}
                   <div class="sample-track-info">
-                    <div class="sample-art-ph">ORIG</div>
+                    ${src.youtubeUrl?'':'<div class="sample-art-ph">ORIG</div>'}
                     <div class="sample-meta">
                       <div class="sample-track-name">${esc(src.title)}</div>
                       <div class="sample-artist">${esc(src.artist)}</div>
@@ -2349,7 +2370,7 @@ function renderSong(song, albumName, albumFolder) {
                   </div>
                 </div>
               </div>
-            </div>`).join('')}
+            </div>`;}).join('')}
           ${song.whosampledUrl?`<div class="sample-footer"><span>情報提供：WhoSampled</span><a class="sample-footer-link" href="${esc(song.whosampledUrl)}" target="_blank">whosampled.com で詳細を見る</a></div>`:''}
         </div>
       </div>`;
