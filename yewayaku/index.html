@@ -72,6 +72,7 @@ body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-se
 .track-btn.active { border-left-color: var(--red); background: color-mix(in srgb, var(--red) 8%, transparent); }
 .track-btn.active .track-name { color: var(--red); font-weight: 600; }
 .track-btn.no-lyrics .track-name { color: var(--dim); }
+.track-btn.no-lyrics.active .track-name { color: var(--red); font-weight: 600; }
 .track-num { font-size: 9px; color: var(--dim); font-weight: 500; min-width: 16px; flex-shrink: 0; }
 .track-info { flex: 1; min-width: 0; }
 .track-name { font-size: 12px; color: var(--ink); font-weight: 500; line-height: 1.4; }
@@ -2197,6 +2198,7 @@ function renderSidebar() {
       const willOpen = !albumOpen[album];
       Object.keys(albumOpen).forEach(k => { albumOpen[k] = false; });
       albumOpen[album] = willOpen;
+      if (willOpen) applyAlbumTheme(album);
       renderSidebar();
     });
   });
@@ -2573,22 +2575,22 @@ document.getElementById('content').addEventListener('click', e => {
 });
 
 const ALBUM_COLORS = {
-  cd:     { accent:'#b5803a', annBg:'#fdf7ee', annText:'#8a5e18' },
-  lr:     { accent:'#c0392b', annBg:'#fdf6f5', annText:'#a04030' },
-  grad:   { accent:'#4a7fd4', annBg:'#f0f4fc', annText:'#2a4a8a' },
-  s808:   { accent:'#5b9cc4', annBg:'#f0f6fc', annText:'#1f5a80' },
-  mbdtf:  { accent:'#8c1919', annBg:'#fdf0f0', annText:'#6a1010' },
-  wtt:    { accent:'#b8922e', annBg:'#fdf8ec', annText:'#7a600e' },
-  yeezus: { accent:'#6e5e4e', annBg:'#f8f6f4', annText:'#4e3e2e' },
-  tlop:   { accent:'#c96a1a', annBg:'#fdf4ec', annText:'#8a4008' },
-  ye:     { accent:'#4a7240', annBg:'#f0f5f0', annText:'#2a5020' },
-  ksg:    { accent:'#7a3ac8', annBg:'#f4f0fc', annText:'#4a1a8a' },
-  jik:    { accent:'#b88c18', annBg:'#fdf8e4', annText:'#7a5c08' },
-  donda:  { accent:'#646464', annBg:'#f5f5f5', annText:'#404040' },
-  v1:     { accent:'#1e5aa0', annBg:'#eef2fa', annText:'#0e3a70' },
-  v2:     { accent:'#5a2e8c', annBg:'#f4f0fc', annText:'#3a1a6a' },
-  donda2: { accent:'#3a3a8c', annBg:'#eeeefa', annText:'#1a1a6a' },
-  bully:  { accent:'#8c3a1a', annBg:'#faf0ee', annText:'#5e1a06' },
+  cd:     { accent:'#a05a2c', annBg:'#fbf3ec', annText:'#6e3a14' },
+  lr:     { accent:'#c0392b', annBg:'#fdf6f5', annText:'#8a2418' },
+  grad:   { accent:'#7a3f9c', annBg:'#f6f0fa', annText:'#4e2068' },
+  s808:   { accent:'#7d8488', annBg:'#f4f5f6', annText:'#454b4f' },
+  mbdtf:  { accent:'#d62f43', annBg:'#fdf0f2', annText:'#8e1626' },
+  wtt:    { accent:'#b8922e', annBg:'#fbf6e9', annText:'#6e5510' },
+  yeezus: { accent:'#c62828', annBg:'#fdf0f0', annText:'#8a1414' },
+  tlop:   { accent:'#e0703a', annBg:'#fdf3ee', annText:'#93420f' },
+  ye:     { accent:'#2f6e54', annBg:'#eef6f1', annText:'#18452f' },
+  ksg:    { accent:'#c07b3a', annBg:'#fbf4ec', annText:'#7e4a14' },
+  jik:    { accent:'#2f47c2', annBg:'#eef0fc', annText:'#16267e' },
+  donda:  { accent:'#1a1a1a', annBg:'#f2f2f2', annText:'#2a2a2a' },
+  v1:     { accent:'#4a4a4a', annBg:'#f3f3f3', annText:'#2e2e2e' },
+  v2:     { accent:'#6e5a38', annBg:'#f7f3ec', annText:'#463821' },
+  donda2: { accent:'#1f1f2e', annBg:'#f1f1f5', annText:'#2a2a3a' },
+  bully:  { accent:'#1a1a1a', annBg:'#f2f2f2', annText:'#2a2a2a' },
 };
 
 function applyAlbumTheme(albumId) {
