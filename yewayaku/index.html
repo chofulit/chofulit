@@ -1,0 +1,2453 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanye West 大全</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff;
+  --bg2: #f9f9f7;
+  --red: #C0392B;
+  --ink: #1a1a1a;
+  --mid: #555;
+  --dim: #999;
+  --border: #e8e8e8;
+  --ann-bg: #fdf6f5;
+  --ann-text: #a04030;
+  --sidebar-w: 256px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; min-height: 100vh; display: flex; }
+
+/* ══ SIDEBAR ══ */
+#sidebar {
+  width: var(--sidebar-w); height: 100vh; background: var(--bg2);
+  border-right: 1px solid var(--border); position: fixed; top: 0; left: 0;
+  overflow-y: auto; z-index: 20; display: flex; flex-direction: column;
+}
+#sidebar-top {
+  padding: 28px 22px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.sb-eyebrow { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--red); font-weight: 600; margin-bottom: 8px; }
+.sb-brand { font-family: 'DM Sans', sans-serif; font-size: 18px; font-weight: 700; line-height: 1.25; }
+.sb-sub { font-size: 11px; color: var(--mid); margin-top: 3px; }
+
+/* Album accordion */
+.sb-albums { flex: 1; padding: 8px 0 40px; }
+.album-item { border-bottom: 1px solid var(--border); }
+.album-toggle {
+  width: 100%; background: none; border: none; text-align: left;
+  padding: 14px 22px; cursor: pointer; display: flex; align-items: center;
+  gap: 10px; font-family: 'DM Sans', sans-serif; transition: background 0.12s;
+}
+.album-toggle:hover { background: rgba(0,0,0,0.03); }
+.album-toggle.open { background: color-mix(in srgb, var(--red) 6%, transparent); }
+.album-chevron {
+  font-size: 8px; color: var(--dim); transition: transform 0.2s; flex-shrink: 0; margin-right: 2px;
+}
+.album-toggle.open .album-chevron { transform: rotate(90deg); }
+.album-info { flex: 1; min-width: 0; }
+.album-name { font-size: 12.5px; font-weight: 600; color: var(--ink); line-height: 1.3; }
+.album-toggle.open .album-name { color: var(--red); }
+.album-year { font-size: 10px; color: var(--dim); margin-top: 1px; }
+
+/* Track list (collapsible) */
+.album-tracks {
+  max-height: 0; overflow: hidden;
+  background: rgba(0,0,0,0.015); border-top: 1px solid var(--border);
+  transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.album-tracks.open { max-height: 2000px; }
+.track-btn {
+  width: 100%; background: none; border: none; text-align: left;
+  padding: 8px 22px 8px 36px; cursor: pointer; display: flex; gap: 10px;
+  align-items: baseline; border-left: 3px solid transparent;
+  transition: all 0.12s; font-family: 'DM Sans', sans-serif;
+}
+.track-btn:hover { background: rgba(0,0,0,0.03); }
+.track-btn.active { border-left-color: var(--red); background: color-mix(in srgb, var(--red) 8%, transparent); }
+.track-btn.active .track-name { color: var(--red); font-weight: 600; }
+.track-btn.no-lyrics .track-name { color: var(--dim); }
+.track-num { font-size: 9px; color: var(--dim); font-weight: 500; min-width: 16px; flex-shrink: 0; }
+.track-info { flex: 1; min-width: 0; }
+.track-name { font-size: 12px; color: var(--ink); font-weight: 500; line-height: 1.4; }
+.track-feat { font-size: 10px; color: var(--dim); margin-top: 1px; }
+
+/* ══ MAIN ══ */
+#main { margin-left: var(--sidebar-w); flex: 1; padding-bottom: 120px; }
+
+/* ══ SONG / ALBUM HEADER ══ */
+.song-hdr, .album-hdr-main {
+  padding: 52px 64px 40px; border-bottom: 2px solid var(--ink); max-width: 820px;
+}
+.hdr-track { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--red); font-weight: 600; margin-bottom: 14px; }
+.hdr-title { font-family: 'DM Sans', sans-serif; font-size: 54px; line-height: 1.0; font-weight: 700; margin-bottom: 8px; }
+.hdr-feat { font-family: 'DM Sans', sans-serif; font-size: 17px; color: var(--mid); margin-bottom: 24px; }
+.hdr-meta { display: flex; flex-wrap: wrap; font-size: 12px; color: var(--mid); border-top: 1px solid var(--border); padding-top: 16px; margin-top: 8px; }
+.hdr-meta-item { margin-right: 32px; margin-bottom: 6px; }
+.hdr-meta-item b { color: var(--ink); font-weight: 600; display: block; font-size: 10px; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 1px; }
+.hdr-desc { margin-top: 24px; font-size: 14px; line-height: 1.95; color: var(--mid); font-family: 'DM Sans', sans-serif; }
+
+/* Album overview header */
+.album-hdr-main { display: flex; gap: 40px; align-items: flex-start; }
+.album-art img { width: 160px; height: 160px; object-fit: cover; display: block; }
+.album-art-ph { width: 160px; height: 160px; background: #1a1a1a; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #555; text-align: center; letter-spacing: 2px; text-transform: uppercase; }
+.album-body { flex: 1; }
+.album-body .hdr-title { font-size: 42px; }
+
+/* ══ COMING SOON ══ */
+.coming-soon-wrap { padding: 60px 64px; max-width: 820px; }
+.cs-rule { width: 40px; height: 2px; background: var(--red); margin-bottom: 28px; }
+.cs-title { font-family: 'DM Sans', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+.cs-body { font-size: 14px; line-height: 1.95; color: var(--mid); margin-bottom: 32px; }
+.cs-tracklist { border-top: 1px solid var(--border); }
+.cs-track { display: flex; gap: 16px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.cs-num { font-size: 10px; color: var(--dim); min-width: 24px; font-weight: 500; }
+.cs-name { font-size: 13px; color: var(--ink); }
+.cs-feat-sm { font-size: 11px; color: var(--dim); margin-top: 2px; }
+
+/* ══ SAMPLE COMPONENT ══ */
+.sample-section { max-width: 820px; border-bottom: 1px solid var(--border); background: var(--bg2); }
+.sample-toggle {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  background: none; border: none; border-top: 2px solid var(--red);
+  padding: 13px 28px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+  text-align: left; transition: background 0.12s;
+}
+.sample-toggle:hover { background: rgba(192,57,43,0.04); }
+.sample-toggle-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; color: var(--ink); }
+.sample-toggle-chevron { font-size: 9px; color: var(--red); transition: transform 0.2s; }
+.sample-section.open .sample-toggle-chevron { transform: rotate(90deg); }
+.sample-body { display: none; }
+.sample-section.open .sample-body { display: block; }
+.sample-heading { padding: 16px 28px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; gap: 20px; }
+.sample-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; color: var(--red); }
+.sample-item { border-bottom: 1px solid var(--border); }
+.sample-item:last-child { border-bottom: none; }
+.sample-tracks { display: grid; grid-template-columns: 1fr 44px 1fr; align-items: center; background: var(--bg); }
+.sample-track { padding: 22px 28px; }
+.sample-role { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--dim); font-weight: 600; margin-bottom: 14px; }
+.sample-track-info { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 16px; }
+.sample-art { width: 64px; height: 64px; object-fit: cover; flex-shrink: 0; }
+.sample-art-ph { width: 64px; height: 64px; flex-shrink: 0; background: #1a1a1a; display: flex; align-items: center; justify-content: center; font-size: 8px; color: #666; text-align: center; line-height: 1.5; padding: 6px; }
+.sample-meta { flex: 1; min-width: 0; }
+.sample-track-name { font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.3; margin-bottom: 4px; }
+.sample-artist { font-size: 12px; color: var(--mid); margin-bottom: 5px; }
+.sample-album { font-size: 11px; color: var(--dim); line-height: 1.7; }
+.sample-ts { display: flex; align-items: center; gap: 10px; border-top: 1px solid var(--border); padding-top: 14px; }
+.sample-ts-label { font-size: 10px; color: var(--dim); }
+.sample-ts-time { font-size: 20px; font-weight: 700; color: var(--ink); letter-spacing: -1px; }
+.sample-ts-link { font-size: 10px; color: var(--red); text-decoration: none; border: 1px solid var(--red); padding: 3px 10px; font-weight: 600; flex-shrink: 0; transition: background 0.12s, color 0.12s; }
+.sample-ts-link:hover { background: var(--red); color: #fff; }
+.sample-connector { display: flex; align-items: center; justify-content: center; }
+.sample-arrow { width: 28px; height: 28px; background: var(--red); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; }
+.sample-footer { border-top: 1px solid var(--border); padding: 10px 28px; display: flex; align-items: center; justify-content: space-between; background: var(--bg); font-size: 11px; color: var(--dim); }
+.sample-footer-link { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--mid); text-decoration: none; border-bottom: 1px solid var(--border); transition: color 0.12s; }
+.sample-footer-link:hover { color: var(--ink); border-bottom-color: var(--ink); }
+
+/* ══ LYRICS ══ */
+.lyrics-wrap { padding: 0 64px; max-width: 820px; }
+.sec-header { margin: 48px 0 20px; display: flex; align-items: center; gap: 16px; }
+.sec-rule { flex: 1; height: 1px; background: var(--border); }
+.sec-label-text { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--dim); font-weight: 600; white-space: nowrap; }
+.sec-note { font-size: 13px; line-height: 1.85; color: var(--mid); margin-bottom: 20px; font-style: italic; padding-left: 16px; border-left: 2px solid var(--border); }
+.lyric-block { padding: 6px 0; }
+.en-line { font-size: 16px; line-height: 1.7; color: var(--ink); white-space: pre-wrap; font-weight: 400; }
+.ja-line { font-size: 14px; line-height: 1.75; color: var(--mid); white-space: pre-wrap; margin-top: 2px; font-family: 'Noto Sans JP', sans-serif; font-weight: 300; }
+.ann-line { font-size: 12.5px; line-height: 1.85; color: var(--ann-text); margin-top: 8px; padding: 10px 14px; background: var(--ann-bg); border-left: 2px solid var(--red); }
+.ann-star { font-weight: 700; margin-right: 4px; }
+.spacer { height: 10px; }
+
+/* ══ GLOSSARY ══ */
+.gl-term { border-bottom: 1px solid #c0392b66; cursor: pointer; transition: color 0.12s; }
+.gl-term:hover { color: var(--red); border-bottom-color: var(--red); }
+#term-pop {
+  position: fixed; background: #fff; border: 1.5px solid var(--ink); border-radius: 4px;
+  padding: 14px 18px; max-width: 290px; z-index: 200; font-size: 12.5px; line-height: 1.75;
+  color: var(--mid); display: none; box-shadow: 3px 3px 0 rgba(0,0,0,0.08);
+}
+#term-pop .tp-type { font-size: 9px; text-transform: uppercase; letter-spacing: 2px; color: var(--red); font-weight: 600; margin-bottom: 4px; }
+#term-pop .tp-name { font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+
+/* ══ HOME ══ */
+.home-hero {
+  background: #0d0d0d; color: #fff; padding: 72px 64px 64px;
+}
+.home-hero-eye { font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: rgba(255,255,255,0.4); font-weight: 600; margin-bottom: 20px; }
+.home-hero-title { font-size: 64px; line-height: 1.0; font-weight: 700; margin-bottom: 20px; letter-spacing: -2px; }
+.home-hero-body { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.55); max-width: 560px; margin-bottom: 48px; }
+.home-hero-stats { display: flex; gap: 48px; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 32px; }
+.home-stat-num { font-size: 38px; font-weight: 700; letter-spacing: -2px; line-height: 1; }
+.home-stat-label { font-size: 10px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 2px; margin-top: 4px; }
+.home-discog-section { padding: 48px 0 80px; }
+.home-discog-hdr { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--dim); font-weight: 600; padding: 0 64px 20px; border-bottom: 1px solid var(--border); margin-bottom: 3px; }
+.home-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
+.home-card {
+  position: relative; aspect-ratio: 1 / 1; background: #1a1a1a;
+  border: none; cursor: pointer; overflow: hidden; padding: 0;
+}
+.home-card-art {
+  width: 100%; height: 100%; background-size: cover; background-position: center;
+  transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
+  display: flex; align-items: center; justify-content: center;
+}
+.home-card:hover .home-card-art { transform: scale(1.06); }
+.home-card-ph-text {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); text-align: center; line-height: 1.8; pointer-events: none;
+}
+.home-card-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%);
+  padding: 40px 14px 14px;
+  transform: translateY(100%);
+  transition: transform 0.32s cubic-bezier(0.25,0.46,0.45,0.94);
+  text-align: left;
+}
+.home-card:hover .home-card-overlay { transform: translateY(0); }
+.home-card-num { font-size: 9px; color: rgba(255,255,255,0.45); letter-spacing: 2px; margin-bottom: 3px; }
+.home-card-title { font-size: 12px; font-weight: 600; color: #fff; line-height: 1.3; margin-bottom: 6px; }
+.home-card-badge { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
+.home-card-badge.done { color: #4ade80; }
+.home-card-badge.wip { color: rgba(255,255,255,0.3); }
+
+@media (max-width: 820px) {
+  #sidebar { width: 100%; position: relative; min-height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+  #main { margin-left: 0; }
+  .song-hdr, .album-hdr-main, .lyrics-wrap, .coming-soon-wrap, .home-wrap { padding: 24px 20px; }
+  .hdr-title { font-size: 34px; }
+  .album-body .hdr-title { font-size: 28px; }
+  .album-hdr-main { flex-direction: column; }
+  .sample-tracks { grid-template-columns: 1fr; }
+  .sample-connector { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav id="sidebar">
+  <div id="sidebar-top">
+    <div class="sb-eyebrow">和訳解説</div>
+    <button class="sb-brand" onclick="navigate('home')" style="background:none;border:none;cursor:pointer;padding:0;text-align:left;display:block;width:100%;font-family:inherit;">Kanye West 大全</button>
+    <div class="sb-sub">ディスコグラフィー</div>
+  </div>
+  <div class="sb-albums" id="album-nav"></div>
+</nav>
+
+<main id="main">
+  <div id="content"></div>
+</main>
+
+<div id="term-pop"></div>
+
+<script>
+// ══════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════
+const GLOSSARY = {
+  "Common": {type:"アーティスト", desc:"シカゴ出身のコンシャス・ラッパー（本名：Lonnie Rashid Lynn）。Kanyeが最も尊敬するラッパーの一人で、この時期Kanyeとともに名盤『Be』(2005)を制作。"},
+  "Gil Scott-Heron": {type:"アーティスト", desc:"詩人・ミュージシャン（1949–2011）。ジャズとポエトリー・リーディングを融合させた「ヒップホップの祖父」。My Way Homeでサンプル使用。"},
+  "The Game": {type:"アーティスト", desc:"ウエストコースト（コンプトン）出身のラッパー（本名：Jayceon Terrell Taylor）。Crack Musicでフィーチャリング参加。"},
+  "Brandy": {type:"アーティスト", desc:"R&B歌手（本名：Brandy Rayana Norwood）。「The Boy Is Mine」(1998)等で90年代を席巻。Bring Me Downでフィーチャリング参加。"},
+  "Malik Yusef": {type:"人物", desc:"シカゴ出身の詩人・アクティビスト。Kanyeの友人で多くのアルバムにアウトロとして参加。"},
+  "Pac": {type:"アーティスト", desc:"Tupac Shakur（2Pac）のこと。1996年9月13日、ラスベガスでの銃撃事件で25歳で死去。"},
+  "Mike Tyson": {type:"人物", desc:"元ヘビー級ボクシング世界チャンピオン。ボクシングにおける「コーナーマン（支えてくれる人）」の象徴として引用。"},
+  "R. Kel'": {type:"アーティスト", desc:"R・ケリー。シカゴ出身R&Bシンガー。「Trapped in the Closet」(2005)シリーズで知られる。後に30年の実刑判決。"},
+  "Magic Johnson": {type:"人物", desc:"NBA伝説的選手。1991年にHIV陽性を公表後も資金力から最高の医療を受け続けた。医療格差を語る文脈で引用。"},
+  "Ronald Reagan": {type:"人物", desc:"第40代米大統領（1981–89）。FBIのCOINTELPROプログラムを通じてブラックパンサー党を弾圧。"},
+  "Hova": {type:"アーティスト", desc:"Jay-Z（本名：Shawn Corey Carter）のニックネーム。「ジェホバ（神）」から。NYブルックリン出身のラッパー・実業家。"},
+  "Etta James": {type:"アーティスト", desc:"伝説的R&Bシンガー（本名：Jamesetta Hawkins）。「At Last」等で知られる。Addictionでサンプル使用。"},
+  "Amerie": {type:"アーティスト", desc:"R&Bシンガー。「1 Thing」（2005年）が大ヒット。Rosesで引用。"},
+  "Bill Withers": {type:"アーティスト", desc:"ソウル・R&B歌手（1938–2020）。「Lean on Me」「Ain't No Sunshine」等で知られる。Rosesで「Rosie」(1973)がサンプル使用。"},
+  "Rose Banks": {type:"アーティスト", desc:"1970年代のR&Bシンガー。「My Life Is Loving You」がBring Me Downにサンプル使用。"},
+  "dome": {type:"スラング", desc:"頭・精神を指すスラング。「My dome is where fate is」＝「俺の頭の中に運命がある」"},
+  "hypes": {type:"スラング", desc:"ヘロイン中毒者を指すスラング。"},
+  "hustle": {type:"スラング", desc:"お金を稼ぐために働くこと（合法・非合法問わず）。"},
+  "frontin'": {type:"スラング", desc:"本当の自分と違うふりをすること。"},
+  "bail": {type:"スラング・法律", desc:"①保釈金 ②その場から逃げ出すこと。"},
+  "fiends": {type:"スラング", desc:"ドラッグ中毒者・依存者のスラング。"},
+  "shorty": {type:"スラング", desc:"若い男性・少年を指すスラング。"},
+  "COINTELPRO": {type:"歴史", desc:"FBI秘密工作プログラム（Counter Intelligence Program）。1956–71年運用。ブラックパンサー党など急進派組織を弾圧した。"},
+  "Talib Kweli": {type:"アーティスト", desc:"ブルックリン出身のコンシャス・ラッパー。Get Em Highに参加。"},
+  "Jay-Z": {type:"アーティスト", desc:"NYブルックリン出身のラッパー・実業家（本名：Shawn Carter）。Roc-A-Fellaレーベルの共同設立者。KanyeのボスでありながらThe College Dropoutで共演。"},
+  "Ludacris": {type:"アーティスト", desc:"アトランタ出身のラッパー（本名：Christopher Bridges）。Breathe In Breathe Outに参加。"},
+  "Twista": {type:"アーティスト", desc:"シカゴ出身のラッパー。超高速ラップで知られる。Slow Jamzに参加。"},
+  "Mos Def": {type:"アーティスト", desc:"ブルックリン出身のラッパー・俳優（本名：Dante Terrell Smith）。Two Wordsに参加。"},
+};
+
+// ── Late Registration songs ──
+const LR_SONGS = [
+  {
+    id:"lr-my-way-home", num:"07", title:"My Way Home", feat:"feat. Common",
+    producer:"Kanye West",
+    sample:'Gil Scott-Heron「Home Is Where the Hatred Is」(1971)',
+    sampleSources:[
+      {artist:"Gil Scott-Heron",title:"Home Is Where the Hatred Is",year:1971,album:"Pieces of a Man",url:"https://www.whosampled.com/sample/314/Kanye-West-Common-My-Way-Home-Gil-Scott-Heron-Home-Is-Where-the-Hatred-Is/"}
+    ],
+    whosampledUrl:"https://www.whosampled.com/Kanye-West/My-Way-Home/",
+    albumArt:"07 - My Way Home/late-registration-artwork.jpg",
+    desc:"この曲はKanyeが同時進行でプロデュースしていたCommonのアルバム『Be』(2005)のために録音されたが、収録を外れLate Registrationのインタールードとして使用された。Kanyeはヴォーカルを一切取らず、Commonのヴァース1本とGil Scott-Heronのサンプルだけで構成された珍しいトラック。",
+    sections:[
+      {label:"[Intro]",note:null,lines:[
+        {en:"Yeah\nYeah",ja:"",ann:null},
+        {en:"I'm on my way home",ja:"家に向かっている。",ann:null}
+      ]},
+      {label:"[Verse: Common]",note:"Commonのヴァース。シカゴ出身の同郷の先輩MCとして、故郷の南サイドを詩的かつ批評的に描く。",lines:[
+        {en:"They say home is where the hate is",ja:"故郷は憎しみのある場所だと言う。",ann:"「Home is where the heart is（家は心の在り処）」ということわざをひっくり返したGil Scott-Heron原曲のタイトルをそのまま引用。"},
+        {en:"My dome is where fate is",ja:"俺の頭の中に運命がある。",ann:"domeは頭・精神のスラング。家ではなく自分の内側に運命の鍵があるという自律性の表明。"},
+        {en:"I stroll where souls get lost like Vegas",ja:"魂がラスベガスのように迷子になる場所をぶらつく。",ann:"シカゴのサウスサイドをラスベガスと同列に並べることで、そこが魂を失いやすい危険な場所であることを示す。"},
+        {en:"Pray to God that my arms reach the masses",ja:"神に祈る、俺の腕が大衆に届くよう。",ann:"armsは「腕」と「武器」の両方の意味があり、音楽を社会変革の武器として捉えているニュアンスもある。"},
+        {en:"The young smoke grasping graspless jungles",ja:"若者たちはタバコを吸いながら、掴めないジャングルを掴もうとしている。",ann:"graspless junglesは都市の貧困地区の比喩。どこにも掴まる場所がない、足場のない環境。"},
+        {en:"Rubberband together in cashless bundles",ja:"現金なしの束をゴムバンドでまとめて。",ann:"ゴムバンドは本来お金の束をまとめるために使うもの。貧困の中でも連帯している若者たちの姿。"},
+        {en:"We wear struggling chains",ja:"俺たちは苦労の鎖を身につけている。",ann:"chainはヒップホップカルチャーのジュエリー（ゴールドチェーン）と、奴隷制度の鎖の両方を掛けている。"},
+        {en:"Making sense of it we hustle for change",ja:"それに意味を見出して、俺たちはチェンジのためにハッスルする。",ann:"changeはコイン（小銭）と社会変革の二重の意味。"},
+        {en:"Revolution ain't a game\nIt's another name\nFor life fighting",ja:"革命はゲームじゃない。\nそれは別の名前だ、\n命をかけて戦うことの。",ann:"革命とは日々の生存競争そのものだという視点。"},
+        {en:"Someone to stay in they corner like Mike Tyson",ja:"マイク・タイソンのように自分のコーナーに立ち続けられる誰かが必要だ。",ann:"ボクシングでは試合の合間にコーナーで選手を支えるセコンドがいる。"},
+        {en:"Hypes fighting for hits to heighten they hell",ja:"ヤク中たちが自分の地獄を高めるためにヒットを求めて戦っている。",ann:"hypesはヘロイン中毒者のスラング。hitはドラッグの一回分。"},
+        {en:"Don't he know he only get as high as he fell",ja:"落ちた分しか高くなれないことを、あいつは知らないのか。",ann:"ドラッグで得られる「高さ」は、自分が落ちた深さ以上にはならないという中毒の構造。"},
+        {en:"Show money becomes bail",ja:"ショーのギャラが保釈金になる。",ann:"音楽で成功してもストリートの問題が追いかけてくる現実。"},
+        {en:"Relationships become jail\nChildren are unheld",ja:"関係性が牢獄になる。\n子供たちは抱きしめられない。",ann:null},
+        {en:"I wish love was for sale",ja:"愛が売り物だったら良かったのに。",ann:null},
+        {en:"Behold the pale",ja:"青白い馬を見よ。",ann:"聖書「ヨハネの黙示録」第6章に登場する死を象徴する「青白い馬（Pale Horse）」への言及。"},
+        {en:"Horse got me trapped like r. Kel', I bail and it—",ja:"その馬に、R・ケリーみたいに罠にはまって、俺は逃げ出して、それで——",ann:"「Trapped in the Closet」(2005)はR. Kellyの楽曲シリーズへの言及。途中で切れる「it—」がサンプルのフックに強引に繋がれ緊張感を高める。"}
+      ]},
+      {label:"[Hook: Gil Scott-Heron sample]",note:"Gil Scott-Heron（1949–2011）の1971年作「Home Is Where The Hatred Is」のサンプル。「ヒップホップの祖父」とも呼ばれる。",lines:[
+        {en:"Might not be such a bad idea if I never, never went home again",ja:"二度と家に帰らないというのも、そんなに悪いアイデアじゃないかもしれない。",ann:null},
+        {en:"I'm on my way home\nI left three days ago",ja:"家に向かっている。\n3日前に出発した。",ann:null},
+        {en:"But no one seems to know I'm gone",ja:"でも誰も俺がいなくなったことに気づいていないようだ。",ann:null},
+        {en:"Home is where the hatred is\nHome is filled with pain and it\nMight not be such a bad idea if I never\nNever went home again",ja:"家は憎しみのある場所だ。\n家は痛みに満ちていて、それで——\n二度と家に帰らないというのも\nそんなに悪いアイデアじゃないかもしれない。",ann:null}
+      ]}
+    ]
+  },
+  {
+    id:"lr-crack-music", num:"08", title:"Crack Music", feat:"feat. The Game",
+    producer:"Kanye West & Jon Brion",
+    sample:'The New York Community Choir「Since You Came in My Life」/ Cold Grits「It\'s Your Thing」',
+    sampleSources:[
+      {artist:"The New York Community Choir",title:"Since You Came in My Life",year:null,album:null,url:"https://www.whosampled.com/sample/14958/Kanye-West-The-Game-Crack-Music-The-New-York-Community-Choir-Since-You-Came-in-My-Life/"},
+      {artist:"Cold Grits",title:"It's Your Thing",year:null,album:null,url:"https://www.whosampled.com/sample/4226/Kanye-West-The-Game-Crack-Music-Cold-Grits-It's-Your-Thing/"}
+    ],
+    whosampledUrl:"https://www.whosampled.com/Kanye-West/Crack-Music/",
+    albumArt:"08 - Crack Music/late-registration-artwork.jpg",
+    desc:"クラックコカインの蔓延とヒップホップ音楽を等置させることで、黒人コミュニティが置かれてきた構造的暴力を告発する曲。ブラックパンサー党の弾圧、レーガン政権下のクラック禍、そして音楽が唯一の「薬」であるという逆説を描く。",
+    sections:[
+      {label:"[Chorus]",note:"コーラスの「ラ・ラ・ラ」はニューヨーク・コミュニティ合唱団のサンプルから。ゴスペル的な高揚感とクラック禍という重いテーマを同居させる。",lines:[
+        {en:"That's that crack music, nigga\nThat real black music, nigga",ja:"これがクラック・ミュージックだよ\nこれが本物のブラック・ミュージックだよ",ann:null},
+        {en:"La-la-la-la-la-la-la-la\nLa-la-la, la-la-la",ja:"ラ・ラ・ラ・ラ・ラ・ラ・ラ・ラ\nラ・ラ・ラ、ラ・ラ・ラ",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"How we stop the Black Panthers?\nRonald Reagan cooked up an answer",ja:"ブラックパンサーをどうやって止めたんだ？\nロナルド・レーガンが答えを作り上げた",ann:"ブラックパンサー党（1966〜1982）は黒人解放運動の急進派組織。レーガン政権はFBIのCOINTELPROプログラムを通じて組織を解体した。"},
+        {en:"You hear that? What Gil Scott was hearin'\nWhen our heroes or heroines got hooked on heroin",ja:"聞こえるか？ギル・スコットが聴いていたものが\n俺たちのヒーローやヒロインたちがヘロインに溺れたとき",ann:"heroes（英雄）とheroines（女性英雄）とheroin（ヘロイン）の音の類似。"},
+        {en:"Crack raised the murder rate in D.C. and Maryland",ja:"クラックはD.C.とメリーランドの殺人率を引き上げた",ann:"1980年代のクラック禍でワシントンD.C.は全米最悪の殺人都市となった。"},
+        {en:"We invested in that, it's like we got Merrill lynched\nAnd we been hangin' from the same tree ever since",ja:"俺たちはそれに投資した、まるでメリルリンチされたみたいに\nそしてそれ以来、俺たちは同じ木に吊るされてきた",ann:"「Merrill Lynch」（証券会社）と「lynch」（リンチ）の掛け言葉。"},
+        {en:"Sometimes, I feel the music is the only medicine\nSo we cook it, cut it, measure it, bag it, sell it",ja:"時々、音楽だけが唯一の薬だと感じる\nだから俺たちはそれを炊いて、切って、量って、袋に入れて、売る",ann:"ドラッグを精製・販売する工程の動詞をそのまま音楽制作に当てはめる。「音楽＝クラック」のメタファー。"},
+        {en:"The fiends cop it, nowadays, they can't tell if\nThat's that good shit, we ain't sure, man\nPut the CD on your tongue—yeah, that's pure, man",ja:"中毒者たちがそれを買う、最近じゃ、それが\nいいものかどうか分からなくなってきた\nCDを舌の上に乗せてみろ——ああ、それが純粋なやつだ",ann:"ドラッグの純度を舌で確認する行為をCDに置き換える。「純粋な音楽＝純粋なドラッグ」という等号。"}
+      ]},
+      {label:"[Verse 2: Kanye West]",note:null,lines:[
+        {en:"From the place where the fathers gone\nThe mothers is hardly home\nAnd the maricons lock us up in the Audy Home",ja:"父親たちがいなくなった場所から\n母親たちもほとんど家にいない\nそしてマリコンが俺たちをオーディ・ホームに閉じ込める",ann:"「maricons」はスペイン語の蔑称（臆病者・警察を指すスラング）。「Audy Home」はシカゴにある少年拘置施設の通称。"},
+        {en:"How the Mexicans say? \"We just tryin' to party, holmes\"",ja:"メキシコ人が言うように「俺たちはただパーティーしようとしてるだけだよ、ホームズ」",ann:"homesはメキシコ系スラングで「仲間」の意。"},
+        {en:"Who gave Saddam anthrax?\nGeorge Bush got the answers",ja:"誰がサダムに炭疽菌を与えたんだ？\nジョージ・ブッシュが答えを知っている",ann:"1980年代のイラン・イラク戦争時、アメリカはサダム・フセインに生物兵器前駆体を提供した歴史への言及。"},
+        {en:"Back in the hood, it's a different type of chemical\nArm & Hammer baking soda, raised they whole quota",ja:"フッドに戻れば、また別の種類の化学物質がある\nアーム＆ハンマーの重曹が、奴らのノルマ全体を引き上げた",ann:"コカインと重曹を加熱するとクラックができる。一般家庭にある素材でドラッグが作られる現実。"},
+        {en:"Dreams of being Hova\nWent from bein' a broke man to bein' a dopeman\nTo bein' the president—look, there's hope, man",ja:"ホバ（Jay-Z）になる夢が\n無一文から売人になることへと変わり\n大統領になることへと変わったから——見ろよ、希望がある",ann:"brokeman（無一文）→dopeman（売人）→president（大統領）という上昇の3段階。"}
+      ]},
+      {label:"[Break]",note:null,lines:[
+        {en:"God, how could you let this happen?",ja:"神よ、どうしてこんなことを許したんだ？",ann:null}
+      ]},
+      {label:"[Outro: Malik Yusef]",note:"Malik Yusefによる詩的な語り。音楽産業への批評と解放の宣言。",lines:[
+        {en:"Our Father, give us this day, our daily bread\nBefore the feds give us these days and take our daily bread",ja:"天の父よ、今日の糧を与えてください\n連邦（警察）が俺たちにこの日々を与えて、日々の糧を奪う前に",ann:"主の祈り（マタイ6章）のパロディ。"},
+        {en:"We took that shit, measured it, and then cooked that shit\nAnd what we gave back was crack music",ja:"俺たちはあれを取って、計って、炊いた\nそして俺たちが返したのはクラック・ミュージックだった",ann:null},
+        {en:"So our mamas ain't got to be they cooks and nannies\nAnd we gon' repo everything they ever took from granny",ja:"俺たちのママが奴らのコックやナニー（乳母）にならなくていいように\n奴らがおばあちゃんから奪ったものを全部取り戻す",ann:"黒人女性が白人家庭でコックや乳母として働かされてきた歴史への言及。"},
+        {en:"Now, the former slaves trade hooks for Grammys",ja:"かつての奴隷たちが今、フック（歌のサビ）でグラミーを獲得している",ann:"hooks（引っかかる歌のサビ）とGrammys（グラミー賞）の掛け合わせ。"},
+        {en:"This dark diction has become America's addiction\nThose who ain't even black use it\nWe gon' keep baggin' up this here crack music",ja:"このダークな言葉遣いがアメリカの中毒になった\n黒人でもない人たちまでそれを使っている\n俺たちはこのクラック・ミュージックを袋詰めし続ける",ann:"ヒップホップ文化が白人・非黒人にも広がり消費されていることへの皮肉と誇りが同居するアウトロ。"}
+      ]}
+    ]
+  },
+  {
+    id:"lr-roses", num:"09", title:"Roses", feat:null,
+    producer:"Kanye West",
+    sample:'Bill Withers「Rosie」(1973)',
+    sampleSources:[
+      {artist:"Bill Withers",title:"Rosie",year:1973,album:"+'Justments",url:"https://www.whosampled.com/sample/353/Kanye-West-Roses-Bill-Withers-Rosie/"}
+    ],
+    whosampledUrl:"https://www.whosampled.com/Kanye-West/Roses/",
+    albumArt:"09 - Roses/late-registration-artwork.jpg",
+    desc:"祖母の入院を背景に、医療格差と家族愛を描いた曲。タイトル「Roses」は祖母の名「Rosie」とお見舞いの花の両方を指す。",
+    sections:[
+      {label:"[Verse 1]",note:null,lines:[
+        {en:"I know it's past visitin' hours\nBut can I please give her these flowers?",ja:"面会時間が過ぎてるのはわかってる\nでも彼女にこの花を届けさせてくれないか？",ann:null},
+        {en:"The doctor don't wanna take procedures\nHe claim her heart can't take the anesthesia\nIt'll send her body into a seizure",ja:"医者は処置を受け入れようとしない\n麻酔に心臓が耐えられないと言う\nそれが体を発作に追い込むと",ann:null},
+        {en:"You know the best medicine go to people that's paid\nIf Magic Johnson got a cure for AIDS\nAnd all the broke motherfuckers passed away\nYou tellin' me if my grandma's in the NBA\nRight now, she'd be okay?",ja:"最高の医療は金を持ってる人間のところへ行く\nもしマジック・ジョンソンがエイズの治療を受けられたなら\n金のない奴らは全員逝ってしまったのに\n俺のおばあちゃんがNBAにいたら\n今頃、大丈夫だったっていうのか？",ann:"マジック・ジョンソン（NBA選手）はHIV陽性でありながら金銭的余裕から最高の医療を受け続けた。医療格差への鋭い皮肉。"},
+        {en:"But since she was just a secretary\nWorking for the church for 35 years\nThings 'sposed to stop right here?",ja:"でも彼女はただの秘書だったから\n35年間、教会で働き続けた\n物事はここで終わるはずなのか？",ann:"教会という誠実な職場で35年働いても、金がないと最高の医療が受けられないという格差への怒りと悲しみ。"},
+        {en:"I asked the nurse: Did you do the research?\nShe asked me: Can you sign some t-shirts?\nBitch, is you smokin' reefer?\nYou don't see that we hurt?",ja:"看護師に聞いた、ちゃんと調べましたか？\n彼女は俺に聞いた、Tシャツにサインしてもらえますか？\nおい、マジで言ってんのか？\n俺たちが傷ついてるのが見えないのか？",ann:"有名人であることが有事の場面でも前面に出てきてしまうというKanyeの苦悩と怒り。"}
+      ]},
+      {label:"[Chorus]",note:null,lines:[
+        {en:"I smile\nWhen roses come to see me",ja:"俺は微笑む\n薔薇が会いに来てくれるとき",ann:null},
+        {en:"And I can't wait for a sunny day\nCan't wait for the clouds to break",ja:"晴れた日が早く来てほしい\n雲が晴れるのが待ち遠しい",ann:null}
+      ]},
+      {label:"[Verse 2]",note:null,lines:[
+        {en:"Cousin Kim took off of work\nPlus, my Aunt Shirley, Aunt Beverly, Aunt Klaye and Aunt Jean\nSo many aunties, we could have an Auntie Team",ja:"いとこのキムが仕事を休んで来た\nそれにシャーリーおばさん、ベバリーおばさん、クレイおばさん、ジーンおばさんも\nおばさんだらけで、おばさんチームができそうだ",ann:null},
+        {en:"Feel like Amerie, it's this 1 Thing\nWhen they said that she made it, you see they eyes gleam",ja:"アメリエみたいな感覚、この「ワン・シング」みたいな\n彼女が乗り越えたと聞いた瞬間、みんなの目が輝いた",ann:"アメリエの「1 Thing」（2005年）は「これだけは譲れない一つのこと」という意味。奇跡的な快復の瞬間を表現。"},
+        {en:"So instead of sending flowers, we the roses",ja:"だから花を送る代わりに、俺たちが薔薇になった",ann:"「お見舞いに花を送る」ではなく「家族が集まること自体が薔薇（愛）」という逆説。タイトルの回収。"}
+      ]}
+    ]
+  },
+  {
+    id:"lr-bring-me-down", num:"10", title:"Bring Me Down", feat:"feat. Brandy",
+    producer:"Kanye West & Jon Brion",
+    sample:'Rose Banks「My Life Is Loving You」',
+    sampleSources:[
+      {artist:"Rose Banks",title:"My Life Is Loving You",year:null,album:null,url:"https://www.whosampled.com/sample/16025/Kanye-West-Brandy-Bring-Me-Down-Rose-Banks-My-Life-Is-Loving-You/"}
+    ],
+    whosampledUrl:"https://www.whosampled.com/Kanye-West/Bring-Me-Down/",
+    albumArt:"10 - Bring Me Down/late-registration-artwork.jpg",
+    desc:"成功を妬む者たちへの返答。信仰、自信、そして批判を超えて前進する決意を描く。Brandy（本名：Brandy Rayana Norwood）はR&B/ポップシンガー。「The Boy Is Mine」(1998)でモニカとデュエットして大ヒット。",
+    sections:[
+      {label:"[Intro/Hook: Brandy]",note:null,lines:[
+        {en:"I always knew that one day\nThey'd try to bring me down\nWow, one day, they tried to bring me down\nAlways knew that one day, they'd try to bring me down\nDown, way down",ja:"いつかそうなると知ってた\n奴らが俺を引きずり落とそうとすることを\nそう、ある日、奴らは俺を引きずり落とそうとした\nいつかそうなると知ってた\nずっと下に、ずっと下に",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"We gon' to mass today, we have to pray\nBesides what the pastor say, I have to say\nSince Pac passed away\nMost you rappers don't even deserve a track from me",ja:"今日はミサに行く、祈らないといけない\n牧師の言葉に加えて、俺も言わないといけない\nパックが逝って以来\nお前らラッパーのほとんどは、俺のトラックを受け取る資格すらない",ann:"Tupac Shakur（2Pac）のこと。1996年9月13日、ラスベガスでの銃撃事件で死去。享年25歳。"},
+        {en:"There'll always be haters, that's the way it is\nHater niggaz marry hater bitches and have hater kids",ja:"アンチは常にいる、それが現実だ\nアンチは女アンチと結婚して、アンチの子を産む",ann:"「hater」＝成功を妬む人。「アンチ」が連鎖し社会に根付いているというユーモラスかつ鋭い観察。"},
+        {en:"But they gon' have to take my life 'fore they take my drive\n'Cause when I was barely livin', that's what kept me alive",ja:"でも奴らが俺の情熱を奪うには、命を奪うしかない\nほとんど生きてなかった頃、それが俺を生かし続けたから",ann:null},
+        {en:"And get some lee way on the he say she say",ja:"噂話なんかに少し余裕を持って",ann:"「he say she say」＝「あいつがこう言った、あの子がこう言った」という噂・陰口のこと。"},
+        {en:"Made a mill myself, and I'm still myself\nAnd I'ma look in the mirror if I need some help",ja:"自分で百万稼いで、それでも俺は俺のまま\n助けが必要なら鏡を見る",ann:null},
+        {en:"Everybody feel a way about K but at least y'all feel somethin'",ja:"みんながKについて何かを感じてる、少なくともみんなは何かを感じてる",ann:"「K」はKanye Westの頭文字。誰もが賛否どちらかの感情を持っているという自信の表明。"}
+      ]},
+      {label:"[Bridge/Outro: Brandy]",note:null,lines:[
+        {en:"Why you come here, I bet it only was to forget to get ya\nWhat kind of dream we found",ja:"なぜここに来たの、きっと忘れさせようとしてただけ\n俺たちはどんな夢を見つけたんだ",ann:null},
+        {en:"They tried to bring me down",ja:"奴らは俺を落とそうとした",ann:null}
+      ]}
+    ]
+  },
+  {
+    id:"lr-addiction", num:"11", title:"Addiction", feat:null,
+    producer:"Kanye West & Jon Brion",
+    sample:'Etta James「My Funny Valentine」(1995)',
+    sampleSources:[
+      {artist:"Etta James",title:"My Funny Valentine",year:1995,album:"Time After Time",url:"https://www.whosampled.com/sample/313/Kanye-West-Addiction-Etta-James-My-Funny-Valentine/"}
+    ],
+    whosampledUrl:"https://www.whosampled.com/Kanye-West/Addiction/",
+    albumArt:"11 - Addiction/late-registration-artwork.jpg",
+    desc:"「中毒」を多義的に使用。薬物、セックス、欲望への依存だけでなく、批判されながらも繰り返してしまう行動パターン全般を描く。甘く退廃的なEtta Jamesのサンプルが雰囲気を生み出している。",
+    sections:[
+      {label:"[Intro]",note:null,lines:[
+        {en:"(You make me smile with my heart, oh)",ja:"（あなたは心から俺を微笑ませる、ああ）",ann:null}
+      ]},
+      {label:"[Hook]",note:null,lines:[
+        {en:"Why everything that's supposed to bad make me feel so good?\nEverything they told me not to is exactly what I would",ja:"なぜ悪いとされることは全部、こんなに気持ちいいんだ？\n俺にするなと言われたことが、まさに俺がしたいことだ",ann:null},
+        {en:"Man, I tried to stop, man, I tried the best I could\nBut (you make me smile)",ja:"やめようとした、できる限り頑張った\nでも（あなたは俺を微笑ませる）",ann:null}
+      ]},
+      {label:"[Verse 1]",note:null,lines:[
+        {en:"What's your addiction? Is it money? Is it girls? Is it weed?\nI've been afflicted by not one, not two, but all three",ja:"お前の中毒は何だ？金か？女か？大麻か？\n俺はひとつじゃない、ふたつじゃない、全部三つに蝕まれてきた",ann:null},
+        {en:"She's got a lover, so the lies, and the lust, is a rush",ja:"彼女には恋人がいる、だから嘘と欲望が刺激になる",ann:"forbidden love（禁断の恋）がより刺激的に感じられる中毒の構造。"},
+        {en:"Roll up the doge, and he ain't cut the quarter, then I'm coming over\n'Cause it's never over",ja:"大麻を巻いて、四分の一も切れてないなら、俺が行く\nだってこれは終わらないから",ann:"「Roll up the doge」＝マリファナをブラント（葉巻型）に巻くこと。「cut the quarter」＝1/4オンス（約7g）を小分けにすること。"}
+      ]},
+      {label:"[Verse 2]",note:null,lines:[
+        {en:"I see the emotion in your eyes, that you, try not to show\nWe get the closest when you high, or you drunk, or you blow",ja:"お前の目に感情が見える、見せまいとしてるやつが\nハイのとき、酔ってるとき、吹かしてるとき、俺たちは一番近くなる",ann:"「blow」はここでは大麻を吸うこと。"},
+        {en:"There's no turning back now, I mean I don't mean to impose\nNot now but right now, I need you to undress, and then pose",ja:"もう後戻りはできない、押し付けるつもりはないけど\n今すぐじゃなくて、今すぐ、服を脱いでポーズをとってくれ",ann:null},
+        {en:"Roll up the doge, and he ain't cut the quarter, and I keep coming over\n'Cause it's never over",ja:"大麻を巻いて、四分の一も切れてないし、俺はずっと来続ける\nだってこれは終わらないから",ann:null}
+      ]},
+      {label:"[Outro: Kanye West, spoken]",note:"アウトロ全体がKanyeのどもりながらの独白。女友達に告白しようとして言葉を濁し続けるコミカルな場面で、曲のテーマ「中毒＝抑えられない衝動」をユーモアで締める。",lines:[
+        {en:"I just wanted to ask you\nJust wanted to, um, let, how would I put this, um",ja:"ちょっと聞きたかったんだ\nどう言えばいいかな",ann:null},
+        {en:"You know I was just kidding\nUnless you gon' do it",ja:"冗談だったよ、わかってるよな\nやってくれるなら別だけど",ann:"「Unless you gon' do it」という最後の一言が中毒的な衝動の本質を突く。"}
+      ]}
+    ]
+  },
+  {
+    id:"lr-skit-2", num:"12", title:"Skit #2", feat:null,
+    producer:"Kanye West", sample:null, sampleSources:[], whosampledUrl:null,
+    albumArt:"12 - Skit #2/late-registration-artwork.jpg",
+    desc:"アルバムのコメディ・スキット。「Broke Phi Broke」というフラタニティ（大学の男性社交クラブ）のパロディ。貧乏な人々が「俺たちには何もない」と誇り高く宣言するユーモア。Kanyeの出世前の苦労時代を自虐的に笑い飛ばす。",
+    sections:[
+      {label:"[Skit]",note:"アメリカの大学にはギリシャ文字を使った友愛会（フラタニティ）が存在する。「Broke Phi Broke」はその「貧乏人版」というコメディ設定。",lines:[
+        {en:"We broke, broke broke phi broke\n(We ain't got it)",ja:"俺たちは破産、破産 破産・ファイ・破産\n（俺たちには何もない）",ann:"「Phi（ファイ）」はギリシャ文字Φ。アメリカの大学フラタニティ名に使われる（例：Delta Phi、Phi Beta Kappa）。「Broke Phi Broke」＝「貧乏人の友愛会」というパロディ。"},
+        {en:"Don't spend no money\nAin't got no clothes\nAin't got no cars\nAin't got no hos",ja:"金なんか使わない\n服もない\n車もない\n女もいない",ann:"「cars, clothes, hoes」はヒップホップ文化で富の象徴として並べられる定番フレーズ。それを全部「持っていない」とするパロディ。"},
+        {en:"Broke, broke, broke, broke, broke!\nBuncha niggas",ja:"破産、破産、破産、破産、破産！\nみんなして",ann:null}
+      ]}
+    ]
+  }
+
+  ,
+  {
+    id:"lr-wake-up-mr-west", num:"01", title:"Wake Up Mr. West", feat:null,
+    producer:"Kanye West",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    albumArt:"01 - Wake Up Mr. West/late-registration-artwork.jpg",
+    year:"2005年", label:"Roc-A-Fella / Def Jam",
+    desc:"Late Registrationの幕開けを飾るスキット。College Dropoutの複数のスキットにも登場したDeRay Davisが、今度は居眠りする生徒を叱責する教師役として現れる。「Wake up, Mr. West!」という締めのセリフがアルバムのオープニングとなる。",
+    sections:[
+      {label:"[Skit: DeRay Davis]",note:null,lines:[
+        {en:"Oh, ho-ho-ho!\nI knew I was gon' see, I knew I was gon' see you again!\nKnew I was gon' see you again!",ja:"おお、ほっほっほ！\nまたお前を見ることになると思ってた！そう思ってた！\nまたお前を見ることになると！",ann:null},
+        {en:"Where your goddamn book bag at?\nAlways carryin' that lil' book bag, nobody wants to see that!\nGoddamn 4th grader, sit your ass down!",ja:"どこに本のカバンを置いた？\nいつもあの小さいカバンを持ち歩いて、誰もそんなもの見たくない！\nこの4年生め、座ってろ！",ann:null},
+        {en:"Kanye, nigga—is you snorin' in my class?\nWake up, Mr. West!\nWake up, Mr. West!",ja:"カニエ、このニガー——俺のクラスでいびきをかいてるのか？\n起きろ、ウェスト先生！\n起きろ、ウェスト先生！",ann:null}
+      ]}
+    ]
+  },
+  {
+    id:"lr-heard-em-say", num:"02", title:"Heard 'Em Say", feat:"feat. Adam Levine",
+    producer:"Kanye West & Jon Brion",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    albumArt:"02 - Heard 'Em Say/late-registration-artwork.jpg",
+    year:"2005年", label:"Roc-A-Fella / Def Jam",
+    desc:"Late Registrationの実質的な1曲目。Jon BrionとのオーケストラサウンドにAdam Levine（Maroon 5）のフックが切なさを添え、シカゴの最低賃金労働、貧困の連鎖を描く。Adam Levine（アダム・レヴィン）はロサンゼルス出身でMaroon 5のボーカル。「Songs About Jane」（2002年）のヒットで注目された。Jon Brion（ジョン・ブライアン）はFiona Apple作品などで知られるマルチプレイヤー・プロデューサー。",
+    sections:[
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"Can I at least get a raise on the minimum wage?\nAnd I know the government administer AIDS\nSo I guess we just pray like the minister say",ja:"せめて最低賃金を上げてもらえないか？\n政府がAIDSを管理していることも知ってる\nだからお役者が言うように祈るしかない",ann:"「government administer AIDS」は1980〜90年代の黒人コミュニティに広まった陰謀論をKanyeが「聞こえてくること（heard 'em say）」として引用している。"},
+        {en:"Allāhu Akbar and throw in some hot cars\nThe things we seen on the screen is not ours\nWhere I'm from the dope boys is the rock stars\nBut they can't cop cars without seeing cop cars",ja:"アッラーフ・アクバル、そして高級車を手に入れる\nスクリーンで見るものは俺たちのものじゃない\n俺の地元ではドープボーイがロックスターだ\nでも車を買えば、警察の車が来る",ann:"「Allāhu Akbar」はアラビア語で「神は偉大なり」。イスラム教の祈りの言葉。"}
+      ]},
+      {label:"[Chorus: Kanye West & Adam Levine]",note:null,lines:[
+        {en:"And I heard 'em say\nNothing's ever promised tomorrow, today\nBut we'll find a way\nAnd nothing lasts forever, but be honest, babe\nIt hurts, but it may be the only way",ja:"俺は聞いた\n明日も今日も、何も約束されていない\nでも俺たちは道を見つける\n何も永遠には続かない、でも正直に言ってくれ\n傷つく、でもそれが唯一の道かもしれない",ann:null}
+      ]},
+      {label:"[Verse 2: Kanye West]",note:null,lines:[
+        {en:"My Aunt Pam can't put them cigarettes down\nSo now my little cousin smokin' them cigarettes now\nHis job try to claim that he too niggarish now\nIs it 'cause his skin blacker than licorice now?\nI can't figure it out, I'm sick of it now",ja:"パム叔母さんは煙草をやめられない\n今では小さい従兄弟も煙草を吸ってる\n職場は彼がニガリッシュすぎると言おうとしてる\n甘草よりも肌が黒いからか？\nわからない、もううんざりだ",ann:"「niggarish」は職場で人種的ステレオタイプとして使われる形容詞で、人種差別的な職場環境への批判として登場する。"}
+      ]},
+      {label:"[Post-Chorus: Adam Levine]",note:null,lines:[
+        {en:"With every worthless word, we get more far away\nAnd nothing's ever promised tomorrow, today\nIt hurts but it may be the only way",ja:"無駄な言葉のたびに、俺たちはより遠ざかっていく\n明日も今日も、何も約束されていない\n傷つく、でもそれが唯一の道かもしれない",ann:null}
+      ]}
+    ]
+  },
+  {
+    id:"lr-touch-the-sky", num:"03", title:"Touch the Sky", feat:"feat. Lupe Fiasco",
+    producer:"Kanye West & Jon Brion",
+    sample:"Curtis Mayfield「Move On Up」(1970)",
+    sampleSources:[
+      {artist:"Curtis Mayfield",title:"Move On Up",year:1970,album:"Curtis",url:"https://www.whosampled.com/sample/322/Kanye-West-Lupe-Fiasco-Touch-the-Sky-Curtis-Mayfield-Move-On-Up/"}
+    ],
+    whosampledUrl:"https://www.whosampled.com/Kanye-West/Touch-the-Sky/",
+    albumArt:"03 - Touch The Sky/late-registration-artwork.jpg",
+    year:"2005年", label:"Roc-A-Fella / Def Jam",
+    desc:"Curtis Mayfield（カーティス・メイフィールド、1942〜1999年）はシカゴ出身のソウル・ファンクシンガー・ギタリストで公民権運動の音楽的支柱の一人。1990年に事故で全身麻痺となりながら歌い続けた。Lupe Fiasco（本名Wasalu Muhammad Jaco、1982〜）はシカゴ出身のラッパーで、この共演が全国デビューへの足がかりの一つとなり「Food & Liquor」（2006年）でブレイク。",
+    sections:[
+      {label:"[Chorus: Kanye West]",note:null,lines:[
+        {en:"I gotta testify, come up in the spot lookin' extra fly\n'Fore the day I die, I'ma touch the sky",ja:"証言しないといけない、スポットにめちゃくちゃかっこよく現れて\n死ぬ日の前に、俺は空に触れる",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"Me and my mama hopped in that U-Haul van\nAny pessimists, I ain't talk to them\nPlus I ain't have no phone in my apartament",ja:"俺とママでユーホールのバンに飛び乗って\n悲観論者とは話さなかった\nアパートに電話もなかった",ann:"U-Haulはアメリカの引越し用トラックレンタルサービス。シカゴからニュージャージーへの引越しを指す。"},
+        {en:"I went to Jacob an hour after I got my advance, I just wanted to shine\nJay's favorite line, \"Dog, in due time\"\nNow he look at me, like, \"Damn, dog, you where I am,\" a hip-hop legend",ja:"前払いをもらって1時間後にジェイコブに行った、輝きたかった\nジェイの好きな言葉、「ドッグ、時期が来れば」\n今では彼は俺を見て、「くそ、ドッグ、お前が俺のいる場所にいる」、ヒップホップの伝説",ann:"Jacob & Co.（ジェイコブ・アンド・コー）はニューヨークのジュエラーで、ヒップホップ界の成功者たちのジュエリーを手がける宝石商。"}
+      ]},
+      {label:"[Verse 2: Kanye West]",note:null,lines:[
+        {en:"Me and my girl split the buffet at KFC\nDog, I was havin' nervous breakdowns\nLike \"Man, these niggas that much better than me?\"",ja:"彼女とKFCのバッフェを二人でシェアした\nドッグ、神経衰弱になってた\n「こいつらってそんなに俺より上なのか？」と思いながら",ann:null},
+        {en:"I'm tryin' to right my wrongs\nBut it's funny, them same wrongs helped me write this song, now",ja:"過ちを正そうとしてる\nでも面白いことに、その同じ過ちが今この曲を書かせてくれた",ann:null}
+      ]},
+      {label:"[Verse 3: Lupe Fiasco]",note:null,lines:[
+        {en:"Lupe steal like Lupin the 3rd",ja:"ルーペはルパン三世のように盗む",ann:"「ルパン三世」は1967年創刊のモンキー・パンチ原作日本漫画・アニメ。怪盗キャラクターへのオマージュ。"},
+        {en:"I'm tryna stop lyin' like I'm Mumm-Ra\nBut I'm not lyin' when I'm layin' on the beat, en garde",ja:"マム・ラーのように嘘をつくのをやめようとしてる\nでもビートに乗ってる時は嘘じゃない、アン・ガルド（構え！）",ann:"Mumm-RaはアニメThunderCats（1985年）のヴィラン。「en garde」はフランス語でフェンシングの開始合図「構え！」。"}
+      ]}
+    ]
+  },
+  {
+    id:"lr-gold-digger", num:"04", title:"Gold Digger", feat:"feat. Jamie Foxx",
+    producer:"Kanye West",
+    sample:"Ray Charles「I Got a Woman」(1954)",
+    sampleSources:[
+      {artist:"Ray Charles",title:"I Got a Woman",year:1954,album:"Single",url:"https://www.whosampled.com/sample/307/Kanye-West-Jamie-Foxx-Gold-Digger-Ray-Charles-I-Got-a-Woman/"}
+    ],
+    whosampledUrl:"https://www.whosampled.com/Kanye-West/Gold-Digger/",
+    albumArt:"04 - Gold Digger/late-registration-artwork.jpg",
+    year:"2005年", label:"Roc-A-Fella / Def Jam",
+    desc:"Late Registrationのリードシングルにして最大のヒット曲。Billboard Hot 100で10週連続首位を記録。Ray Charles（本名Ray Charles Robinson、1930〜2004年）はジョージア州出身のR&B・ソウル・ジャズ歌手・ピアニストで「天才（The Genius）」と呼ばれた伝説的ミュージシャン。本曲リリースの前年（2004年）に死去。Jamie Foxxが主演した伝記映画「Ray」も2004年公開。",
+    sections:[
+      {label:"[Intro: Jamie Foxx & Kanye West]",note:"Jamie FoxxはRay Charlesを模した歌唱でイントロを飾る。",lines:[
+        {en:"She take my money when I'm in need\nYeah, she's a triflin' friend indeed\nOh, she's a gold digger\nWay over town that digs on me",ja:"必要な時にお金を取っていく\nそう、彼女は本当にろくでもない友達\nああ、彼女はゴールドディガー（金の亡者）\n街中で俺を掘り下げてくる",ann:null}
+      ]},
+      {label:"[Pre-Chorus: Kanye West]",note:null,lines:[
+        {en:"Now, I ain't sayin' she a gold digger\nBut she ain't messin' with no broke niggas",ja:"彼女がゴールドディガーだとは言わないが\n貧乏なニガーとは付き合わない",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"Cutie the bomb, met her at a beauty salon\nWith a baby Louis Vuitton under her underarm",ja:"かわいい子、美容院で会った\n脇の下にベビー・ルイ・ヴィトンを抱えて",ann:null},
+        {en:"My psychic told me she'll have a ass like Serena\nTrina, Jennifer Lopez, four kids\nAnd I gotta take all they bad asses to ShowBiz?",ja:"霊能者が言うには彼女はセレナのような尻を持つ\nトリーナ、ジェニファー・ロペス、子供が四人\nそのクソガキたちを全員ショービズに連れてくのか？",ann:"ShowBizはシカゴのファミリーエンターテインメントセンター（Chuck E. Cheeseに類似した施設）。"},
+        {en:"From what I heard, she got a baby by Busta\nMy best friend said she used to fuck with Usher\nI don't care what none of y'all say, I still love her",ja:"聞いた話じゃバスタの子供がいる\n親友が言うには昔アッシャーと付き合ってた\nみんなが何を言おうと、俺はまだ彼女が好きだ",ann:null}
+      ]},
+      {label:"[Verse 2: Kanye West]",note:null,lines:[
+        {en:"Eighteen years, eighteen years\nShe got one of your kids, got you for eighteen years",ja:"18年、18年\nお前の子供を産んで、18年間お前を縛った",ann:"アメリカの養育費（child support）は子供が18歳になるまで支払い義務がある。"},
+        {en:"Win the Super Bowl and drive off in a Hyundai\nShe went to the doctor, got lipo with your money\nShe walkin' 'round lookin' like Michael with your money",ja:"スーパーボウルで優勝してヒュンダイで去る\nお前の金で医者に行って脂肪吸引した\nお前の金でマイケル・ジャクソンみたいな顔で歩き回ってる",ann:null},
+        {en:"Holler, \"We want prenup, we want prenup, yeah\"\n'Cause when she leave yo' ass, she gon' leave with half\nAnd on the eighteenth birthday, he found out it wasn't his",ja:"叫べ、「婚前契約が欲しい、婚前契約が欲しい」\n彼女が去る時、半分持っていくから\n18歳の誕生日に、彼は自分の子じゃないとわかった",ann:null}
+      ]},
+      {label:"[Verse 3: Kanye West]",note:null,lines:[
+        {en:"He gon' make it to a Benz out of that Datsun\nHe got that ambition, baby, look at his eyes\nThis week, he moppin' floors, next week, it's the fries",ja:"そのダットサンからベンツに乗り替える\n野心がある、ベイビー、彼の目を見ろ\n今週は床を拭いて、来週はフライを揚げる",ann:"DatsunはNissan（日産）の旧ブランド名。庶民的な車の代名詞。"},
+        {en:"And when he get on, he'll leave yo' ass for a white girl",ja:"でも彼が成功したら、お前を白人女に乗り換えるかもしれない",ann:"成功した黒人男性が異人種と付き合うようになるという社会的現象をKanyeが直接言及した物議を醸した一節。"}
+      ]}
+    ]
+  },
+  {
+    id:"lr-skit-1", num:"05", title:"Skit #1", feat:null,
+    producer:"Kanye West",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    albumArt:"05 - Skit #1/late-registration-artwork.jpg",
+    year:"2005年", label:"Roc-A-Fella / Def Jam",
+    desc:"College Dropoutの「Workout Plan」スキットで初登場した「Broke Phi Broke」（金欠の友愛会）の続編。今回はフラタニティを正式に設立する場面。DeRay Davis出演。Gold Diggerの「女を金持ちの男に取られる」という流れを受けて挿入されている。",
+    sections:[
+      {label:"[Skit: DeRay Davis]",note:"「Broke Phi Broke」はアメリカの大学フラタニティ（ギリシャ文字を使った友愛会）の「貧乏人版」というコメディ設定。",lines:[
+        {en:"I brought you brothers here today to start our own fraternity\nBroke Phi Broke, we ain't got it\nNo, we have no money\nWe are sharin' jeans",ja:"今日は自分たちのフラタニティを立ち上げるためにお前たちを集めた\nブローク・ファイ・ブローク、俺たちには無い\nそう、俺たちにはお金がない\n俺たちはジーンズをシェアしてる",ann:"「Phi（ファイ）」はギリシャ文字Φ。アメリカの大学フラタニティ名に使われる（例：Delta Phi、Phi Beta Kappa）。"},
+        {en:"How many cars do we own? (None!)\nShould we let our woman go and be with the cat with the car?\n(Yes, we will!)\nWhy? 'Cause we can't afford gas.\n(We can't afford no gas!)\nSo we ain't drivin'!",ja:"俺たちは何台車を持ってる？（ゼロ！）\n女を車を持った男のとこへ行かせるべきか？\n（そうだ！）\nなぜか？ガス代を払えないから。\n（ガス代を払えない！）\nだから俺たちは運転しない！",ann:null}
+      ]}
+    ]
+  },
+  {
+    id:"lr-drive-slow", num:"06", title:"Drive Slow", feat:"feat. Paul Wall & GLC",
+    producer:"Kanye West",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    albumArt:"06 - Drive Slow/late-registration-artwork.jpg",
+    year:"2005年", label:"Roc-A-Fella / Def Jam",
+    desc:"シカゴのサウスサイドを舞台にした成長譚と、ヒューストンのスロウド・アンド・スクリュード文化へのオマージュを融合した曲。Paul Wall（本名Paul Michael Slayton、1981〜）はヒューストン出身の白人ラッパーで2005年グラミー賞受賞。GLC（Gregory L. Carter）はシカゴ出身でKanyeの盟友。DJ Screw（本名Robert Earl Davis Jr.、1971〜2000年）はヒューストン発の「Screwed and Chopped」スタイルの発明者。",
+    sections:[
+      {label:"[Chorus: Kanye West]",note:null,lines:[
+        {en:"Drive slow, homie\nDrive slow, homie\nYou never know, homie, might meet some hoes, homie\nYou need to pump your brakes and drive slow, homie",ja:"ゆっくり走れ、ホーミー\nゆっくり走れ、ホーミー\nホーミー、何があるかわからない、女の子に会えるかもしれない\nブレーキを踏んで、ゆっくり走れ、ホーミー",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"My homie Mali used to stay, 79th and May\nOne of my best friends from back in the day\nDown the street from Calumet, a school full of Stones\nHe nicknamed me \"K-Rock\" so they'd leave me alone",ja:"幼馴染のマリは79番街とメイ通りに住んでた\n昔からの親友の一人\nカルメット（高校）の通りを下って、ストーンズでいっぱいの学校\n奴らが俺をほっとくようにマリは「K-ロック」というあだ名をくれた",ann:"「79th and May」はシカゴのサウスサイドにある実際の交差点。「Stones」はシカゴのBlackstone Rangersギャングのメンバーを指す。"},
+        {en:"Back when we rocked Ellesses, he had dreams of Caprices\nHow he get the cash? The day his father passed away",ja:"エレッセを着てた頃、彼はキャプリスを夢見てた\nどうしてお金を手に入れた？父親が亡くなった日",ann:"Ellesseはイタリアのスポーツブランドで1990年代のシカゴで流行。Chevrolet Capriceはシカゴのサウスサイドで人気だったアメリカ製乗用車。"},
+        {en:"Al B. Sure! nigga with the hair all wavy\nHit Lake Shore, girls go all crazy",ja:"アル・ビー・シュアみたいにウェービーな髪の男\nレイクショアを走れば、女の子たちが狂喜する",ann:"Al B. Sure!は1980〜90年代のR&Bシンガー。Lake Shore Driveはシカゴのミシガン湖沿いに走る幹線道路。"},
+        {en:"He told me, \"Don't rush to get grown, drive slow, homie\"",ja:"奴は言った、「急いで大人になるな、ゆっくり走れ、ホーミー」",ann:null}
+      ]},
+      {label:"[Verse 2: Paul Wall]",note:null,lines:[
+        {en:"I'm tippin' on them fours, I'm jammin' on this Screw\nOpen up my mouth and sunlight illuminates the dark",ja:"フォーズの上でティッピング、スクリューに合わせてジャミン\n口を開けたら太陽光が暗闇を照らす",ann:"「Screw」はDJ Screw（1971〜2000）のScrewed and Choppedスタイルへの言及。「sunlight illuminates the dark」はグリル（金歯）が輝く様子の比喩。"}
+      ]},
+      {label:"[Verse 3: GLC & Kanye West]",note:null,lines:[
+        {en:"I wear my custom kicks, I got my Jesus chain\nMy canaries is gleamin' through my angel wings",ja:"カスタムスニーカーを履いて、ジーザスチェーンをしてる\n俺のカナリア（イエローダイヤ）が翼を通して輝いてる",ann:null},
+        {en:"When you see them hoes, lil' homie, drive slow",ja:"女の子たちを見たら、リトル・ホーミー、ゆっくり走れ",ann:null}
+      ]}
+    ]
+  }
+  ,
+  {
+    id:"lr-diamonds-remix", num:"13", title:"Diamonds From Sierra Leone (Remix)", feat:"feat. Jay-Z",
+    producer:"Kanye West, Devo Springsteen & Jon Brion",
+    sample:"Shirley Bassey「Diamonds Are Forever」(1971)",
+    sampleSources:[
+      {artist:"Shirley Bassey",title:"Diamonds Are Forever",year:1971,album:"Diamonds Are Forever (soundtrack)",url:"https://www.whosampled.com/sample/308/Kanye-West-JAY-Z-Diamonds-From-Sierra-Leone-Remix-Shirley-Bassey-Diamonds-Are-Forever/"}
+    ],
+    whosampledUrl:"https://www.whosampled.com/Kanye-West/Diamonds-from-Sierra-Leone-Remix/",
+    albumArt:"13 - Diamonds From Sierra Leone (Remix)/late-registration-artwork.jpg",
+    year:"2005年", label:"Roc-A-Fella / Def Jam",
+    desc:"Shirley Bassey（1937〜）はウェールズ出身の歌手で、映画007「ダイヤモンドは永遠に」（1971年）の主題歌歌手。シエラレオネ内戦（1991〜2002年）では反政府勢力RUFがダイヤモンド採掘収益を資金源に民間人への暴力（手足の切断など）を行い、「紛争ダイヤモンド（Blood Diamond）」として欧米市場に流通した。Damon Dash（デイモン・ダッシュ）はJay-ZとともにRoc-A-Fella Recordsを共同設立したが、2004年のDef Jamへの売却後にレーベルを離れた。",
+    sections:[
+      {label:"[Intro: Shirley Bassey]",note:null,lines:[
+        {en:"Diamonds are forever\nThey are all I need to please me\nThey won't leave in the night\nI've no fear that they might desert me",ja:"ダイヤモンドは永遠に\n私が喜ぶために必要なのはそれだけ\n夜に去っていくことはない\n捨てられるかもしれないという恐れもない",ann:null}
+      ]},
+      {label:"[Chorus: Kanye West & Shirley Bassey]",note:null,lines:[
+        {en:"Diamonds are forever\nForever, forever (Throw your diamonds in the sky if you feel the vibe)\nThe Roc is still alive every time I rhyme\nForever ever? Forever ever?\nEver, ever? Ever, ever? Ever, ever?",ja:"ダイヤモンドは永遠に\n永遠に、永遠に（ビートを感じたらダイヤを空に向けろ）\n俺がライムするたびにRocは生きている\n永遠に？永遠に？\nいつまでも？いつまでも？いつまでも？",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"Good mornin', this ain't Vietnam, still\nPeople lose hands, legs, arms, for real\nLittle was known of Sierra Leone\nAnd how it connect to the diamonds we own",ja:"おはよう、ここはベトナムじゃない、それでも\n人々は手、足、腕を本当に失っている\nシエラレオネのことはほとんど知られていなかった\nそしてそれが俺たちが持つダイヤモンドとどうつながっているかも",ann:"シエラレオネ内戦（1991〜2002年）では反政府勢力RUFがダイヤモンド採掘を資金源に民間人の手足を切断するなどの残虐行為を行った。"},
+        {en:"My chain, these ain't conflict diamonds\nIs they, Jacob? Don't lie to me, mane",ja:"俺のチェーン、これは紛争ダイヤじゃない\nそうじゃないよな、ジェイコブ？嘘をつくなよ",ann:"Jacob & Co.（ジェイコブ・アンド・コー）はニューヨークのダイヤモンドジュエラーで、Jay-Z、50 Cent、Kanyeらが愛用する宝石商。"},
+        {en:"Over here, it's a drug trade, we die from drugs\nOver there, they die from what we buy from drugs\nI thought my Jesus piece was so harmless\n'Til I seen a picture of a shorty armless",ja:"こっちでは麻薬取引、俺たちはドラッグで死ぬ\n向こうでは、俺たちがドラッグで買うものが原因で死ぬ\n俺のジーザス・ピースは無害だと思っていた\n腕のない若者の写真を見るまでは",ann:null}
+      ]},
+      {label:"[Verse 2: Kanye West & JAY-Z]",note:null,lines:[
+        {en:"People askin' me is I'm gon' give my chain back\nThat'll be the same day I give the game back\nYou know the next question, dawg, \"Yo, where Dame at?\"",ja:"みんな俺にチェーンを返すつもりかって聞いてくる\nそれはゲームを返す日と同じだ\n次の質問はわかってる、「ダムはどこにいる？」",ann:"Damon Dash（デイモン・ダッシュ）は2004年頃Jay-Zとの関係が悪化しRoc-A-Fellaを離れた。当時のファン間で語られていたトピック。"}
+      ]},
+      {label:"[Verse 3: JAY-Z]",note:null,lines:[
+        {en:"I got it from here, 'Ye, damn\nThe chain remains, the gang is intact",ja:"ここからは俺が引き継ぐ、'Ye、すごいな\nチェーンは残る、仲間は健在",ann:null},
+        {en:"How could you falter when you're the Rock of Gibraltar?\nI had to get off the boat so I could walk on water",ja:"ジブラルタル岩のような存在がどうやって揺らぐ？\n水の上を歩くために船から降りなければならなかった",ann:"「Rock of Gibraltar」はスペインとモロッコの間の海峡に位置する巨大な岩山で「難攻不落・不動」の象徴。「walk on water」はマタイ14章でイエスが嵐の夜に水の上を歩いた奇跡の場面への言及。"},
+        {en:"I'm not a businessman, I'm a business, man",ja:"俺はビジネスマンじゃない、俺がビジネスだ",ann:"「businessman（ビジネスマン）」と「business, man（ビジネスだ、男よ）」のコンマの位置で意味が変わる言葉遊び。"},
+        {en:"The Dynasty like my money: last three lifetimes\nShirley Bassey's in the rear, sayin' exactly\nWhat I been sayin' practically my whole career",ja:"Dynastyは俺の金のようなもの：3世代分の命をかける\nシャーリー・バッシーが後ろで言っている\n俺がキャリア通じてずっと言ってきたことを",ann:null},
+        {en:"I'm Young, bitches!",ja:"俺はヤング（Young）だ！",ann:null}
+      ]}
+    ]
+  },
+  {
+    id:"lr-we-major", num:"14", title:"We Major", feat:"feat. Nas & Really Doe",
+    producer:"Kanye West & Jon Brion",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    albumArt:"14 - We Major/late-registration-artwork.jpg",
+    year:"2005年", label:"Roc-A-Fella / Def Jam",
+    desc:"Nas（本名Nasir Bin Olu Dara Jones）は1994年のデビューアルバム「Illmatic」で史上最高のラッパーの一人と称される。Really Doe（リアリー・ドウ）はTony Williamsの別名で、Late Registrationのソウルボーカルを多数担当。Jon Brionは映画「マグノリア」「アイ・ハート・ハッカビーズ」等でも知られるマルチ奏者で、アルバムのオーケストラアレンジを担当した。",
+    sections:[
+      {label:"[Hook: Kanye West]",note:null,lines:[
+        {en:"I take a sip of that yak, I wanna fuck\nI take a hit of that chronic, it got me stuck\nPuff-puff, then pass, don't fuck up rotation\nHpnotiq for Henny? Now nigga, that's a chaser\nCool out, thinking we local, c'mon homie, we major",ja:"ヘネシーを一口飲んだら、やりたくなる\nクロニックを一吸いしたら、動けなくなった\n吸って吸って渡す、ローテーションを乱すな\nヒプノティックをヘネシーで？それはチェイサーだろ\n落ち着けよ、俺たちはメジャーだ",ann:"「yak」はHennessy（ヘネシー）コニャックのスラング。「Puff puff pass」はマリファナを2回吸って次の人に回すというルール。Hpnotiqは2001年以降ヒップホップ文化で人気が出た青いリキュールブランド。"}
+      ]},
+      {label:"[Chorus]",note:null,lines:[
+        {en:"We major? C'mon homie, we major\nWe major! C'mon homie, we major",ja:"俺たちはメジャー？こいつら、俺たちはメジャーだ\n俺たちはメジャー！こいつら、俺たちはメジャーだ",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"Projects tore up, gang signs is thrown up\nGet they first car and then IRS show up",ja:"団地は荒れて、ギャングサインが投げられる\n初めて車を買ったらIRS（国税庁）がやって来る",ann:"IRS＝Internal Revenue Service（内国歳入庁）。米国の税務当局。"},
+        {en:"He ain't never had shit but he had that nine\nGon' be a whole family on that funeral line",ja:"あいつは何も持ってなかったが9mm拳銃を持ってた\n葬儀の列には家族全員が並ぶことになる",ann:null},
+        {en:"I ain't in the Klan, but I brought my hood with me",ja:"KKKじゃないが、フードを持ってきた",ann:"「Klan」＝KKK（クー・クラックス・クラン）。白人至上主義の秘密結社で白いフードを被ることで知られる。「hood」はフードと「フッド（地元の街）」のダブルミーニング。"}
+      ]},
+      {label:"[Verse 2: Nas]",note:null,lines:[
+        {en:"He said, Nas, what the fans want is Illmatic, still\nBeen like 12 years since a nigga first signed\nNow I'm a free agent",ja:"あいつが言った、Nas、ファンが求めてるのは今もIllmaticだって\n俺が最初にサインしてから12年が経った\n今の俺はフリーエージェント",ann:"Nasは1994年のデビューアルバム「Illmatic」で高い評価を得た。2004年頃Columbia Recordsとの契約が終わりフリーになっていた。"},
+        {en:"To build my very own Motown\n'Cause rappers be deprived of executive 9 to 5s",ja:"自分のモータウンを作る時が\nラッパーたちは経営者としての仕事を奪われているから",ann:"Motown RecordsはBerry Gordyが1959年にデトロイトで設立した黒人所有の伝説的レーベル。Stevie Wonder、Diana Ross、Marvin Gayeらを輩出した。"},
+        {en:"I'm Jesse Jackson on the balcony where King got killed",ja:"俺はキング牧師が暗殺されたバルコニーのジェシー・ジャクソンだ",ann:"1968年4月4日、マーティン・ルーサー・キング・Jr.牧師がメンフィスのロレイン・モーテルのバルコニーで暗殺された。その場にいたジェシー・ジャクソン牧師は民権運動の後継者となった。"},
+        {en:"Either way my change came like Sam Cooke",ja:"どちらにせよ、俺の変化はサム・クックみたいにやってきた",ann:"Sam Cooke（1931〜1964）はゴスペルからポップR&Bに転向し大成功した伝説的シンガー。「A Change Is Gonna Come」で公民権運動の象徴にもなり、1964年に謎の死を遂げた。"}
+      ]},
+      {label:"[Bridge: Really Doe / Tony Williams]",note:null,lines:[
+        {en:"Feeling better than I ever felt before today\nLike better late than never, it's orientation",ja:"今日まで感じたことがないほど気持ちいい\n遅くても来ないよりマシ、これがオリエンテーション",ann:"「orientation」は大学の新入生オリエンテーション（入学案内）のこと。アルバムタイトル「Late Registration（遅延登録）」との韻を踏む。"}
+      ]},
+      {label:"[Outro: Kanye West]",note:null,lines:[
+        {en:"So they asked me, why you call it Late Registration, 'Ye?\n'Cause we takin' these motherfuckers back to school",ja:"それで聞かれた、なぜ「Late Registration」と呼ぶんだって\nなぜなら俺たちはこいつらを学校に連れ戻してるから",ann:"「Late Registration（遅延登録）」はアメリカの大学で締切後に授業登録することを指す。Kanyeは大学を中退しているため、アルバムタイトルは「遅れてきた学生」の自己像と「音楽業界に遅れて入学した俺がいまこそ主役を取る」という二重の意味を持つ。"}
+      ]}
+    ]
+  },
+  {
+    id:"lr-skit-3", num:"15", title:"Skit #3", feat:null,
+    producer:"Kanye West",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    albumArt:"15 - Skit #3/late-registration-artwork.jpg",
+    year:"2005年", label:"Roc-A-Fella / Def Jam",
+    desc:"DeRay Davisによるスキット。Skit #2の「Broke Phi Broke」の続編的な語り。「1920年代の貧乏な奴隷たち」から続く歴史と、フォークでシリアルを食べてミルクを節約するというエピソードを描くブラックコメディ。DeRay Davisはシカゴ出身のスタンダップコメディアン・俳優で「Scary Movie 4」「21 Jump Street」への出演でも知られる。",
+    sections:[
+      {label:"[Skit: DeRay Davis]",note:null,lines:[
+        {en:"This was founded years ago\nBy broke slaves, years ago\nBy broke brothas in the 20s, years ago",ja:"これは何年も前に設立された\n貧乏な奴隷たちによって、何年も前に\n1920年代の貧乏な兄弟たちによって、何年も前に",ann:"「the 20s」＝1920年代。禁酒法時代（Prohibition Era）かつ大移動（Great Migration）の時代。南部から北部の都市へ移住した多くの黒人が貧困に苦しんだ。"},
+        {en:"Eating all of our cereal with forks because we wanted to save the milk, do you remember that?",ja:"ミルクを節約しようとフォークでシリアルを食べたこと、覚えてるか？",ann:null},
+        {en:"Do you remember all those Christmases when your mama walked in the room and pretended she was the tree, huh?",ja:"ママが部屋に入ってきて自分がツリーのふりをしたクリスマスを覚えてるか？",ann:null}
+      ]}
+    ]
+  },
+  {
+    id:"lr-hey-mama", num:"16", title:"Hey Mama", feat:null,
+    producer:"Kanye West & Jon Brion",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    albumArt:"16 - Hey Mama/late-registration-artwork.jpg",
+    year:"2005年", label:"Roc-A-Fella / Def Jam",
+    desc:"母親Donda West（1949〜2007）への感謝と愛を綴った曲。Donda WestはClark Atlanta Universityで英文学の博士号を取得し、シカゴ州立大学英語学部長まで務めた。Kanyeが3歳のとき母子でシカゴに引越した。2007年11月、Dondaは整形手術の合併症で亡くなり、この曲は深い哀悼の意を持つようになった。",
+    sections:[
+      {label:"[Chorus]",note:null,lines:[
+        {en:"I wanna scream so loud for you, 'cause I'm so proud of you\nI know I act a fool, but I promise you, I'm goin' back to school\nI appreciate what you allowed for me\nI just want you to be proud of me",ja:"あなたのために大声で叫びたい、こんなに誇りに思ってるから\n馬鹿みたいに振る舞ってたのはわかってる、でも約束する、学校に戻るから\nあなたが俺に与えてくれたものに感謝してる\nただあなたに誇りに思ってほしい",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"This little light of mine, I'm finna let it shine\nI was three years old when you and I moved to the Chi'",ja:"この小さな光を、輝かせよう\n俺が3歳のとき、ふたりでシカゴに引っ越した",ann:"「This little light of mine」は有名なゴスペル曲のタイトル。公民権運動の讃美歌として歌われた。Kanyeは1977年にアトランタで生まれ3歳頃にシカゴへ移住した。"},
+        {en:"You work late nights just to keep on the lights\nMommy got me training wheels so I could keep on my bike\nMichael Jackson leather and a glove, but didn't give me a curl",ja:"電気を消さないために夜遅くまで働いた\nママは俺のために補助輪を買ってくれた\nマイケル・ジャクソンのレザーとグローブも、でもカールヘアはくれなかった",ann:"Jheri curl（ジェリーカール）は1980〜90年代の黒人男性の間で流行したパーマスタイル。"},
+        {en:"And you never put no man over me\nI said, \"Mommy, I'ma love you 'til you don't hurt no more\nAnd when I'm older, you ain't gotta work no more\nAnd I'ma get you that mansion that we couldn't afford\"",ja:"あなたは決して男を俺より優先しなかった\n「ママ、もう傷つかなくなるまで愛し続ける\n大きくなったら、もう働かなくていい\n俺が買えなかったあのお屋敷を買ってあげる」",ann:null}
+      ]},
+      {label:"[Verse 2: Kanye West]",note:null,lines:[
+        {en:"Forrest Gump mama said, \"Life is like a box of chocolates\"\nMy mama told me, \"Go to school, get your doctorate\"\nBut still supported me when I did the opposite",ja:"フォレスト・ガンプのママは「人生はチョコレートの箱みたいなもの」と言った\n俺のママは「学校に行って博士号を取りなさい」と言った\nでも俺が逆のことをしたときも支えてくれた",ann:"1994年のアカデミー賞作品賞受賞映画「フォレスト・ガンプ/一期一会」の名言。Donda WestはClark Atlanta Universityで英文学の博士号（Ph.D.）を取得した学者。"},
+        {en:"Can't you see, you're like a book of poetry\nMaya Angelou, Nikki Giovanni\nTurn one page and there's my mommy",ja:"わかるだろ、あなたは詩集みたいだ\nマヤ・アンジェロウ、ニッキ・ジョヴァンニ\n1ページめくると俺のママがいる",ann:"Maya Angelou（1928〜2014）は「I Know Why the Caged Bird Sings」で知られる黒人女性詩人・作家・公民権活動家。Nikki Giovanni（1943〜）は「Black Feeling, Black Talk」などの詩集で知られる黒人女性詩人。"}
+      ]},
+      {label:"[Break: Kanye West]",note:null,lines:[
+        {en:"Just tell me what kind of S-Type Donda West like?\nIt don't gotta be Mother's Day or your birthday\nFor me to just call and say",ja:"Donda Westはどんなタイプのジャガーが好き？\n母の日でも誕生日でもなくていい\n俺がただ電話して言うだけで",ann:"Jaguar S-Typeは英国の高級車ブランドJaguarのセダンモデル（2002〜2008年製造）。"}
+      ]}
+    ]
+  },
+  {
+    id:"lr-celebration", num:"17", title:"Celebration", feat:null,
+    producer:"Kanye West & Jon Brion",
+    sample:"Oliver Sain「Bus Stop」(1976)",
+    sampleSources:[
+      {artist:"Oliver Sain",title:"Bus Stop",year:1976,album:"Bus Stop",url:"https://www.whosampled.com/sample/312/Kanye-West-Celebration-Oliver-Sain-Bus-Stop/"}
+    ],
+    whosampledUrl:"https://www.whosampled.com/Kanye-West/Celebration/",
+    albumArt:"17 - Celebration/late-registration-artwork.jpg",
+    year:"2005年", label:"Roc-A-Fella / Def Jam",
+    desc:"アルバムのクロージング前の祝祭曲。Oliver Sain（オリバー・セイン、1932〜2003年）はミズーリ州セントルイスのR&Bサックス奏者・プロデューサー。「Bus Stop」（1976年）のファンキーなグルーヴがこの曲に熱量を与えている。",
+    sections:[
+      {label:"[Chorus]",note:null,lines:[
+        {en:"Yeah, you know what this is\nIt's a celebration, bitches\nGrab a drink, grab a glass\nAfter that, I grab yo' ass",ja:"イェー、これが何かわかるよな\nお祝いだ、みんな\n飲み物を取って、グラスを取って\nその後は、お前のケツをつかむ",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"What, you want some Patron? I got that",ja:"パトロン欲しい？あるよ",ann:"Patrón（パトロン）はメキシコ産のプレミアムテキーラブランド。2000年代のヒップホップカルチャーに定着した高級酒。"},
+        {en:"Right now, The Louis Vuitton Don is signing off",ja:"今、ルイ・ヴィトン・ドンはここでおやすみ",ann:"「Louis Vuitton Don」はKanyeの初期のニックネーム。高級ブランドを身にまとう新世代のヒップホップスターとしての自己像を表す。"}
+      ]},
+      {label:"[Pre-Chorus]",note:null,lines:[
+        {en:"We hit the liquor store\nGot some Cris' and some Mo'\nAnd we about to let it flow\nGot an ounce of that 'dro\nAnd we about to let it blow",ja:"酒屋に行ってきた\nクリスタルとモエを買ってきた\nそして流す準備ができた\nハイドロを1オンス手に入れた\nそして吹かす準備ができた",ann:"Cristal（クリスタル）はルイ・ロデレール社のフランス産プレミアムシャンパン。Moët（モエ）はモエ・エ・シャンドンのシャンパン。「'dro」はhydroponic（水耕栽培）の略で高品質マリファナを指す。"}
+      ]},
+      {label:"[Verse 2: Kanye West]",note:null,lines:[
+        {en:"And I vow that my child will be well-endowed\nHe looked up at me, said, \"Daddy, that's the reason why you had me?\"\nYep. We was practicing\n'Til one day, your ass bust through the packaging\nYou know what, though? You my favorite accident",ja:"俺の子は恵まれた子になると誓う\nあいつが俺を見上げて言った、「パパ、それが俺が生まれた理由？」\nそう、練習してたんだ\nある日、お前が包みを破って出てきた\nでも知ってるか？お前は俺の一番好きなアクシデントだ",ann:null}
+      ]}
+    ]
+  },
+  {
+    id:"lr-skit-4", num:"18", title:"Skit #4", feat:null,
+    producer:"Kanye West",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    albumArt:"18 - Skit #4/late-registration-artwork.jpg",
+    year:"2005年", label:"Roc-A-Fella / Def Jam",
+    desc:"Broke Phi Brokeシリーズの締め。Kanye Westが成功して「組織」を離れるシーンを描く自伝的ユーモア。クローゼットに新しい靴があることが「成功の裏切りの証拠」とされる。",
+    sections:[
+      {label:"[Skit]",note:null,lines:[
+        {en:"There is an imposter among us\nThis brother right here has been out making beats on the side\nThis brother has been eating every day, can you believe that?",ja:"俺たちの中に偽物がいる\nこの兄弟が外でビートを作ってたんだ\nこの兄弟は毎日食べてた、信じられるか？",ann:null},
+        {en:"I walked into the brother Kanye's closet and I found new shoes!\nKanye, would you like to step forward and explain these new shoes?!",ja:"カニエの兄弟のクローゼットに入ったら新しい靴を見つけた！\nカニエ、前に出て来てこの新しい靴を説明してくれないか？！",ann:null},
+        {en:"[Kanye]\nI was gon' stick—I'm tryin' to stick to my roots and—\n[Leader]\nWhat?! You march your new shoes out of here, Kanye.\nDon't you ever come back smellin' all good, taking showers and shit like that\nWe don't appreciate that down here at Broke Phi Broke",ja:"（カニエ）\n俺はルーツを守ろうと——ルーツを守ろうとして——\n（リーダー）\n何だと？！その新しい靴でここから出て行け、カニエ。\nいい匂いさせてシャワー浴びてとか、そんなことして戻ってくるなよ\n俺たちBroke Phi Brokeはそういうのは歓迎しない",ann:null}
+      ]}
+    ]
+  },
+  {
+    id:"lr-gone", num:"19", title:"Gone", feat:"feat. Otis Redding, Cam'ron & Consequence",
+    producer:"Kanye West",
+    sample:"Otis Redding「It's Too Late」",
+    sampleSources:[
+      {artist:"Otis Redding",title:"It's Too Late",year:1967,album:"The Dock of the Bay",url:"https://www.whosampled.com/sample/310/Kanye-West-Cam%27ron-Consequence-Gone-Otis-Redding-It%27s-Too-Late/"}
+    ],
+    whosampledUrl:"https://www.whosampled.com/Kanye-West/Gone/",
+    albumArt:"19 - Gone/late-registration-artwork.jpg",
+    year:"2005年", label:"Roc-A-Fella / Def Jam",
+    desc:"Otis Redding（1941〜1967年）は「Sittin' On The Dock of the Bay」で知られる伝説的ソウルシンガーで26歳で飛行機事故で逝去。Cam'ron（本名Cameron Giles）はハーレム出身でDiplomats（Dipset）のリーダー。Consequence（コンシークエンス）はクイーンズ出身のラッパーでKanyeの長年の盟友。Consequenceのヴァースは「gone」一語のみで連鎖韻（chain rhyme）を構成するラップ技法の傑作。",
+    sections:[
+      {label:"[Intro: Otis Redding sample]",note:null,lines:[
+        {en:"But it's too late\nHe's gone",ja:"でも遅すぎた\n彼は去ってしまった",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"You sweat her, and I ain't talkin 'bout a Coogi\nYou a big L, and I ain't talkin 'bout Cool J",ja:"お前はあの子に夢中で、クーギーのことを言ってるんじゃない\nお前は大きなL（敗北者）だ、クール・Jのことじゃない",ann:"Coogiはオーストラリア発の高級ニットウェアブランドでノトーリアス・B.I.G.が着用したことでヒップホップに定着した。「big L」はスラングで大きな負け・敗北者（Lはloss/loser）を指す。"},
+        {en:"Say she want diamonds, I took her to Ruby Tuesdays\nIf we up in Fridays, I still have it my way, gone!",ja:"ダイヤが欲しいって言うから、ルビー・チューズデーに連れて行った\nTGIフライデーズにいても、俺のやり方でやる、gone！",ann:"Ruby TuesdayはアメリカのカジュアルダイニングチェーンでTGI Fridaysと並ぶ大衆レストラン。ダイヤを求める女性に高級ではない店に連れて行くジョーク。"}
+      ]},
+      {label:"[Verse 2: Kanye West]",note:null,lines:[
+        {en:"Said he couldn't rap, now he at the top where dude belong\n'Cause I dookied on any song that they threw me on, gone",ja:"ラップできないって言われてた、今はいるべき頂点にいる\n俺に投げてくれたどんな曲でもぶっ壊したから、gone",ann:null}
+      ]},
+      {label:"[Verse 3: Cam'ron]",note:null,lines:[
+        {en:"Knock knock, who's there? Killa Cam, Killa who?\nKilla Cam, hustler, grinder, guerilla troop\nOh, my chinchilla blue, blue",ja:"トントン、誰だ？キラ・カム、キラ誰だ？\nキラ・カム、ハスラー、グラインダー、ゲリラ部隊\nああ、俺のチンチラは青、青",ann:"「Killa Cam」はCam'ronのニックネーム。チンチラの毛皮は最高級の天然毛皮の一つで、青く染めたチンチラコートはCam'ronのトレードマーク的な装い。"}
+      ]},
+      {label:"[Verse 4: Consequence]",note:"「gone」一語を使って連鎖韻（chain rhyme）でストーリーを語る技法。友人の死から始まり、金の消失、バーでのトラブル、逮捕、収監という出来事を「gone」で繋ぐ。",lines:[
+        {en:"I been pouring out some liquor for the fact that my pal's gone\nAnd trying to help his mama with the fact that her child gone",ja:"友人が去ったという事実のために酒を注いできた\nその子供が去ったという事実を抱えながら、ママを助けようとしてる",ann:"「pour out some liquor」は故人に捧げる飲み物を地面に注ぐ弔いの儀式。黒人コミュニティに広く根付いた慣行。"},
+        {en:"And rented Gone With the Wind, 'cause I'da gone in by ten\nBut I had gone with my friend, and we had gone to the bar\nAnd now the judge is telling me that I had gone too far\nAnd now we gone for twenty years doing time behind bars",ja:"「風と共に去りぬ」を借りて、10時までに帰れたのに\nでも友達と一緒にバーに行った\n今、裁判官が俺に言ってる、やりすぎだって\nそして俺たちは20年間、刑務所で時間を過ごすことになった",ann:"「Gone with the Wind」（風と共に去りぬ）は1939年のアカデミー賞作品賞受賞映画。タイトルに「Gone」が含まれるためConsequenceの連鎖韻に組み込まれた。"}
+      ]},
+      {label:"[Verse 5: Kanye West]",note:null,lines:[
+        {en:"I'm ahead of my time, sometimes years out\nSo the powers that be won't let me get my ideas out",ja:"俺は時代の先を行ってる、時に何年も先を\nだから権力者たちは俺のアイデアを出させない",ann:null},
+        {en:"My dog worked at Taco Bell, hooked us up plural\nFired a week later, the manager count the churros",ja:"友達がタコベルで働いて、俺たちに食わせてくれた\n1週間後に解雇、マネージャーがチュロスを数えてたから",ann:"Taco Bellはメキシコ料理のファストフードチェーン。Churros（チュロス）はタコベルでも売られる揚げ菓子。"},
+        {en:"They got a new bitch, now you Jennifer Aniston",ja:"新しい女ができたら、お前はジェニファー・アニストン",ann:"Jennifer Aniston（ジェニファー・アニストン）は俳優「フレンズ」のレイチェル役で有名。2004〜2005年にBrad PittがAngelina Jolieと恋仲になり離婚され、「捨てられた側」の象徴として引用。"},
+        {en:"I'ma open up a store for aspiring MCs\nWon't sell 'em no dream, but the inspiration is free\nThey said, \"Sorry, Mr. West is gone\"",ja:"夢を持つMCたちのために店を開く\n夢は売らないが、インスピレーションは無料だ\n「申し訳ありません、ウェストさんはいませんでした」",ann:null}
+      ]}
+    ]
+  },
+  {
+    id:"lr-diamonds-original", num:"20", title:"Diamonds From Sierra Leone", feat:null,
+    producer:"Kanye West, Devo Springsteen & Jon Brion",
+    sample:"Shirley Bassey「Diamonds Are Forever」(1971)",
+    sampleSources:[
+      {artist:"Shirley Bassey",title:"Diamonds Are Forever",year:1971,album:"Diamonds Are Forever (soundtrack)",url:"https://www.whosampled.com/sample/308/Kanye-West-JAY-Z-Diamonds-From-Sierra-Leone-Remix-Shirley-Bassey-Diamonds-Are-Forever/"}
+    ],
+    whosampledUrl:"https://www.whosampled.com/Kanye-West/Diamonds-from-Sierra-Leone/",
+    albumArt:"20 - Diamonds From Sierra Leone (Bonus Track)/late-registration-artwork.jpg",
+    year:"2005年", label:"Roc-A-Fella / Def Jam",
+    desc:"Jay-Zを含まないオリジナル版。Verse 1はRemixとは異なるKanye独自のヴァース。Verse 2はRemixでJay-Zに差し替えられたKanyeの別ヴァース。Shirley Bassey（1937〜）はウェールズ出身の歌手で、007映画「ダイヤモンドは永遠に」（1971年）をはじめ複数の007主題歌を担当した唯一の歌手。",
+    sections:[
+      {label:"[Intro: Shirley Bassey]",note:null,lines:[
+        {en:"Diamonds are forever\nThey won't leave in the night\nI've no fear that they might desert me",ja:"ダイヤモンドは永遠に\n夜に去ることはない\n去るかもしれないという恐怖はない",ann:null}
+      ]},
+      {label:"[Chorus: Shirley Bassey & Kanye West]",note:null,lines:[
+        {en:"Diamonds are forever (forever, forever)\nThrow your diamonds in the sky if you feel the vibe\nThe Roc is still alive every time I rhyme\nForever ever? Forever ever? Ever, ever?",ja:"ダイヤモンドは永遠に（永遠に、永遠に）\nビートを感じたらダイヤを空に向けて投げろ\n俺がライムするたびにRocは生きている\n永遠に？永遠に？いつまでも？",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"Vegas on acid, seen through Yves St. Laurent glasses\nAnd I've realized that I've arrived\n'Cause it take more than a magazine to kill my Vibe",ja:"ラスベガスをアシッドで体験したような、イヴ・サンローランのメガネ越しに\nそして俺は自分が到達したことに気づいた\n雑誌一冊では俺のバイブを殺せないから",ann:"Yves Saint Laurentはフランスのラグジュアリーファッションブランド（現Saint Laurent）。「Vibe」はヒップホップ専門誌。"},
+        {en:"I remember I couldn't afford a Ford Escort\nOr even a four-track recorder\nSo it's only right that I let the top drop on a drop-top Porsche",ja:"フォード・エスコートを買えなかった頃を覚えてる\n4トラックレコーダーさえも\nだからポルシェのオープンカーでトップを下ろすのは当然",ann:null}
+      ]},
+      {label:"[Verse 2: Kanye West]",note:null,lines:[
+        {en:"I was sick about awards, couldn't nobody cure me\nAlicia Keys tried to talk some sense in him\nThirty minutes later seein' there's no convincin' him\nWhat more could you ask for? The international asshole",ja:"アワードのことで病んでた、誰も治せなかった\nアリシア・キーズが道理を説こうとした\n30分後には説得の余地がないとわかった\nこれ以上何を望む？国際的なアスホール",ann:"Alicia Keys（アリシア・キーズ）はニューヨーク出身のR&Bシンガー・ピアニストでグラミー賞15冠超。"},
+        {en:"Now all I need is y'all to pronounce my name\nIt's Kanye, but some of my plaques, they still say \"Kayne\"",ja:"今俺が必要なのは、お前らが名前を正しく発音することだけ\n「カンイェ」なのに、プラークには「カイン」と書いてある",ann:"「Kanye」はスワヒリ語で「唯一の」を意味する。多くのメディアや賞状で「Kayne」と誤記された。"},
+        {en:"Got family in the D, kinfolk from Motown\nBig K pick up where young Hov left off",ja:"デトロイトに家族がいる、モータウン出身の親族\nビッグKが若きホヴァが残したところから引き継ぐ",ann:"「the D」＝Detroit（デトロイト）。Motown Recordsは1959年設立の黒人所有の伝説的レーベル。「young Hov」＝若い頃のJay-Z（Hov=Jehovahにかけたニックネーム）。"}
+      ]}
+    ]
+  },
+  {
+    id:"lr-late", num:"21", title:"Late", feat:"feat. Tony Williams",
+    producer:"Kanye West & Jon Brion",
+    sample:"The Whatnauts「Help Is on the Way」(1970)",
+    sampleSources:[
+      {artist:"The Whatnauts",title:"Help Is on the Way",year:1970,album:"Introducing the Whatnauts",url:"https://www.whosampled.com/sample/315/Kanye-West-Tony-Williams-Late-The-Whatnauts-Help-Is-on-the-Way/"}
+    ],
+    whosampledUrl:"https://www.whosampled.com/Kanye-West/Late/",
+    albumArt:"21 - Late/late-registration-artwork.jpg",
+    year:"2005年", label:"Roc-A-Fella / Def Jam",
+    desc:"アルバムのタイトルを回収する締め曲。「Late Registration（遅延登録）」という言葉を「遅刻」のメタファーに転用し、学校から人生まで常に遅れがちな自分を笑い飛ばす自伝的な曲。Tony Williams（トニー・ウィリアムズ）はシカゴ出身のラッパーで「Really Doe」のラッパー名でも知られるKanyeの長年の友人・コラボレーター。The Whatnauts（ザ・ワットナッツ）はメリーランド州ボルチモア出身のR&Bグループ（1969〜）。",
+    sections:[
+      {label:"[Intro: The Whatnauts, Tony Williams & Kanye West]",note:null,lines:[
+        {en:"Little girl (A-ha-ha-ha-ha)\nPlease stop your– crying\n'Cause I'll be late for that",ja:"リトル・ガール（あははは）\n泣くのをやめて——\nそんなことしてると遅刻するから",ann:null}
+      ]},
+      {label:"[Chorus: Kanye West & Tony Williams]",note:null,lines:[
+        {en:"I'll be late for that, baby, I'll wait for that\nIf you had a taste of that, you'd probably pay for that\nI'm comin' in when I feel like\nSo turn this muh'fucker up, only if it feels right\nI think I was made for that",ja:"遅刻するよ、ベイビー、それを待つよ\nその味を知ったら、金を払ってでも欲しがるだろう\n気が向いたときに来る\nだからこれを上げて、気持ちよければ\n俺はそのために生まれたと思う",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"Stop all your blood clot cryin', I was flyin'\nMade it to school with barely 'nuff time to sign in",ja:"泣くのをやめろ、俺は飛んでた\nサインするギリギリの時間に学校に着いた",ann:"「blood clot（ブラッド・クロット）」はジャマイカのパトワ語（Patois）の強い罵倒表現。ジャマイカ文化の影響が強いヒップホップでは定番のスラング。"},
+        {en:"They said the best classes go to the fastest\n\"Sorry, Mr. West – there's no good classes, and that's what yo' ass get\"\nNot even electives? Not even prerequisites?!\nYou mean I missed my major by a couple of seconds?!",ja:"一番いいクラスは早い者勝ちって言った\n「申し訳ありません、ウェストさん——いいクラスはありません、それがお前の結末だ」\n選択科目もない？前提科目もない？！\n専攻を数秒の差で逃したってこと？！",ann:null},
+        {en:"Now, I'm in the shop class, or the basket weavin'\nWith all the rest of the muh'fuckers underachievin'",ja:"今は工芸クラスか、籠編みクラスにいる\n他の落ちこぼれたちと一緒に",ann:"「shop class」は木工・機械などの職業訓練科目。「basket weaving（籠編み）」は実用価値が最も低いとされる授業の代名詞。"},
+        {en:"Will I make it from the student loans to a Benzo?\nLike old folks pissin', I guess it all Depends... oh",ja:"学生ローンからベンツに辿り着けるか？\nおじいちゃんのおしっこみたいに、Depends（オムツブランド）ってことかな",ann:"「Depends」はアメリカの高齢者用おむつブランドの名前で「Depends on〜（〜次第）」という言葉と掛けている。"}
+      ]},
+      {label:"[Verse 2: Kanye West]",note:null,lines:[
+        {en:"Baby, it's too late for that. Lately, I've been takin' it slow\nTryna make it to the party 'fore the guest list close",ja:"ベイビー、それはもう遅すぎる。最近はゆっくりやってる\nゲストリストが締まる前にパーティーに着こうとしてる",ann:null},
+        {en:"Like them Eskimos; \"what would you do for a Klondike?\"\nHmm... I'll be on time for that",ja:"エスキモーみたいに、「クロンダイクバーのために何をする？」\nうーん...それには時間通りに来るよ",ann:"「What would you do for a Klondike Bar?」はアメリカのアイスクリームブランドKlondike Barの有名なCMスローガン（1982〜）。"},
+        {en:"Been bullshittin', but I finally arrived with it\nI know it's late, and I took all year, but\nYou can stop complainin', 'cause I'm finally here. Yeah!",ja:"ぼーっとしてたけど、ついにやり遂げた\n遅いのはわかってる、一年かかったけど\n文句を言うのをやめてくれ、ついに来たんだから。イェー！",ann:null}
+      ]}
+    ]
+  }
+];
+
+// ── Late Registration: full tracklist (21 tracks) ──
+const LR_ALL_TRACKS = [
+  {num:"01",title:"Wake Up Mr. West",feat:null,hasLyrics:true,songId:"lr-wake-up-mr-west"},
+  {num:"02",title:"Heard 'Em Say",feat:"feat. Adam Levine",hasLyrics:true,songId:"lr-heard-em-say"},
+  {num:"03",title:"Touch The Sky",feat:"feat. Lupe Fiasco",hasLyrics:true,songId:"lr-touch-the-sky"},
+  {num:"04",title:"Gold Digger",feat:"feat. Jamie Foxx",hasLyrics:true,songId:"lr-gold-digger"},
+  {num:"05",title:"Skit #1",feat:null,hasLyrics:true,songId:"lr-skit-1"},
+  {num:"06",title:"Drive Slow",feat:"feat. Paul Wall & GLC",hasLyrics:true,songId:"lr-drive-slow"},
+  {num:"07",title:"My Way Home",feat:"feat. Common",hasLyrics:true,songId:"lr-my-way-home"},
+  {num:"08",title:"Crack Music",feat:"feat. The Game",hasLyrics:true,songId:"lr-crack-music"},
+  {num:"09",title:"Roses",feat:null,hasLyrics:true,songId:"lr-roses"},
+  {num:"10",title:"Bring Me Down",feat:"feat. Brandy",hasLyrics:true,songId:"lr-bring-me-down"},
+  {num:"11",title:"Addiction",feat:null,hasLyrics:true,songId:"lr-addiction"},
+  {num:"12",title:"Skit #2",feat:null,hasLyrics:true,songId:"lr-skit-2"},
+  {num:"13",title:"Diamonds From Sierra Leone (Remix)",feat:"feat. Jay-Z",hasLyrics:true,songId:"lr-diamonds-remix"},
+  {num:"14",title:"We Major",feat:"feat. Nas & Really Doe",hasLyrics:true,songId:"lr-we-major"},
+  {num:"15",title:"Skit #3",feat:null,hasLyrics:true,songId:"lr-skit-3"},
+  {num:"16",title:"Hey Mama",feat:null,hasLyrics:true,songId:"lr-hey-mama"},
+  {num:"17",title:"Celebration",feat:null,hasLyrics:true,songId:"lr-celebration"},
+  {num:"18",title:"Skit #4",feat:null,hasLyrics:true,songId:"lr-skit-4"},
+  {num:"19",title:"Gone",feat:"feat. Otis Redding, Cam'ron & Consequence",hasLyrics:true,songId:"lr-gone"},
+  {num:"20",title:"Diamonds From Sierra Leone",feat:null,hasLyrics:true,songId:"lr-diamonds-original"},
+  {num:"21",title:"Late",feat:null,hasLyrics:true,songId:"lr-late"},
+];
+
+// ── College Dropout tracks ──
+const CD_TRACKS = [
+  {num:"01",title:"Intro",feat:null,hasLyrics:true,data:{
+    num:"01",title:"Intro",feat:null,
+    producer:"Kanye West",sample:null,sampleSources:[],whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"アルバムのオープニングスキット。権威的な教師役のDeRay Davisがすでに「大学中退者」としてのKanyeを叱責する。The College Dropoutが単なる音楽アルバムではなく、学歴社会への問いかけであることをはじめから宣言している。",
+    sections:[
+      {label:"[Intro: DeRay Davis]",note:null,lines:[
+        {en:"Oh, ho-ho-ho!",ja:"ああ、ホッホッホ！",ann:null},
+        {en:"I knew I was gon' see, I knew I was gon' see you again!",ja:"お前にまた会えると思ってたよ！",ann:null},
+        {en:"Where your goddamn book bag at?",ja:"その本のかばんはどこだ？",ann:"DeRay Davis（デレイ・デイヴィス）：シカゴ出身のコメディアン・俳優。The College Dropoutに登場する「怒れる先生・権威者」役を一貫して演じる。「社会が若い黒人に向けるプレッシャーの声」の擬人化として機能している。"},
+        {en:"Always carryin' that lil' book bag, nobody wants to see that!",ja:"いつもそのちっぽけなかばんを持って、誰もそんなもの見たくないぞ！",ann:null},
+        {en:"Goddamn 4th grader, sit your ass down!",ja:"この4年生め、座れ！",ann:null},
+        {en:"You ain't doin' nothin' wit' your life, notin' wit' your life!",ja:"お前は人生で何もしてない、何も！",ann:null},
+        {en:"Look at my face, do I got a promised face?",ja:"俺の顔を見ろ、俺が何か保証したか？",ann:null},
+        {en:"Does it look like I promised you anything?",ja:"俺が何かを約束したように見えるか？",ann:null},
+        {en:"Kanye, nigga—is you snorin' in my class?",ja:"カニエ、お前は俺の授業で居眠りしてるのか？",ann:null},
+        {en:"Wake up, Mr. West!",ja:"起きろ、ウェストくん！",ann:null},
+        {en:"Wake up, Mr. West!",ja:"起きろ、ウェストくん！",ann:null}
+      ]}
+    ]
+  }},
+  {num:"02",title:"We Don't Care",feat:"feat. various",hasLyrics:true,data:{
+    num:"02",title:"We Don't Care",feat:"feat. various",
+    producer:"Kanye West",sample:null,sampleSources:[],whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"シカゴ南部のゲットーで育つ子供たちが麻薬売買に身を投じる現実を、聖歌隊の声を背景にユーモアと怒りで描いたアルバムのリードトラック。「大学も仕事もない」状況で薬物取引が唯一のキャリアになる社会構造を批判する。",
+    sections:[
+      {label:"[Intro]",note:null,lines:[
+        {en:"Oh, yeah",ja:"ああ、そうだ",ann:null},
+        {en:"I got the perfect song for the kids to sing",ja:"子供たちが歌うのにぴったりな曲がある",ann:null},
+        {en:"And all my people that's",ja:"そして俺の仲間たち全員、",ann:null}
+      ]},
+      {label:"[Chorus]",note:null,lines:[
+        {en:"Drug dealin' just to get by",ja:"なんとか生き残るために麻薬を売る",ann:null},
+        {en:"Stack your money 'til it get sky high",ja:"金を空まで積み上げろ",ann:null},
+        {en:"We wasn't s'posed to make it past twenty-five",ja:"俺たちは25を越えられないはずだった",ann:null},
+        {en:"Joke's on you, we still alive",ja:"お前への皮肉だ、俺たちはまだ生きてる",ann:null},
+        {en:"Throw your hands up in the sky and say",ja:"両手を空に上げて言え",ann:null},
+        {en:"\"We don't care what people say\"",ja:"「人々が何を言おうと俺たちは気にしない」",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"We never had nothin' handed, took nothin' for granted",ja:"俺たちは何も与えられず、何も当然とは思わなかった",ann:null},
+        {en:"But as a shorty, I looked up to the dope man",ja:"でもガキの頃は、麻薬売人を尊敬してた",ann:null},
+        {en:"Only adult man I knew that wasn't broke, man",ja:"俺が知ってた、金のない状態じゃなかった唯一の大人の男だった",ann:null},
+        {en:"Flicking Starter coats, man—man, you don't know, man",ja:"スターターコートをはためかせて——お前にはわからない",ann:"Starter coats（スターターコート）：1990年代にスポーツチームのロゴが入ったナイロン製ジャケット。ゲットーの若者の間で流行し、高価なブランド品の象徴として扱われた。"},
+        {en:"Sittin' in the hood like community colleges",ja:"コミュニティカレッジみたいにゲットーに座ってる",ann:"Community College（コミュニティカレッジ）：アメリカの2年制公立大学。学費が低く入学要件も緩やか。前進できずにいる状況を皮肉る比喩。"},
+        {en:"This dope money here is Lil' Trey's scholarship",ja:"この麻薬マネーがリル・トレイの奨学金だ",ann:null},
+        {en:"'Cause ain't no tuition for having no ambition",ja:"なぜなら野心がないことへの学費はないから",ann:null},
+        {en:"So we forced to sell crack, rap, and get a job",ja:"だからクラックを売るか、ラップするか、仕事を得るしかない",ann:null}
+      ]},
+      {label:"[Verse 2]",note:null,lines:[
+        {en:"'Cause a nigga can't shine off $6.55",ja:"なぜなら6ドル55セントじゃ輝けないから",ann:null},
+        {en:"We put shit on layaway, then come back",ja:"ものを後払いで予約して、また取りに来る",ann:"Layaway（後払い予約）：代金を分割払いで支払い終えた後に商品を受け取れる購入方式。クレジットカードが使えない低所得層が利用した。"},
+        {en:"We claim other people kids on our income tax",ja:"他人の子供を自分の確定申告に申告する",ann:"貧困コミュニティでは課税控除を最大化するため、親族の子供を扶養申告するケースが存在した社会的現実。"},
+        {en:"We take that money, cop work, then push packs to get paid",ja:"その金を取って、商品を仕入れて、小分けにして売る",ann:null},
+        {en:"Mama say she wanna move South",ja:"ママは南部に引っ越したいと言う",ann:null},
+        {en:"Scratching lottery tickets, eyes on a new house",ja:"宝くじをこすりながら、新しい家を見つめてる",ann:null}
+      ]},
+      {label:"[Verse 3]",note:null,lines:[
+        {en:"You know the kids gon' act a fool",ja:"子供たちが馬鹿な行動をするのはわかってる",ann:null},
+        {en:"When you stop the programs for after school",ja:"放課後のプログラムをなくしたら",ann:null},
+        {en:"And they DCFS, some of 'em dyslexic",ja:"DCFSの管轄で、一部は識字障害がある",ann:"DCFS（Illinois Department of Children and Family Services）：イリノイ州の児童家庭サービス局。貧困・虐待家庭の子供を管理・保護する機関。"},
+        {en:"They favorite 50 Cent song \"12 Questions\"",ja:"彼らのお気に入りの50 Centの曲は「12 Questions」",ann:"50 Cent（フィフティ・セント）：ニューヨーク出身のラッパー。2003年「In Da Club」で大ブレイク。「12 Questions」は架空のタイトル。"},
+        {en:"Look what was handed us, fathers abandoned us",ja:"俺たちに与えられたものを見ろ、父親たちは俺たちを捨てた",ann:null},
+        {en:"Sometimes, I feel no one in this world understands us",ja:"時々、この世で俺たちを理解してる人は誰もいないと感じる",ann:null},
+        {en:"But we don't care what people say",ja:"でも人々が何を言おうと俺たちは気にしない",ann:null}
+      ]}
+    ]
+  }},
+  {num:"03",title:"Graduation Day",feat:"feat. John Legend",hasLyrics:true,data:{
+    num:"03",title:"Graduation Day",feat:"feat. John Legend",
+    producer:"Kanye West",sample:null,sampleSources:[],whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"We Don't Careの後に続くスキット＋ミニトラック。DeRay Davis演じる先生がKanyeに激怒してキャンパスから追い出し、続いてJohn Legendが「もっといいものがある、誰にも言うな」と歌う。学歴社会への反抗とドロップアウトの解放感を対比した構成。",
+    sections:[
+      {label:"[Spoken: DeRay]",note:null,lines:[
+        {en:"What in the fuck was that, Kanye?",ja:"カニエ、あれは一体何だったんだ？",ann:null},
+        {en:"I told you to do some shit for the kids",ja:"子供たちのために何かやれと言ったんだ",ann:null},
+        {en:"You can give me your muthafuckin' graduation ticket right now",ja:"今すぐ卒業式のチケットを渡せ",ann:null},
+        {en:"You give me this muthafuckin' robe before you catch some senioritis",ja:"お前が卒業前症候群にかかる前にこのガウンを返せ",ann:"Senioritis（シニアアイティス）：卒業が近づいた学生が無気力になる現象を指すアメリカの口語表現。"},
+        {en:"You will not walk 'cross that stage, you won't slide across that stage",ja:"あのステージを歩かせない、滑らせもしない",ann:null},
+        {en:"I'm tryna get you out here with these white people and this how you're gon' do me?",ja:"俺はここで白人たちと一緒にお前を卒業させようとしてたのに、こんなことするのか？",ann:null},
+        {en:"You know what, you's a nigga, and I don't mean that in no nice way",ja:"わかったか、お前はニガーだ、褒め言葉じゃない",ann:null},
+        {en:"'Cause, you getting the fuck out of this campus",ja:"なぜなら、お前はこのキャンパスから出て行くんだから",ann:null},
+        {en:"What the fuck you gon' do now?",ja:"お前はこれからどうするんだ？",ann:null}
+      ]},
+      {label:"[Verse: John Legend]",note:null,lines:[
+        {en:"I'm no longer confused, but, don't tell anybody",ja:"もう迷っていない、でも誰にも言うな",ann:"John Legend（ジョン・レジェンド、本名John Roger Stephens、1978〜）：オハイオ州出身のR&Bシンガー・ピアニスト。この時点ではまだソロデビュー前。後にEGOT（Emmy・Grammy・Oscar・Tony全受賞）を達成した最初の黒人アーティスト。"},
+        {en:"I'm about to break the rules, but, don't tell anybody",ja:"ルールを破ろうとしている、でも誰にも言うな",ann:null},
+        {en:"I got something better than school, so don't tell anybody",ja:"学校より良いものがある、だから誰にも言うな",ann:null},
+        {en:"My momma would kill me, so, don't tell anybody",ja:"ママに殺されちゃうから、誰にも言うな",ann:null},
+        {en:"She wants me to get a good-ass job, just like everybody",ja:"ママは俺にも皆と同じように良い仕事に就いてほしいと思ってる",ann:null},
+        {en:"She ain't walked in my shoes, I'm just not everybody",ja:"ママは俺の立場にはなれない、俺はみんなと同じじゃない",ann:null}
+      ]}
+    ]
+  }},
+  {num:"04",title:"All Falls Down",feat:"feat. Syleena Johnson",hasLyrics:true,data:{
+    num:"04",title:"All Falls Down",feat:"feat. Syleena Johnson",
+    producer:"Kanye West",
+    sample:"Lauryn Hill「Mystery of Iniquity」(2002)",
+    sampleSources:[
+      {artist:"Lauryn Hill",title:"Mystery of Iniquity",year:2002,album:"MTV Unplugged No. 2.0",url:"#"}
+    ],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"物質主義・自己嫌悪・インセキュリティに支配される若い黒人女性と、最後に自分自身も同じ問題を抱えていると告白するKanyeを描いた曲。Lauryn Hillのクリアランスが下りなかったため、Syleena Johnsonが代わりにそのメロディを歌っている。",
+    sections:[
+      {label:"[Chorus: Syleena Johnson & Kanye West]",note:null,lines:[
+        {en:"Oh, when it all, it all falls down",ja:"ああ、全てが、全てが崩れ落ちるとき",ann:null},
+        {en:"I'm tellin' you all, it all falls down",ja:"みんなに言う、全ては崩れ落ちる",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"Man, I promise, she's so self-conscious",ja:"約束するが、彼女は本当に自意識過剰だ",ann:null},
+        {en:"She has no idea what she doin' in college",ja:"大学で何をしているのか自分でもわかっていない",ann:null},
+        {en:"That major that she majored in don't make no money",ja:"彼女が専攻した学科では金にならない",ann:null},
+        {en:"But she won't drop out, her parents'll look at her funny",ja:"でも中退できない——親に変な目で見られるから",ann:null},
+        {en:"Couldn't afford a car, so she named her daughter Alexis",ja:"車が買えないから、娘をアレクシスと名付けた",ann:"「Alexis（アレクシス）」：レクサス高級セダン「LS」の愛称に近い発音。車が買えないため娘に高級車の名前をつけるという皮肉。"},
+        {en:"She had hair so long that it looked like weave",ja:"ウィッグに見えるほど長い髪があった",ann:null},
+        {en:"Then she cut it all off, now she look like Eve",ja:"全部切ってしまって、今はイヴのように見える",ann:"Eve（イヴ）：フィラデルフィア出身のラッパー。2000年代初頭のヒップホップシーンを代表する女性MC。スキンヘッドで知られる。"},
+        {en:"Single black female addicted to retail and well",ja:"小売り依存症の独身黒人女性、そして",ann:null}
+      ]},
+      {label:"[Verse 2: Kanye West]",note:null,lines:[
+        {en:"Man, I promise, I'm so self-conscious",ja:"約束するが、俺は本当に自意識過剰だ",ann:null},
+        {en:"That's why you always see me with at least one of my watches",ja:"だから俺はいつも少なくとも一つ時計を着けているのが見える",ann:null},
+        {en:"Rollies and Pashas done drove me crazy",ja:"ロレックスとカルティエのパシャが俺を狂わせた",ann:"Rollie（ロリー）：ロレックスの愛称。Pasha（パシャ）：カルティエの時計シリーズ。どちらも高級時計ブランドのアイコン。"},
+        {en:"I can't even pronounce nothing, pass that Ver-say-cee",ja:"何も発音できない、そのヴェルサーチをよこせ",ann:null},
+        {en:"We shine because they hate us, floss 'cause they degrade us",ja:"憎まれるから輝く、見下されるから見せびらかす",ann:null},
+        {en:"We tryna buy back our forty acres",ja:"俺たちは40エーカーを買い戻そうとしている",ann:"南北戦争終結後の1865年、解放された黒人奴隷に土地（40エーカーとラバ1頭）を与えるという政府の約束が果たされなかった史実への言及。"},
+        {en:"Even if you in a Benz, you still a nigga in a coupe",ja:"ベンツに乗っていても、クーペに乗ったニガーにすぎない",ann:null}
+      ]},
+      {label:"[Verse 3: Kanye West]",note:null,lines:[
+        {en:"We buy our way out of jail, but we can't buy freedom",ja:"刑務所からは金で出られるが、自由は買えない",ann:null},
+        {en:"Things we buy to cover up what's inside",ja:"内側にあるものを隠すために買うもの",ann:null},
+        {en:"'Cause they made us hate ourself and love they wealth",ja:"彼らが俺たちに自分を憎ませ、彼らの富を愛させたから",ann:null},
+        {en:"Drug dealer buy Jordan, crackhead buy crack",ja:"麻薬売人はジョーダンを買い、クラックヘッドはクラックを買う",ann:null},
+        {en:"And the white man get paid off of all of that",ja:"そして白人はその全てから利益を得ている",ann:null},
+        {en:"'Cause fuck it, I went to Jacob with twenty-five thou'",ja:"だってクソ、俺も25000ドルを持ってジェイコブのところへ行ったから",ann:"Jacob the Jeweler（ジェイコブ・ザ・ジュエラー）：ニューヨークのダイヤモンドジュエラー、Jacob Arabo。ヒップホップアーティストが高額ジュエリーを購入する象徴的な場所。"},
+        {en:"'Cause I wanna be on 106 & Park, pushin' a Benz",ja:"106 & Parkに出てベンツを乗り回したいから",ann:"106 & Park：BET（Black Entertainment Television）の人気音楽番組。2000年代の黒人音楽の主要なプロモーション媒体。"},
+        {en:"We all self-conscious, I'm just the first to admit it",ja:"俺たちは皆自意識過剰だ、俺はただ最初にそれを認めただけ",ann:null}
+      ]},
+      {label:"[Outro: DeRay]",note:null,lines:[
+        {en:"I just can't keep workin' like this",ja:"もうこんな風には働き続けられない",ann:null},
+        {en:"This grave shifts is like a slave ship",ja:"このグレイブシフト（深夜シフト）は奴隷船みたいだ",ann:"grave shift（グレイブシフト）：深夜勤務（graveyardシフト）を指す俗語。「奴隷船」との言葉遊びで低賃金労働の搾取的な性質を表している。"}
+      ]}
+    ]
+  }},
+  {num:"05",title:"I'll Fly Away",feat:"feat. Tony Williams & DeRay Davis",hasLyrics:true,data:{
+    num:"05",title:"I'll Fly Away",feat:"feat. Tony Williams & DeRay Davis",
+    producer:"Kanye West",sample:null,sampleSources:[],whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"1929年作の伝統的なアメリカのゴスペル讃美歌をカバーしたインタールード。アルバム全体を貫く信仰・救済のテーマを体現し、前曲All Falls Downの重苦しさから解放感を与える役割を果たしている。",
+    sections:[
+      {label:"[Verse: Tony Williams & DeRay Davis]",note:null,lines:[
+        {en:"One glad morning, when this life is over, I'll fly away",ja:"嬉しい朝が来て、この人生が終わったとき、私は飛び立つ",ann:"「I'll Fly Away」：1929年にAlbert E. Brumleyが作曲したゴスペル讃美歌。南部の白人プロテスタント教会で生まれたが、のちに黒人ゴスペルでも広く歌われるようになった。2000年の映画「O Brother, Where Art Thou?」でも使われ広く知られる。"},
+        {en:"To a land where joy shall never end, oh, I'll fly away",ja:"喜びが終わることのない土地へ、ああ、私は飛び立つ",ann:null}
+      ]},
+      {label:"[Chorus: Tony Williams & DeRay Davis]",note:null,lines:[
+        {en:"Oh, I'll fly away, oh, glory",ja:"ああ、飛び立つ、ああ栄光よ",ann:null},
+        {en:"I'll fly away",ja:"私は飛び立つ",ann:null},
+        {en:"When I die, Hallelujah, bye and bye",ja:"私が死んだとき、ハレルヤ、そのうちに",ann:null},
+        {en:"I'll fly away",ja:"私は飛び立つ",ann:null}
+      ]}
+    ]
+  }},
+  {num:"06",title:"Spaceship",feat:"feat. GLC & Consequence",hasLyrics:true,data:{
+    num:"06",title:"Spaceship",feat:"feat. GLC & Consequence",
+    producer:"Kanye West",
+    sample:"Marvin Gaye「Distant Lover」(1973)",
+    sampleSources:[{artist:"Marvin Gaye",title:"Distant Lover",year:1973,album:"Let's Get It On",url:"#"}],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"Kanyeが音楽の夢を追いながらGapでアルバイトをしていた時期の実体験を描いた曲。黒人スタッフへの差別的な扱い、閉塞感、夢への渇望を「宇宙船で飛び立ちたい」という比喩で表現する。GLC、Consequenceがそれぞれの苦境を語るヴァースも加わる。",
+    sections:[
+      {label:"[Chorus]",note:null,lines:[
+        {en:"I've been working this grave-shift / And I ain't made shit",ja:"俺はずっとグレイブシフトで働いてきた / 何も稼げなかった",ann:null},
+        {en:"I wish I could buy me a spaceship and fly / Past the sky, oh",ja:"宇宙船を買って飛んでいきたい / 空の向こうへ、ああ",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"Let's go back, back to the Gap",ja:"ギャップに戻ろう",ann:"Gap（ギャップ）：アメリカ最大手の衣料品チェーン。Kanyeは音楽デビュー前に実際にGapでアルバイトをしていた。"},
+        {en:"Look at my check—wasn't no scratch",ja:"俺の給料を見ろ——何もなかった",ann:null},
+        {en:"They take me to the back and pat me / Asking me about some khakis",ja:"俺を奥に連れて行ってパットダウン（所持品検査）される / カーキパンツのことを聞かれる",ann:null},
+        {en:"But let some Black people walk in",ja:"でも黒人のお客が入ってくると",ann:null},
+        {en:"I bet you they show off their token blackie",ja:"トークン・ブラッキー（免罪符の黒人）として俺を前に出してくるに違いない",ann:"token blackie（トークン・ブラッキー）：企業が多様性を見せるために形式的に置く黒人従業員を指す皮肉的な表現。"},
+        {en:"Lock yourself in a room / Doing five beats a day for three summers",ja:"部屋に閉じこもれ / 3年の夏、毎日5つのビートを作れ",ann:null},
+        {en:"That's A Different World like Cree Summer's",ja:"それがCree SummerのA Different Worldだ",ann:"A Different World（ア・ディファレント・ワールド）：黒人大学（HBCU）を舞台にしたNBCのシットコム（1987〜1993年）。Cree Summerはその出演女優。"},
+        {en:"I deserve to do these numbers",ja:"俺はこれだけの数字を出す資格がある",ann:null},
+        {en:"\"The kid that made that deserves that Maybach!\"",ja:"「あれを作った子はマイバッハを受け取る資格がある！」",ann:"Maybach（マイバッハ）：ドイツの超高級自動車ブランド。成功した証として受け取るべき報酬の象徴。"}
+      ]},
+      {label:"[Verse 2: GLC]",note:null,lines:[
+        {en:"Thirsty on the grind, Chi state of mind",ja:"ハングリーに動き続け、シカゴの精神で",ann:"GLC（本名Gregory L. Collins）：シカゴ南部出身のラッパー、Kanyeの幼馴染。"},
+        {en:"Lost my mama, lost my mind",ja:"ママを失い、正気も失った",ann:null},
+        {en:"\"Why you ain't signed?\" Wasn't my time",ja:"「なぜサインされてないんだ？」まだ俺の時じゃなかった",ann:null}
+      ]},
+      {label:"[Verse 3: Consequence]",note:null,lines:[
+        {en:"\"Yo, you look just like this kid I seen in an old Busta Rhymes video\"",ja:"「お前、古いバスタ・ライムスのビデオに出てた子に似てるな」",ann:"Consequence（コンシクエンス）：クイーンズ出身のラッパー。A Tribe Called QuestのQ-TipがKanyeに紹介した。"},
+        {en:"That all had got snatched from me, A&Rs and they faculties",ja:"全てが奪われた、A&Rたちと彼らのスタッフに",ann:"A&R（エー・アンド・アール）：Artists and Repertoire。レコードレーベルでアーティストの発掘・契約を担当する部門。"},
+        {en:"So I won't be taking no days off 'til my spaceship takes off, blaow!",ja:"宇宙船が飛び立つまで一日も休まない、ブラウ！",ann:null}
+      ]},
+      {label:"[Outro: Tony Williams]",note:null,lines:[
+        {en:"I wanna fly / I said I want my chariot to pick me up / And take a brother for a ride",ja:"飛びたい / 戦車が迎えに来てくれることを願う / 兄弟を乗せて走ってほしい",ann:null}
+      ]}
+    ]
+  }},
+  {num:"07",title:"Jesus Walks",feat:null,hasLyrics:true,data:{
+    num:"07",title:"Jesus Walks",feat:null,
+    producer:"Kanye West, Che Smith",
+    sample:"ARC Choir「Walk with Me」",
+    sampleSources:[
+      {artist:"ARC Choir",title:"Walk with Me",year:null,album:null,url:"#"}
+    ],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"Kanyeの代表曲の一つ。ラジオ局に「宗教的すぎてかけられない」と3度拒否されながら、3つの異なるMVを制作し最終的にグラミー賞最優秀ラップソングを受賞。ギャングスター、ドラッグ中毒者、ストリッパーなど社会から排除されたすべての人々と「ジーザスが歩む」というメッセージを込めている。",
+    sections:[
+      {label:"[Spoken Intro]",note:null,lines:[
+        {en:"We at war",ja:"俺たちは戦争中だ",ann:null},
+        {en:"We at war with terrorism, racism",ja:"テロリズムと人種差別と戦っている",ann:"2001年9月11日のアメリカ同時多発テロ後、アメリカ社会は「テロとの戦争」を宣言した。Kanyeはその言説を内省的な問いかけへと転換している。"},
+        {en:"But most of all, we at war with ourselves",ja:"でも何より、俺たち自身と戦っている",ann:null}
+      ]},
+      {label:"[Chorus]",note:null,lines:[
+        {en:"(Jesus, walk)",ja:"（ジーザス、歩め）",ann:null},
+        {en:"God, show me the way because the Devil's tryna break me down",ja:"神よ、道を示してくれ、悪魔が俺を壊そうとしているから",ann:null},
+        {en:"(Jesus, walk with me)",ja:"（ジーザス、俺と共に歩め）",ann:null}
+      ]},
+      {label:"[Verse 1]",note:null,lines:[
+        {en:"You know what the Midwest is? Young and restless",ja:"中西部とは何か知ってるか？ 若くて落ち着きのない場所だ",ann:null},
+        {en:"I walk through the valley of the Chi where death is",ja:"俺は死が溢れるシカゴの谷を歩く",ann:"「Valley of the Chi」：詩篇23篇「死の陰の谷を歩む」のパロディ。シカゴ（Chi）の危険な地域を死の谷に見立てている。"},
+        {en:"They be askin' us questions, harass and arrest us",ja:"俺たちに質問して、ハラスメントして逮捕する",ann:null},
+        {en:"A trunk full of coke, rental car from Avis",ja:"コカインで満杯のトランク、エイビスのレンタカー",ann:"Avis（エイビス）：アメリカ大手レンタカー会社。麻薬運搬に使われるレンタカーとして言及される。"},
+        {en:"My mama used to say only Jesus can save us",ja:"ママはいつもジーザスだけが俺たちを救えると言っていた",ann:null},
+        {en:"But I'll be gone 'til November, I got packs to move, I hope",ja:"でも11月まで俺はいなくなる、動かさなきゃならないパック（麻薬）がある",ann:null}
+      ]},
+      {label:"[Chorus (extended)]",note:null,lines:[
+        {en:"God, show me the way because the Devil's tryna break me down",ja:"神よ、道を示してくれ、悪魔が俺を壊そうとしているから",ann:null},
+        {en:"The only thing that I pray is that my feet don't fail me now",ja:"俺が祈るのはただ一つ、足が今ここで俺を裏切らないように",ann:null},
+        {en:"And I don't think there's nothin' I can do now to right my wrongs",ja:"今さら俺の過ちを正すためにできることはないと思う",ann:null},
+        {en:"I wanna talk to God but I'm afraid 'cause we ain't spoke in so long",ja:"神と話したいが怖い、もうずっと話してないから",ann:null}
+      ]},
+      {label:"[Verse 2]",note:null,lines:[
+        {en:"To the hustlers, killers, murderers, drug dealers, even the scrippers",ja:"ハスラー、殺し屋、殺人犯、麻薬売人、そしてストリッパーたちへ",ann:null},
+        {en:"(Jesus walks with them)",ja:"（ジーザスは彼らと共に歩む）",ann:null},
+        {en:"To the victims of welfare, feel we livin' in Hell here, hell yeah",ja:"福祉の犠牲者たち、ここが地獄だと感じている、まさに地獄だ",ann:null},
+        {en:"We rappers is role models, we rap, we don't think",ja:"俺たちラッパーはロールモデルだ、ラップするが考えない",ann:null},
+        {en:"The way Kathie Lee needed Regis, that's the way I need Jesus",ja:"キャシー・リーがリージスを必要としたように、俺はジーザスを必要としている",ann:"「Live! with Regis and Kathie Lee」（1985〜2000年）というABCの朝の情報番組での名コンビ関係。なくてはならないパートナー関係の比喩。"},
+        {en:"They say you can rap about anything except for Jesus",ja:"何についてでもラップできると言う、でもジーザス以外は",ann:null},
+        {en:"That means guns, sex, lies, videotape",ja:"つまり銃、セックス、嘘、ビデオテープについては",ann:"「sex, lies and videotape（セックスと嘘とビデオテープ）」：スティーヴン・ソダーバーグ監督の1989年の映画タイトルをもじったライン。"},
+        {en:"But if I talk about God, my record won't get played, huh?",ja:"でも神について話したら、俺のレコードはかけてもらえない？",ann:"グラミー賞：Jesus Walksは第47回グラミー賞（2005年）で最優秀ラップソング部門を受賞。"},
+        {en:"Then I hope it take away from my sins",ja:"それで俺の罪が消えてくれることを願う",ann:null}
+      ]}
+    ]
+  }},
+  {num:"08",title:"Never Let Me Down",feat:"feat. Jay-Z & J. Ivy",hasLyrics:true,data:{
+    num:"08",title:"Never Let Me Down",feat:"feat. Jay-Z & J. Ivy",
+    producer:"Kanye West",
+    sample:"Tracie Spencer「I'm Ready for You」/ Tarrey Torae",
+    sampleSources:[{artist:"Tracie Spencer",title:"I'm Ready for You",year:1992,album:"Make My Wish Come True",url:"#"}],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"Jay-ZとKanyeの信頼関係、Kanyeの家族の公民権運動への参加、シカゴのスポークンワードアーティストJ. Ivyの詩を組み合わせた曲。「決して俺を裏切るな」というタイトルは神への祈りであり、盟友への誓いでもある。",
+    sections:[
+      {label:"[Chorus]",note:null,lines:[
+        {en:"When it comes to being true, at least true to me / One thing I've found",ja:"真実であることについて、少なくとも自分に正直に / 一つのことを見つけた",ann:null},
+        {en:"Oh, no, you'll never let me down",ja:"ああ、お前は決して俺を裏切らない",ann:null}
+      ]},
+      {label:"[Verse 1: JAY-Z]",note:null,lines:[
+        {en:"Ayo, first, I snatched the streets, then I snatched the charts",ja:"まずストリートを制し、それからチャートを制した",ann:"Jay-Z（ジェイ・ジー、本名Shawn Corey Carter、1969〜）：ブルックリン出身のラッパー・経営者。Roc-A-Fella Records創業者。本曲録音当時は8枚目「The Black Album」（2003年）をリリースしたばかりの絶頂期。"},
+        {en:"Rappers came and went. I've been here from the start",ja:"ラッパーたちは来ては去った、俺は最初からここにいる",ann:null},
+        {en:"It's Hov tradition, Jeff Gordon of rap / I'm back to claim pole position",ja:"ホヴの伝統、ラップのジェフ・ゴードン / ポールポジションを取り戻しに来た",ann:"Hov（ホヴ）：Jay-Zの愛称。ジェホバ（神の名）をもじったもの。Jeff Gordon（ジェフ・ゴードン）：NASCARの伝説的ドライバーでポールポジション（最前列スタート）の王者。Cristal（クリスタル）：フランスのシャンパン「ルイ・ロデレール・クリスタル」。2000年代ヒップホップにおける成功の象徴。"}
+      ]},
+      {label:"[Verse 2: Kanye West]",note:null,lines:[
+        {en:"I get down for my grandfather, who took my momma / Made her sit in that seat where white folks ain't want us to eat",ja:"俺が頑張るのは祖父のためだ / 白人が俺たちに食わせたくなかった席に座らせた人",ann:"シット・イン（座り込み抗議）：1950〜60年代の公民権運動で行われた非暴力抗議。黒人が白人専用のカウンターに座り込み抗議した。KanyeはThis is a true story—母Dondaが6歳の時、祖父Portwood Williamsと共に参加し逮捕された。"},
+        {en:"At the tender age of 6, she was arrested for the sit-ins / And with that in my blood, I was born to be different",ja:"6歳という幼い年齢で、彼女はシット・インで逮捕された / その血が流れているから、俺は違う人間として生まれてきた",ann:null},
+        {en:"Racism still alive, they just be concealin' it",ja:"人種差別はまだ生きてる、ただ隠しているだけ",ann:null},
+        {en:"They even made me show ID to get inside of Sam's Club",ja:"サムズクラブに入るのにIDを見せさせられた",ann:"Sam's Club（サムズクラブ）：ウォルマート系列の会員制倉庫型スーパー。黒人男性が入店時にIDを求められる体験は、日常的なレイシャル・プロファイリング（人種的偏見に基づく取り締まり）の例として語られている。"},
+        {en:"But look what an accident did to Left Eye / First Aaliyah, now Romeo must die",ja:"事故がLeft Eyeに何をしたかを見れば / まずアリーヤ、次にロミオ・マスト・ダイ",ann:"Left Eye（レフト・アイ）：R&BグループTLCのメンバー、Lisa Lopes（1971〜2002年）のニックネーム。2002年4月にホンジュラスで自動車事故死。Aaliyah（アリーヤ、1979〜2001年）：R&Bシンガー。2001年8月にバハマで自家用機墜落事故により22歳で死去。主演映画「Romeo Must Die」（2000年）と重ねて詠んでいる。Kanyeも2002年10月に自動車事故で顎を骨折しており、両者の死を念頭に置いている。"}
+      ]},
+      {label:"[Verse 3: J. Ivy]",note:null,lines:[
+        {en:"We are all here for a reason on a particular path",ja:"俺たちは皆、特定の道で理由があってここにいる",ann:"J. Ivy（ジェイ・アイビー）：シカゴ出身のスポークンワードアーティスト。2003年グラミー賞スポークンワード部門特別賞受賞。Def Poetry Jamに出演。Kanye加入前からその才能を認めた人物の一人。"},
+        {en:"My spirit is a part of this, that's why I get spiritual / But I get my hymns from Him",ja:"俺の精神はこれの一部だ、だから俺はスピリチュアルになる / でも讃美歌は彼（神）から得る",ann:null},
+        {en:"I'm not a miracle. I'm a Heaven-sent instrument",ja:"俺は奇跡じゃない、天から送られた楽器だ",ann:null},
+        {en:"If I were on the highest cliff, on the highest riff / And you slipped off the side / I would never, ever let you down",ja:"最も高い崖の上にいたとしても / お前が端から滑り落ちても / 絶対に、決してお前を放さない",ann:null}
+      ]}
+    ]
+  }},
+  {num:"09",title:"Get Em High",feat:"feat. Talib Kweli & Common",hasLyrics:true,data:{
+    num:"09",title:"Get Em High",feat:"feat. Talib Kweli & Common",
+    producer:"Kanye West",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"KanyeがTalib Kweli、CommonというNYとシカゴの意識系リリシストたちと競い合うパーティートラック。大学中退後の自己証明と「俺たちは嫌な奴だから仲良い」という仲間意識を軽妙に語る。",
+    sections:[
+      {label:"[Chorus: Kanye West]",note:null,lines:[
+        {en:"N-now, th-th-throw your motherfuckin' hands / Get 'em high",ja:"さあ、両手を上げろ / 高く",ann:null},
+        {en:"All the girls pass the weed to your motherfuckin' man / Get 'em high",ja:"ガールズよ、大麻を彼氏に回せ / ハイになれ",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"My freshman year, I was going through hella problems / 'Till I built up the nerve to drop my ass up out of college",ja:"大学1年の時、ヤバい問題を抱えてた / 大学から出る勇気をためるまで",ann:null},
+        {en:"Why you think me and Dame cool? We assholes",ja:"なぜ俺とデイムが仲良しだと思う？俺たちは嫌な奴だから",ann:"Dame（デイム）：Damon Dash（デイモン・ダッシュ）。Roc-A-Fella RecordsをJay-Zと共同設立。KanyeはDameに才能を認められRoc-A-Fellaと契約した。"},
+        {en:"That's why we hear your music and fast forward / 'Cause we don't wanna hear that weak shit no mo'",ja:"だから俺たちはお前の音楽を聴いて早送りする / そんな弱いものはもう聞きたくないから",ann:null}
+      ]},
+      {label:"[Verse 2: Kanye West & Talib Kweli]",note:null,lines:[
+        {en:"Now who the hell is this? Emailing me at 11:26",ja:"一体誰だこれは？11時26分にメールしてくる",ann:null},
+        {en:"You know how girls on Black Planet be when they get bubbly",ja:"ブラック・プラネットの女の子たちがノリノリになった時どうなるかわかるだろ",ann:"BlackPlanet.com（ブラック・プラネット）：2000年代前半に人気を博した黒人向けSNS。主に黒人コミュニティのメッセージングに使われた（Twitterの開始は2006年）。"},
+        {en:"Yo, Kwe, she don't believe me, please pick up the line",ja:"クウェ、彼女は俺を信じない、電話に出てくれ",ann:"Talib Kweli（タリブ・クウェリ）：ブルックリン出身のラッパー。Mos Defとのユニット「Black Star」（1998年）で名を上げたコンシャス系MC。Kanyeのデビュー前のツアーに同行したこともあり、初期キャリアに貢献した。"}
+      ]},
+      {label:"[Verse 3: Talib Kweli & Common]",note:null,lines:[
+        {en:"I can't believe this nigga use my name for pickin' up dimes",ja:"こいつが女を口説くのに俺の名前を使うとは信じられない",ann:null}
+      ]},
+      {label:"[Verse 4: Common]",note:null,lines:[
+        {en:"Rock clubs like Tiger Woods in the hood",ja:"タイガー・ウッズのようにゲットーでロッククラブ（ゴルフクラブ）を振る",ann:"Tiger Woods（タイガー・ウッズ）：アフリカ系アメリカ人として初めてゴルフ界を制したスーパースター。ゲットーでゴルフクラブを振る＝場違いな場所で圧倒的な支配力を発揮するという比喩。"},
+        {en:"They say hip-hop is dead, I'm here to resurrect me",ja:"ヒップホップは死んでると言う、俺がよみがえらせる",ann:"Common（コモン、本名Lonnie Rashid Lynn Jr.）：シカゴ出身のラッパー・俳優。Kanyeとの縁は深く、後に「Finding Forever」（2007年）をKanyeのプロデュースで制作。このラインは後年Nasがリリースする「Hip Hop Is Dead」（2006年）を先取りしている。"},
+        {en:"So when the industry crash, I survive like Kanye / Spittin' through wires and fires",ja:"業界が崩壊したとき、俺はカニエのように生き残る / ワイヤーと炎を通して吐き出す",ann:"Kanyeのデビュー前の自動車事故（2002年10月）とそれを経てリリースした「Through the Wire」（顎を骨折した状態で録音）への言及。"}
+      ]}
+    ]
+  }},
+  {num:"10",title:"Workout Plan",feat:null,hasLyrics:true,data:{
+    num:"10",title:"Workout Plan",feat:null,
+    producer:"Kanye West",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"次の「The New Workout Plan」への導入スキット。テレビ通販番組風に、ワークアウトで体型を整えてNBAプレイヤーや「baller」を捕まえた女性たちの会話を演じる風刺的な小品。",
+    sections:[
+      {label:"[Skit: Girl #1, Girl #2, Girl #3]",note:null,lines:[
+        {en:"Ayy, you know I finally got my shit together / Been watchin' that workout plan, girl!",ja:"ついに自分のことを整えたのよ / あのワークアウトプランを見てるの！",ann:null},
+        {en:"My nigga, I'm tired of puttin' 1-8-7 in my nigga's pager / That shit ain't workin' no more",ja:"もう彼氏のポケベルに1-8-7って打つのも嫌になった / もう効果ないし",ann:"187（1-8-7）：カリフォルニア州刑法第187条、殺人を意味するスラング。ポケベル（pager）が普及していた時代に、脅しとして相手のポケベルに打ち込む行為を指す。"},
+        {en:"Girl, you know I'ma video ho-ffesional now / Rollin' in Lexus, Acuras, everything, girl",ja:"私今はビデオ・ホーフェッショナルよ / レクサスやアキュラとかいろんな車に乗ってるのよ",ann:"video ho-ffesional：「ビデオ・ガール（ヒップホップMVに登場する女性）」と「professional（専門家）」を組み合わせた造語。"},
+        {en:"Girl, I'll give it to you for Free.99 / FREE.99?!",ja:"タダで渡すわ / タダ？！",ann:"Free.99（フリー・ドット・ナインティーナイン）：「無料」を価格表示風にギャグにした表現。$0.99の代わりに「Free.99」と言って実質タダを示す。"},
+        {en:"Broke Phi Broke",ja:"ブローク・ファイ・ブローク",ann:"Broke Phi Broke：「Broke（金欠）」に黒人大学の友愛会・親愛会のギリシャ文字名称スタイルを組み合わせた造語。"}
+      ]}
+    ]
+  }},
+  {num:"11",title:"The New Workout Plan",feat:"feat. GLC & Bosko",hasLyrics:true,data:{
+    num:"11",title:"The New Workout Plan",feat:"feat. GLC & Bosko",
+    producer:"Kanye West",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"前スキット「Workout Plan」を受けて展開するナンバー。テレビの「ワークアウト番組」のパロディとして、ダイエットよりも「金持ちの男を捕まえるためのテクニック」を指南する内容。後半にはKanyeのワークアウトプランでNBA選手をゲットした女性たちの証言が挿入される。",
+    sections:[
+      {label:"[Intro: Kanye West]",note:null,lines:[
+        {en:"You just popped in the Kanye West: Get Right for the Summer workout tape",ja:"カニエ・ウェスト「夏に向けて体を整えろ」ワークアウトテープを入れたところ",ann:null},
+        {en:"Ladies, if you follow these instructions exactly / You might be able to pull you a rapper, a NBA player / Man, at least a dude with a car",ja:"レディースよ、これらの指示を正確に守れば / ラッパーやNBAプレイヤーをゲットできるかも / 少なくとも車を持った男くらいは",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"One, and two, and three, and four, and get them sit ups right",ja:"1、2、3、4、腹筋をしっかりやって",ann:null},
+        {en:"It's a party tonight and ooh, she's so excited",ja:"今夜はパーティーがある、ああ、彼女はとても興奮してる",ann:null}
+      ]},
+      {label:"[Verse 2: Kanye West]",note:null,lines:[
+        {en:"My name Kanye from the Jigga set, Twista said, \"Get It Wet\"",ja:"俺の名前はカニエ、ジガ（Jay-Z）のセットから",ann:"Jigga set：Jay-ZとRoc-A-Fellaレーベルを指す。"},
+        {en:"Cover your mouth up like you got SARS",ja:"SARSにかかったかのように口を覆え",ann:"SARS（サーズ）：重症急性呼吸器症候群。2002〜2003年に流行した感染症。"},
+        {en:"We ain't sweating to the oldies, we juking to a cold beat",ja:"オールディーズで汗をかくんじゃない、クールなビートでジュークするんだ",ann:"Juking（ジューキング）：シカゴ独自のダンス文化。ハウスミュージック系のパーティーで親密なスタイルで踊る行為。"}
+      ]},
+      {label:"[Interlude 1: Jill]",note:null,lines:[
+        {en:"I was able to pull a NBA player / Now I shop every day on Rodeo Drive",ja:"NBAプレイヤーをゲットできたの / 今はロデオ・ドライブで毎日ショッピングしてる",ann:"Rodeo Drive（ロデオ・ドライブ）：ビバリーヒルズの超高級ショッピング街。ヴェルサーチ、グッチなど一流ブランドが並ぶ。"}
+      ]},
+      {label:"[Interlude 2: Lasandra]",note:null,lines:[
+        {en:"I was able to get a free trip to Cancun / I ain't gotta fuck with Ray-Ray's broke ass no mo'",ja:"カンクンへの無料旅行もゲットした / もうレイレイの貧乏な奴と関わらなくていい",ann:"Cancun（カンクン）：メキシコのリゾート地。Ray-Ray：黒人コミュニティでよく使われる男性のニックネーム。"}
+      ]},
+      {label:"[Interlude 3: Ella-May]",note:null,lines:[
+        {en:"I been able to date outside the family / I got a double wide, and I rode a plane",ja:"家族以外の人と付き合えるようになった / ダブルワイドを手に入れて、飛行機にも乗った",ann:"Double wide（ダブルワイド）：2つのユニットを並べたトレーラーハウス。アメリカ南部低所得層の象徴的な住居形態。「date outside the family」という南部の田舎のステレオタイプのパロディ。"}
+      ]},
+      {label:"[Bridge & Refrain]",note:null,lines:[
+        {en:"Thanks to Kanye's workout plan / I pulled me a baller man / And I ain't gotta work at the mall again",ja:"カニエのワークアウトプランのおかげで / バラー（金持ち）の男をゲットした / もうモールで働かなくていい",ann:null},
+        {en:"Eat your salad, no dessert / Get that man you deserve",ja:"サラダを食べて、デザートなし / 相応しい男をゲットしろ",ann:null}
+      ]}
+    ]
+  }},
+  {num:"12",title:"Slow Jamz",feat:"feat. Twista & Jamie Foxx",hasLyrics:true,data:{
+    num:"12",title:"Slow Jamz",feat:"feat. Twista & Jamie Foxx",
+    producer:"Kanye West",
+    sample:"Luther Vandross「A House Is Not a Home」",
+    sampleSources:[
+      {artist:"Luther Vandross",title:"A House Is Not a Home",year:1986,album:"Give Me the Reason",url:"#"}
+    ],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"The College Dropoutの収録曲だが、Twista名義のシングルとして先行リリースされビルボードHot 100で1位を獲得。Kanyeにとって初のチャート1位曲。Jamie Foxxがルーサー・ヴァンドロスをモチーフにしたナレーターを演じ、1970〜80年代の黒人R&Bアーティストへのオマージュを捧げながらスロウジャムの系譜を讃える。",
+    sections:[
+      {label:"[Intro: Jamie Foxx & Luther Vandross]",note:null,lines:[
+        {en:"Kanye, it-it's Foxx, man",ja:"カニエ、フォックスだよ",ann:"Jamie Foxx（ジェイミー・フォックス）：コメディアン・俳優・シンガー。アカデミー賞受賞作「Ray」（2004年）と本曲が同年にリリースされ知名度が急上昇した。"},
+        {en:"We don't put enough emphasis on the ladies sometimes",ja:"俺たち、時々女性のことを十分に考えてないんだ",ann:null}
+      ]},
+      {label:"[Chorus: Jamie Foxx, Luther Vandross & Kanye West]",note:null,lines:[
+        {en:"She said she want some Marvin Gaye, some Luther Vandross",ja:"彼女はマーヴィン・ゲイが聴きたいって、ルーサー・ヴァンドロスも",ann:"Luther Vandross（ルーサー・ヴァンドロス、1951〜2005年）：ニューヨーク出身のR&Bシンガー。「A House Is Not a Home」などで知られるソウル・バラードの大家。2003年に脳卒中で倒れた。"},
+        {en:"A little Anita will definitely set this party off right",ja:"アニータを少し流せば絶対パーティーが盛り上がる",ann:null},
+        {en:"She said she want some Ready for the World, some New Edition",ja:"レディー・フォー・ザ・ワールドが聴きたいって、ニュー・エディションも",ann:null},
+        {en:"Some Minnie Riperton will definitely set this party off right",ja:"ミニー・リパートンを流せば絶対パーティーが盛り上がる",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"I told her to drive over in yo' new whip",ja:"新しい車で来いと言った",ann:null},
+        {en:"She be grabbin', callin' me Biggie like Shyne, hom'",ja:"彼女は俺をつかんで、シャインみたいにビギーって呼ぶんだ",ann:"Shyne（シャイン）：本名Jamal Barrow。Notorious B.I.G.（ビギー）の声に似たスタイルで2000年代初頭に注目されたラッパー。"},
+        {en:"She got a light-skinned friend, look like Michael Jackson",ja:"肌の明るい友達がいて、マイケル・ジャクソンに似てる",ann:null},
+        {en:"Got a dark-skinned friend, look like Michael Jackson",ja:"肌の暗い友達がいて、こっちもマイケル・ジャクソンに似てる",ann:null},
+        {en:"I played Ready for the World, she was ready for some action",ja:"レディー・フォー・ザ・ワールドをかけたら、彼女は行動する準備ができてた",ann:null},
+        {en:"I'ma play this Vandross, you gon' take yo' pants off",ja:"ヴァンドロスをかけたら、お前はパンツを脱ぐことになる",ann:null}
+      ]},
+      {label:"[Bridge: Jamie Foxx & Luther Vandross]",note:null,lines:[
+        {en:"Smokey Robinson, Smokey Robinson",ja:"スモーキー・ロビンソン、スモーキー・ロビンソン",ann:null},
+        {en:"Freddie Jackson, everything, everything",ja:"フレディ・ジャクソン、すべて、すべて",ann:null},
+        {en:"Smokey Robinson, Ashford & Simpson",ja:"スモーキー・ロビンソン、アシュフォード&シンプソン",ann:null},
+        {en:"Al Green, oh Al Green",ja:"アル・グリーン、ああアル・グリーン",ann:null},
+        {en:"What you know about the Isley Brothers?",ja:"アイズレー・ブラザーズのこと何か知ってるか？",ann:null}
+      ]},
+      {label:"[Interlude]",note:null,lines:[
+        {en:"Now, now, Kanye, I know I told you to slow it down, baby",ja:"ねえカニエ、ゆっくりやれって言ったじゃない",ann:null},
+        {en:"But now I need you to do it faster, baby",ja:"でも今は速くやってほしい",ann:null},
+        {en:"But I know somebody who can, Twista",ja:"でも誰かできる人を知ってる、ツイスタだ",ann:"Twista（ツイスタ）：シカゴ出身のラッパー。世界最速ラッパーとしてギネス記録を持つ。"}
+      ]},
+      {label:"[Verse 2: Twista & Luther Vandross]",note:null,lines:[
+        {en:"When it come to rockin' the rhythm like Marvin and Luther",ja:"マーヴィンとルーサーみたいにリズムを刻むとなれば",ann:null},
+        {en:"I can tell you ain't no messin' with Kan Man and Twist",ja:"カニエとツイスタには敵わないとわかるだろ",ann:null},
+        {en:"In the Chi and I be sippin' Hennessy, play some R&B",ja:"シカゴでヘネシーを飲みながらR&Bをかける",ann:null},
+        {en:"You ain't know Twista could work it like the Whispers?",ja:"ツイスタがウィスパーズみたいにやれること知らなかった？",ann:null},
+        {en:"Hit the stop light, move it to some Isleys",ja:"信号待ちで、アイズレーズを流して体を動かす",ann:null},
+        {en:"Rims still movin' so I bump a lil' Spinners",ja:"ホイールがまだ回ってる間、スピナーズをかける",ann:null},
+        {en:"With my earth in the wind smokin' fire",ja:"アース・ウィンド・アンド・ファイアーのように燃えながら",ann:null},
+        {en:"Let me get your sheets wet listenin' to Keith Sweat",ja:"キース・スウェットを聴きながらシーツを濡らそう",ann:null},
+        {en:"I'm lovin' the way you be holdin' me when I be listenin' to Jodeci",ja:"ジョデシィを聴く時に抱きしめてくれる、それが好きだ",ann:null},
+        {en:"And when some Luther come on, I hope you feelin' me",ja:"ルーサーがかかった時、俺を感じてくれよ",ann:null}
+      ]}
+    ]
+  }},
+  {num:"13",title:"Breathe In Breathe Out",feat:"feat. Ludacris",hasLyrics:true,data:{
+    num:"13",title:"Breathe In Breathe Out",feat:"feat. Ludacris",
+    producer:"Kanye West",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"「重要なことをラップすると言っていたのに、金・女・リムの話をしてしまっている」と自己批評しながらそのまま続ける自己矛盾の曲。コンシャスラップの代表格であるMos DefとTalib Kweliへの謝罪を挟みつつ、全力で物質主義ラップをやりきる。",
+    sections:[
+      {label:"[Chorus: Ludacris]",note:null,lines:[
+        {en:"Breathe in, breathe out / If you're iced up, pull your sleeves out",ja:"吸って、吐いて / アイスアップしてるなら袖を出して",ann:"Ludacris（ルーダクリス、本名Christopher Brian Bridges）：アトランタ出身のラッパー。パンチラインとユーモアに定評のあるMC。"},
+        {en:"If a nigga act up, pull a Desert E's out",ja:"ニガーが暴れたらデザートイーグルを出して",ann:"Desert Eagle（デザートイーグル）：大型の半自動拳銃。ヒップホップで「銃」の象徴として頻繁に登場する。"}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"Golly, more of that bullshit ice rap / I gotta 'pologize to Mos and Kweli",ja:"やれやれ、またあのクソみたいなアイスラップだ / モスとクウェリに謝らないといけない",ann:"Mos and Kweli（モスとクウェリ）：Mos Def（モス・デフ）とTalib Kweli（タリブ・クウェリ）。コンシャス（意識高い）ヒップホップの代表格。"},
+        {en:"But is it cool to rap about gold / If I told the world I copped it from Ghana and Mali?",ja:"でも金についてラップするのはいいのか / 世界にガーナとマリから買ったと言ったら？",ann:"Ghana and Mali（ガーナとマリ）：西アフリカの国々。歴史的に金の産地として有名。"},
+        {en:"Always said, \"If I rapped, I'd say somethin' significant\" / But now, I'm rapping 'bout money, hoes, and rims again",ja:"いつも言ってた、「ラップするなら重要なことを言う」と / でも今は金と女とリムの話をしてる",ann:null},
+        {en:"And it's still about the Benjamins",ja:"それでもまだベンジャミン（100ドル札）の話",ann:"Benjamins（ベンジャミンズ）：100ドル札の俗称。ベンジャミン・フランクリンの肖像が印刷されていることから。Puff Daddyの曲「It's All About the Benjamins」（1997年）への言及。"},
+        {en:"Strippers named \"Cinnamon,\" more chips than Pentium",ja:"「シナモン」という名前のストリッパー、ペンティアムよりも多いチップ",ann:"Pentium（ペンティアム）：Intelのプロセッサーブランド。「Chips」はコンピュータチップと金のダブルミーニング。"}
+      ]},
+      {label:"[Verse 3: Kanye West]",note:null,lines:[
+        {en:"All of which is legal in Amsterdam / So, say my name like Candyman",ja:"すべてアムステルダムでは合法 / キャンディマンのように俺の名前を呼んでくれ",ann:"Amsterdam（アムステルダム）：オランダの首都。マリファナとセックスが合法で、アメリカとの対比で使われる。Candyman（キャンディマン）：1992年のホラー映画の主人公。鏡に向かって名前を5回唱えると現れる。"},
+        {en:"You can't take that all at one time—you gotta breathe!",ja:"一度にすべてはできない——深呼吸しろ！",ann:null}
+      ]},
+      {label:"[Outro: Kanye West]",note:null,lines:[
+        {en:"And you say, \"Chi-city\"",ja:"「シカゴ！」と言え",ann:null}
+      ]}
+    ]
+  }},
+  {num:"14",title:"School Spirit Skit 1",feat:null,hasLyrics:true,data:{
+    num:"14",title:"School Spirit Skit 1",feat:null,
+    producer:"Kanye West",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"DeRay Davisによる風刺スキット。「大学を卒業すれば幸せになれる」という神話を誇張しながら解体する。年収2万5千ドルの仕事、Gap勤務、秘書の秘書という現実と「でも学歴がある」という虚しい満足感が笑いの核心。",
+    sections:[
+      {label:"[Skit: DeRay Davis]",note:"DeRay Davis（ディレイ・デイヴィス）：シカゴ出身のコメディアン・俳優。College Dropoutで「学歴社会のプレッシャーの声」を体現する語り手役を一貫して演じる。",lines:[
+        {en:"Now you'll get that 25-thousand dollar job a year",ja:"さあ！年収2万5千ドルの仕事が手に入る",ann:"25-thousand dollar（2万5千ドル）：2004年当時のアメリカの低〜中程度の年収。大卒への期待値に対する現実の落差を表す数字。"},
+        {en:"If you continue to work at the Gap / You'll come in at an entry-level position",ja:"Gapで働き続ければ / 入門職から始まる",ann:"Gap（ギャップ）：アメリカのカジュアルウェアチェーン。Kanyeが音楽デビュー前に実際にアルバイトをしていた店。学歴があっても小売業の入門職にしか就けないという皮肉のために選ばれている。"},
+        {en:"Which is being the secretary's secretary",ja:"それが秘書の秘書になること",ann:null},
+        {en:"She's actually the boss's niece!",ja:"実は社長の姪なんだ！",ann:null},
+        {en:"No, I've never had sex / But you know what? My degree keeps me satisfied",ja:"そう、俺はセックスをしたことがない / でも俺の学位が満たしてくれる",ann:null}
+      ]}
+    ]
+  }},
+  {num:"15",title:"School Spirit",feat:null,hasLyrics:true,data:{
+    num:"15",title:"School Spirit",feat:null,
+    producer:"Kanye West",
+    sample:"Aretha Franklin「Spirit in the Dark」",
+    sampleSources:[{artist:"Aretha Franklin",title:"Spirit in the Dark",year:1970,album:"Spirit in the Dark",url:"#"}],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"HBCUのギリシャ文字組織（フラタニティ・ソロリティ）のステッピングを讃えるコーラスを持ちながら、本人は「大学を卒業したのではなく、自分が終わったと決断した」と宣言する曲。自動車事故での生還を力の証として語る。",
+    sections:[
+      {label:"[Chorus]",note:null,lines:[
+        {en:"Alpha, step, Omega, step / Kappa, step, Sigma, step",ja:"アルファよ、ステップを踏め、オメガよ / カッパよ、シグマよ",ann:"Alpha（アルファ）、Omega（オメガ）、Kappa（カッパ）、Sigma（シグマ）、AKA、Delta（デルタ）、S.G. Rho、Zeta（ゼータ）：いずれも黒人大学（HBCU）の男女フラタニティ・ソロリティ組織名。Stepping（ステッピング）：これらの組織の伝統的なダンス。手拍子・足踏み・コールアンドレスポンスからなるパフォーマンス。最古の黒人フラタニティはAlpha Phi Alpha（1906年創設）。"},
+        {en:"AKA, step, Delta, step / S.G. Rho, step, Zeta, step",ja:"AKAよ、ステップを踏め、デルタよ / SGローよ、ゼータよ",ann:null}
+      ]},
+      {label:"[Verse 1]",note:null,lines:[
+        {en:"Told 'em I finished school and I started my own business",ja:"学校を終えて自分のビジネスを始めたと言った",ann:null},
+        {en:"They say, \"Oh, you graduated?\" No, I decided I was finished",ja:"「卒業したの？」——いや、終わったと自分で決めたんだ",ann:null},
+        {en:"This nigga graduated at the top of our class / I went to Cheesecake, he was a nigga waiter there",ja:"このニガーはクラスのトップで卒業した / チーズケーキファクトリーに行ったら、そこでウェイターをしてた",ann:null}
+      ]},
+      {label:"[Verse 2]",note:null,lines:[
+        {en:"Roc-A-Fella chain, yeah, that's my rapper style / Rosary piece, yeah, that's my Catholic style",ja:"ロカフェラチェーン、それが俺のラッパースタイル / ロザリオのピース、それが俺のカトリックスタイル",ann:"Rosary piece（ロザリー・ピース）：ロザリオ（カトリックの祈祷具）を模したジュエリー。"},
+        {en:"Red and white Ones, yeah, that's my Kappa style / And I ain't even pledge",ja:"赤と白のワンズ（エアフォース1）、それが俺のカッパスタイル / 誓約したこともないのに",ann:"Red and white Ones：Nike Air Force 1の赤×白カラーリング。Kappa Alpha Psiのカラー（クリムゾン＆クリーム）への言及。"},
+        {en:"Crack my head on the steering wheel and I ain't even dead",ja:"ハンドルで頭を割っても俺は死ななかった",ann:"2002年10月のKanyeの自動車事故への言及。顎を骨折する重傷を負いながら生還したことを指す。この事故直後に「Through the Wire」を制作した。"},
+        {en:"If I could go through all that and still be breathing / Nigga, bend over, I'm here for a reason",ja:"あれを全部経験してまだ息をしていられるなら / ニガー、かがめ、俺がここにいるのには理由がある",ann:null}
+      ]}
+    ]
+  }},
+  {num:"16",title:"School Spirit Skit 2",feat:null,hasLyrics:true,data:{
+    num:"16",title:"School Spirit Skit 2",feat:null,
+    producer:"Kanye West",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"Skit 1の続き。52歳になっても学位を取り続けている人物を描く。「周りが稼いでいる中で、俺は賢くなるためにお金を使っている」「死ぬ時に温めてくれるのは学位だ」というオチで、学歴崇拝の滑稽な末路を描く。",
+    sections:[
+      {label:"[Skit: De'Ray Davis]",note:null,lines:[
+        {en:"You get that associate's degree / Then bachelor's / Then masters / Then your masters' masters / Then your doctorate",ja:"準学士を取れ / 次に学士 / 次に修士 / 次に修士の修士 / 次に博士",ann:null},
+        {en:"When everyone says \"you're not working, you're not making any money\" / You say, \"Yeah, I'm fifty-two, so what?\"",ja:"「お前は働いてない、お金を稼いでいない」と言われたら / 「そうだ、俺は52歳だ、それが何だ？」と言え",ann:null},
+        {en:"All these guys out here making money all these ways / And I'm spending mine to be smart",ja:"ここにいる奴らは皆、いろいろな方法で金を稼いでいる / でも俺は賢くなるためにお金を使ってる",ann:null},
+        {en:"'Cause when I die / You know what's gonna keep me warm? / That's right, those degrees",ja:"なぜなら俺が死ぬ時に / 何が俺を温めてくれるかわかるか？ / そうだ、あの学位だ",ann:null}
+      ]}
+    ]
+  }},
+  {num:"17",title:"Lil Jimmy Skit",feat:null,hasLyrics:true,data:{
+    num:"17",title:"Lil Jimmy Skit",feat:null,
+    producer:"Kanye West",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"School Spirit Skit 2の「死ぬ時に温めてくれるのは学位だ」を受けたシュールな続編。父親が学位を集めすぎて息子の学位まで取ってしまったホームレスの「リル・ジミー」の話。他のホームレスが新聞を持っているのに、自分は「文書で証明された」学位を持っているというオチ。",
+    sections:[
+      {label:"[Spoken Word: The World Famous Tony Williams & DeRay]",note:"The World Famous Tony Williams：シカゴのDJ・コメディアン。アルバムの霊的・コメディ的な柱として機能する。",lines:[
+        {en:"My Dad died, and, uh, he left me his degrees",ja:"お父さんが死んで、学位を残してくれたんだ",ann:null},
+        {en:"He was so greedy with degrees, he took my degree",ja:"学位への欲が深すぎて、俺の学位まで取ってしまった",ann:null},
+        {en:"All the regular homeless people have newspaper / And look what I have / These are documented",ja:"普通のホームレスの人たちは新聞を持ってる / でも俺が持ってるものを見てくれ / これは文書で証明されてる",ann:null},
+        {en:"I'm gonna get super smart, so I, too, can die without money / But I'll be the smartest dead guy!",ja:"超賢くなって、俺も金なしで死ねる / でも俺は一番賢い死人になるぞ！",ann:null}
+      ]}
+    ]
+  }},
+  {num:"18",title:"Two Words",feat:"feat. Mos Def, Freeway & Harlem Boys Choir",hasLyrics:true,data:{
+    num:"18",title:"Two Words",feat:"feat. Mos Def, Freeway & Harlem Boys Choir",
+    producer:"Kanye West",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"「二つの言葉」を繰り返すストラクチャーで構成された政治的・自己宣言的なトラック。Mos Def（ニューヨーク）、Kanye（シカゴ）、Freeway（フィラデルフィア）の三都市のMCが各バースを担当し、Harlem Boys Choirが壮大なコーラスを加える。",
+    sections:[
+      {label:"[Chorus: Kanye West]",note:null,lines:[
+        {en:"It's only two places you end up: either dead or in jail / Still nowhere to go",ja:"行き着く場所は二つだけ：死か刑務所 / それでもどこにも行けない",ann:null}
+      ]},
+      {label:"[Verse 1: Mos Def]",note:null,lines:[
+        {en:"Two words: United States, no love, no breaks / Low brow, high stakes. Crack smoke, Black folks",ja:"二つの言葉：合衆国、愛なし、休憩なし / 低俗、高リスク。クラックの煙、黒人たち",ann:"Mos Def（モス・デフ、本名Yasiin Bey、1973〜）：ブルックリン・ベッドスタイ出身。Talib Kweliとの「Black Star」（1998年）で名を上げたコンシャス系MC。"},
+        {en:"Two words: B-K, N-Y, Bed-Stuy",ja:"二つの言葉：B-K（ブルックリン）、N-Y（ニューヨーク）、ベッドスタイ",ann:"Bed-Stuy（ベッドスタイ）：Bed-Ford Stuyvesant。ブルックリンの地区。Mos Defの出身地。"}
+      ]},
+      {label:"[Verse 2: Kanye West]",note:null,lines:[
+        {en:"Two words: Chi-Town, Southside, worldwide",ja:"二つの言葉：シカゴ、サウスサイド、ワールドワイド",ann:null},
+        {en:"I am limelight, Blueprint, five mics",ja:"俺はライムライト（注目の的）、ブループリント、5マイク",ann:"Blueprint：Jay-Zの2001年のアルバム（Kanyeがビートを提供）。five mics：The Source誌（ヒップホップ専門誌）の最高評価。"},
+        {en:"Two words: Chi-Town raised me, crazy / So I live by two words: \"Fuck you, pay me\"",ja:"二つの言葉：シカゴが俺を育てた、クレイジーに / だから俺は二つの言葉で生きてる：「くそくらえ、金払え」",ann:null},
+        {en:"I'm Kon, the Louis Vuitton Don / Bought my mom a purse, now she Louis Vuitton Mom",ja:"俺はコン、ルイ・ヴィトン・ドン / ママにバッグを買った、今や彼女はルイ・ヴィトン・マム",ann:"Louis Vuitton Don（ルイ・ヴィトン・ドン）：Kanyeの自称。「Don」はイタリア語で「ボス」を意味する。後に「Graduation」（2007年）の重要テーマになる。"},
+        {en:"Mayonnaise-colored Benz, I push Miracle Whips",ja:"マヨネーズ色のベンツ、ミラクルウィップを走らせる",ann:"Miracle Whip（ミラクルウィップ）：アメリカの調味料ブランド。「Mayonnaise-colored Benz」の白さと「whip（運転する）」のダブルミーニング。"},
+        {en:"Like Dame, Puffy, and Russell",ja:"デイム、パフィー、ラッセルのように",ann:"Dame（Damon Dash、Roc-A-Fella）、Puffy（Sean Combs、Bad Boy Records）、Russell（Russell Simmons、Def Jam）——黒人ヒップホップ業界の大物経営者3人。"}
+      ]},
+      {label:"[Verse 3: Freeway]",note:null,lines:[
+        {en:"Two words: Freeway; two letters: A-R",ja:"二つの言葉：フリーウェイ。二つの文字：A-R（AR-15、突撃銃）",ann:"Freeway（フリーウェイ、本名Leslie Edward Pridgen）：フィラデルフィア出身のラッパー。Roc-A-Fella Records所属。"},
+        {en:"With the beef in the pot, Jay sent for his dogs to brawl",ja:"牛肉が鍋に入ってる、ジェイは仲間を呼んで戦わせた",ann:null}
+      ]},
+      {label:"[Outro: Mos Def & Harlem Boys Choir]",note:null,lines:[
+        {en:"Motherfuckers askin', \"Who is that?\" / You know it's the almighty Black Jack",ja:"誰だと聞いてくる奴らに / アルマイティ・ブラック・ジャックとわかるはずだ",ann:"Jack Johnson（ジャック・ジョンソン）：1908年に史上初の黒人ヘビー級世界チャンピオンとなったアフリカ系アメリカ人ボクサー。人種差別が激しい時代に白人選手を次々と倒し、黒人の誇りの象徴となった。"},
+        {en:"Ghetto people, get this shit off your chest",ja:"ゲットーの人々よ、胸のつかえを吐き出せ",ann:"Harlem Boys Choir（ハーレム・ボーイズ・クワイア）：1968年創設のニューヨーク・ハーレムの名門少年合唱団。ポップやR&B、ヒップホップとの共演でも知られる。"}
+      ]}
+    ]
+  }},
+  {num:"19",title:"Through The Wire",feat:null,hasLyrics:true,data:{
+    num:"19",title:"Through The Wire",feat:null,
+    producer:"Kanye West",
+    sample:"Chaka Khan「Through the Fire」(1984)",
+    sampleSources:[
+      {artist:"Chaka Khan",title:"Through the Fire",year:1984,album:"I Feel for You",url:"#"}
+    ],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"Kanyeの最初のソロシングル（2003年）。2002年10月23日、ロサンゼルスでの交通事故で顎の骨を骨折したKanyeが、顎をワイヤーで固定したままスタジオに入り録音した曲。「顎を通してラップする（through the wire）」というタイトルは文字通りの意味。",
+    sections:[
+      {label:"[Intro]",note:null,lines:[
+        {en:"Yo, Gee, they can't stop me from rappin', can they?",ja:"ジー、奴らは俺がラップするのを止められないよな？",ann:null}
+      ]},
+      {label:"[Chorus: Chaka Khan]",note:"Chaka Khan（チャカ・カーン、本名Yvette Marie Stevens、1953〜）：シカゴ出身のR&B・ソウルシンガー。「I Feel for You」「Ain't Nobody」などで知られる。",lines:[
+        {en:"Through the fire, to the limit, to the wall",ja:"炎の中を、限界まで、壁まで",ann:null},
+        {en:"For a chance to be with you, I'd gladly risk it all",ja:"お前と一緒にいるチャンスのためなら、喜んですべてをかける",ann:null},
+        {en:"Through the fire, through whatever, come what may",ja:"炎の中を、何があっても、どんな事態が来ても",ann:null},
+        {en:"Right down to the wire, even through the fire",ja:"ワイヤーを通してでも、炎の中でも",ann:null}
+      ]},
+      {label:"[Post-Chorus: Kanye West]",note:null,lines:[
+        {en:"I spit it through the wire, man",ja:"ワイヤー越しにラップしてるんだ",ann:null},
+        {en:"They got my mouth wired shut",ja:"口をワイヤーで固定されてるんだ",ann:null},
+        {en:"Chi-Town, what's goin' on?",ja:"シカゴ、調子どうだ？",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"I drink a Boost for breakfast, an Ensure for dessert",ja:"朝食にブーストを飲んで、デザートにエンシュアを飲む",ann:"Boost / Ensure（ブースト/エンシュア）：経口栄養補助飲料のブランド。顎を固定されて噛むことができない状態でも飲める飲み物として言及される。"},
+        {en:"How do you console my mom, or give her light support",ja:"どうすれば俺のお母さんを慰められる、軽いサポートを与えられる",ann:null},
+        {en:"Tellin' her her son's on life support?",ja:"息子が生命維持装置につながれてると伝えて？",ann:null},
+        {en:"On the plane scared as hell that her guy look like Emmett Till",ja:"飛行機に乗りながら怯えてた、彼氏の顔がエメット・ティルに見えると",ann:"Emmett Till（エメット・ティル、1941〜1955年）：14歳で白人女性への口笛を疑われミシシッピ州で惨殺された黒人少年。遺体は顔面が損壊しており、公開葬儀が公民権運動の火付け役となった。"},
+        {en:"She a Delta, so she been throwin' that Dynasty sign",ja:"彼女はデルタ（ソロリティ）なんだ、だからダイナスティサインを出してた",ann:"Delta：Delta Sigma Theta（黒人女性ソロリティ）。「ダイナスティサイン」はJay-ZのRoc-A-Fellaレーベルのハンドサイン。"},
+        {en:"In the same hospital where Biggie Smalls died",ja:"ビギー・スモールズが死んだ同じ病院で",ann:"Biggie Smalls（ビギー・スモールズ）：Notorious B.I.G.（本名Christopher Wallace、1972〜1997年）。1997年に射殺された。病院はCedars-Sinai Medical Center（ロサンゼルス）。"},
+        {en:"Story on MTV and I ain't tryna make Da Band",ja:"MTVに話が流れたが、俺はダ・バンドを作ろうとしてるんじゃない",ann:"Da Band（ダ・バンド）：P. Diddyが2002〜2003年にMTVのリアリティ番組「Making the Band」で結成したグループ。"},
+        {en:"I swear, this, right here, history in the makin', man",ja:"誓う、これは歴史が作られてる瞬間だ",ann:null}
+      ]},
+      {label:"[Verse 2: Kanye West]",note:null,lines:[
+        {en:"If you could feel how my face felt",ja:"俺の顔がどんな感触だったか感じてみたら",ann:null},
+        {en:"You would know how Mase felt (Mason Betha!)",ja:"メイスの気持ちがわかるはずだ",ann:"Mase（メイス、本名Mason Betha）：Harlem出身のラッパー。Bad Boy Records時代に活躍。顎への損傷という文脈での言及。"},
+        {en:"Thank God I ain't too cool for the safe belt",ja:"シートベルトをしてた自分に感謝する",ann:null},
+        {en:"I looked like Tom Cruise in Vanilla Sky, it was televised",ja:"バニラ・スカイのトム・クルーズみたいな顔で、テレビに流れた",ann:"Vanilla Sky（バニラ・スカイ）：2001年のサイコスリラー映画。主人公の顔面が損傷するシーンがある。"},
+        {en:"They thought I was burnt up like Pepsi did Michael",ja:"ペプシがマイケルにしたように燃えたと思われた",ann:"1984年にMichael Jacksonがペプシのプロモーション撮影中に爆発事故で頭部に火傷を負った事件。"},
+        {en:"Unbreakable, what you thought, they call me Mr. Glass?",ja:"壊れない——ミスター・グラスとでも思ったか？",ann:"Mr. Glass（ミスター・グラス）：映画「アンブレイカブル」（2000年）のヴィラン。骨が極めて脆い人物。逆説的な強さの表明。"},
+        {en:"Look back on my life like the Ghost of Christmas Past",ja:"過去のクリスマスの幽霊のように自分の人生を振り返る",ann:"チャールズ・ディケンズ「クリスマス・キャロル」に登場する過去を見せる亡霊への言及。"},
+        {en:"But I'm a champion, so I turned tragedy to triumph",ja:"でも俺はチャンピオンだから、悲劇を勝利に変えた",ann:null},
+        {en:"Make music that's fire, spit my soul through the wire",ja:"炎のような音楽を作って、ワイヤー越しに魂を吐き出す",ann:null}
+      ]}
+    ]
+  }},
+  {num:"20",title:"Family Business",feat:null,hasLyrics:true,data:{
+    num:"20",title:"Family Business",feat:null,
+    producer:"Kanye West",
+    sample:"The O'Jays「Family Reunion」",
+    sampleSources:[
+      {artist:"The O'Jays",title:"Family Reunion",year:1975,album:"Family Reunion",url:"#"}
+    ],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"The College Dropoutの最も内省的な曲の一つ。家族の集まり、刑務所にいる従兄弟、亡くなった祖母、家族の喧嘩——それらすべてを「家族のことは家族の中だけで解決しろ」という言葉でまとめる。アルバムの物質主義批評の中で「本当に大切なもの」として提示されるトラック。",
+    sections:[
+      {label:"[Intro]",note:null,lines:[
+        {en:"How's your son? He made the team this year?",ja:"息子さんはどう？ 今年チームに入った？",ann:null},
+        {en:"Ma', we here, we gon' cook this Sunday, okay? So come by",ja:"ママ、俺たちここにいる、今度の日曜は料理するから来て",ann:null},
+        {en:"Damn, that's your new girlfriend?",ja:"くそ、それがお前の新しい彼女か？",ann:null}
+      ]},
+      {label:"[Verse 1]",note:null,lines:[
+        {en:"This is family business",ja:"これは家族の話",ann:null},
+        {en:"And this is for my cousin locked down, know the answer's in us",ja:"刑務所に入ってる従兄弟のために、答えは俺たちの中にあるとわかってる",ann:null},
+        {en:"Yo, you heard the track I did, man? \"This Can't Be Life\"",ja:"ねえ、俺が作った曲聴いたか？「ディス・キャント・ビー・ライフ」",ann:"「This Can't Be Life」：Jay-ZのアルバムThe Dynasty: Roc La Familia（2000年）収録曲。Kanye West制作。この曲のビートメイクがJay-Zに認められ、Roc-A-Fellaとの関係が深まるきっかけになった。"},
+        {en:"I even made you a plate, soul food, know how Granny do it",ja:"お前のためにプレートも作った、ソウルフード、グラニーのやり方で",ann:null},
+        {en:"Monkey bread on the side, know how the family do it",ja:"サイドにモンキーブレッド、家族のやり方で",ann:null},
+        {en:"When I brought it, why the guard had to look all through it?",ja:"持っていったのに、なんで看守は全部調べないといけないんだ？",ann:null},
+        {en:"And look, you tell me you ain't did it, then you ain't did it",ja:"聞いてくれ、お前がやってないと言うならやってない",ann:null},
+        {en:"And if you did, then that's family business",ja:"やったとしても、それは家族の話だ",ann:null}
+      ]},
+      {label:"[Verse 2]",note:null,lines:[
+        {en:"Come on, let's take a family Grammy picture",ja:"さあ、家族のグラミー写真を撮ろう",ann:null},
+        {en:"Abi, remember when they ain't believe in me?",ja:"アビ、奴らが俺を信じなかった時を覚えてるか？",ann:null},
+        {en:"Now she like, \"See! That's my cousin on TV!\"",ja:"今は「見て！ テレビに従兄弟が出てる！」と言ってる",ann:null},
+        {en:"When we get together, be Electric Slidin'",ja:"集まったら、エレクトリック・スライドをやる",ann:"Electric Slide（エレクトリック・スライド）：1976年のMarcia Griffithsのヒット曲に合わせたライン・ダンス。家族の集まりやウェディングパーティーで踊られる定番ダンス。"},
+        {en:"I got a Aunt Ruth that can't remember your name",ja:"名前を思い出せないルース叔母さんがいる",ann:null},
+        {en:"But I bet them Polaroids'll send her down memory lane",ja:"でもポラロイド写真を見れば記憶が蘇るはずだ",ann:null},
+        {en:"But you ain't have to tell my girl I used to pee in the bed",ja:"でも俺が昔おねしょしてたことを彼女に言わなくていい",ann:null}
+      ]},
+      {label:"[Verse 3]",note:null,lines:[
+        {en:"I woke up early this morning with a new state of mind",ja:"今朝は新しい気持ちで目が覚めた",ann:null},
+        {en:"Keep your nose out the sky, keep your heart to God",ja:"鼻を空に向けるな、心を神に向けろ",ann:null},
+        {en:"All my niggas from the Chi' is my family, dawg",ja:"シカゴの仲間は全員俺の家族だ",ann:null},
+        {en:"Sittin' here, grillin' people like George Foreman",ja:"ジョージ・フォアマンのように人を睨みつけてる",ann:"George Foreman（ジョージ・フォアマン）：ヘビー級ボクシングチャンピオン。ジョージ・フォアマン・グリルという家庭用電気グリルのCMでも有名。「grillin'（グリルする）」＝睨みつけるというダブルミーニング。"},
+        {en:"Why Uncle Ray and Aunt Sheila always performin'?",ja:"なんでレイ叔父さんとシェイラ叔母さんはいつもパフォーマンスするんだ？",ann:null},
+        {en:"Y'all gon' sit down, have a good time this reunion",ja:"みんな座って、この同窓会を楽しもう",ann:null},
+        {en:"And drink some wine like Communion",ja:"聖餐のようにワインを飲もう",ann:null},
+        {en:"We ain't letting everybody in our family business, uh",ja:"家族の問題を皆には見せない",ann:null}
+      ]},
+      {label:"[Outro: Tarrey Torae]",note:null,lines:[
+        {en:"All these things",ja:"これらすべてのことが",ann:null},
+        {en:"CLK Mercedes Benz",ja:"CLKメルセデス・ベンツ",ann:"CLK Mercedes（CLKメルセデス）：メルセデス・ベンツCLKクラス。「家族の絆と比べると高級車なんて取るに足らない」という対比が完成する。"},
+        {en:"A whole lotta money",ja:"たくさんのお金",ann:null},
+        {en:"Mommy and Daddy, can you please stop fighting?",ja:"ママとパパ、お願いだから喧嘩をやめて",ann:null},
+        {en:"Let's get Stevie out of jail",ja:"スティービーを刑務所から出そう",ann:null}
+      ]}
+    ]
+  }},
+  {num:"21",title:"Last Call",feat:"feat. JAY-Z",hasLyrics:true,data:{
+    num:"21",title:"Last Call",feat:"feat. JAY-Z",
+    producer:"Evidence & Kanye West",
+    sample:null,
+    sampleSources:[],
+    whosampledUrl:null,
+    artwork:"../1. The College Dropout/College Dropout artwork.jpg",
+    year:"2004年",label:"Roc-A-Fella / Def Jam",
+    desc:"The College Dropoutのクロージングトラック。前半約4分はラップ、後半約8分のスポークンワードでKanyeがRoc-A-Fellaと契約するまでの自伝的経緯を語る。「最後の呼びかけ」というタイトルは、バーが閉まる前の最後の注文の合図。Jay-Zのトーストで始まり、Kanyeの独白で終わる。",
+    sections:[
+      {label:"[Intro: JAY-Z & Kanye West]",note:null,lines:[
+        {en:"Yo, fuck you Kanye, first and foremost for making me do this shit / I'd like to propose a toast",ja:"カニエ、まずはじめに、こんなことをやらせる貴様はくそくらえ / 乾杯の挨拶を提案したい",ann:null}
+      ]},
+      {label:"[Verse 1: Kanye West]",note:null,lines:[
+        {en:"The all around the world Digital Underground Pac / The Rudolph the red-nosed reindeer of the Roc",ja:"世界中のデジタル・アンダーグラウンド・パックのような存在 / ロックの赤鼻のトナカイ・ルドルフ",ann:"Digital Underground（デジタル・アンダーグラウンド）：オークランド出身のヒップホップグループ。2Pac（トゥパック・シャクール）はここから出た。Rudolph：仲間外れにされながらも最終的に認められた赤鼻のトナカイ。Kanyeが業界での自分の立場を重ねた比喩。"},
+        {en:"My money was thinner than Sean Paul's goatee hair / Now Jean Paul Gaultier cologne fill the air",ja:"俺のお金はショーン・ポールの山羊ひげより薄かった / 今はジャン・ポール・ゴルチエのコロンが漂う",ann:"Sean Paul：ジャマイカのレゲトンシンガー。薄い山羊ひげで知られる。Jean Paul Gaultier（ジャン・ポール・ゴルチエ）：フランスの高級ファッションブランド。経済的成功の象徴。"},
+        {en:"'Til the night I almost killed myself in Lexus",ja:"レクサスで死にかけた夜まで",ann:"2002年10月の自動車事故への言及。顎を骨折する重傷を負いながらも生還し、その翌朝「Through the Wire」を録音した。"}
+      ]},
+      {label:"[Verse 2: Kanye West]",note:null,lines:[
+        {en:"Though the fans want the feeling of A Tribe Called Quest / But all they got left is this guy called West",ja:"ファンはア・トライブ・コールド・クエストの感覚を求めてるが / 残されたのはウェストと呼ばれるこの男だけ",ann:"A Tribe Called Quest（ア・トライブ・コールド・クエスト）：ニューヨーク出身のヒップホップグループ。Q-Tip、Phife Dawg等。1990年代のリリシストヒップホップの象徴として言及される。"},
+        {en:"I'm the Gap like Banana Republic and Old Navy",ja:"バナナ・リパブリックとオールドネイビーのようなギャップだ",ann:"Gap（ギャップ）、Banana Republic（バナナ・リパブリック）、Old Navy（オールド・ネイビー）はいずれも同じGap Inc.傘下のブランド。Kanyeがそれらをつなぐ「ギャップ（橋渡し）」だという意味。"},
+        {en:"I'm Kon, the Louis Vuitton Don / Bought my mom a purse, now she Louis Vuitton Mom",ja:"俺はコン、ルイ・ヴィトン・ドン / ママにバッグを買った、今や彼女はルイ・ヴィトン・マム",ann:"Louis Vuitton Don（ルイ・ヴィトン・ドン）：Kanyeの自称の初出。「Don」はイタリア語で「ボス」を意味する。後に「Graduation」（2007年）のツアーで定着するアイコン的ニックネーム。"},
+        {en:"\"Oh my god, is that a black card?\" / \"But I prefer the term African American Express\"",ja:"「えっ、それってブラックカード？」 / 「でも私はアフリカン・アメリカン・エクスプレスという言葉を好む」",ann:"African American Express（アフリカン・アメリカン・エクスプレス）：American Express Centurion（ブラックカード）のパロディ。人種の呼称をめぐるユーモア。"},
+        {en:"Mayonnaise-colored Benz, I push Miracle Whips",ja:"マヨネーズ色のベンツ、ミラクルウィップを走らせる",ann:"このラインをJay-Zに聴かせたことがRoc-A-Fella契約のきっかけの一つになったとKanyeはOutroで語っている。"},
+        {en:"Like Dame, Puffy, and Russell",ja:"デイム、パフィー、ラッセルのように",ann:"Damon Dash（Roc-A-Fella）、Sean Combs（Bad Boy Records）、Russell Simmons（Def Jam）——黒人ヒップホップ業界の大物経営者3人。"}
+      ]},
+      {label:"[Outro（スポークンワード）：Kanye West]",note:"アルバムの終盤約8分間、KanyeがRoc-A-Fellaとの契約を勝ち取るまでの経緯を語る自伝的独白。",lines:[
+        {en:"So this A&R over at Roc-A-Fella, named Hip Hop picked the \"Truth\" beat for Beanie. And I was in the session with him.",ja:"ロカフェラのA&Rのヒップ・ホップという男がビーニー（シーガル）のために「Truth」のビートを選んだ、俺はそのセッションにいた",ann:"Hip Hop（本名John Davis）：Roc-A-FellaのA&R担当。Kanyeを発掘した人物。No ID（ノー・アイディー）：シカゴのプロデューサーでKanyeのメンター。CommonやJay-Zの作品でも知られる。"},
+        {en:"I made this one beat where I sped up this Harold Melvin sample... \"This Can't Be Life\"",ja:"ハロルド・メルヴィンのサンプルを速めたビートを作った……「ディス・キャント・ビー・ライフ」",ann:"Harold Melvin（ハロルド・メルヴィン）：「Harold Melvin & The Blue Notes」のソウルシンガー。Kanyeが初期サンプリングに使用した。「This Can't Be Life」：Jay-Zのアルバム「The Dynasty」収録曲。KanyeがJay-Zに提供した最初のメジャーな曲。ドラムはDr. Dreの「Xxplosive」（Chronic 2001）からサンプリングしたと語っている。"},
+        {en:"The first beat I made was \"Heart of the City.\"",ja:"最初に作ったビートが「ハート・オブ・ジ・シティ」だ",ann:"「Heart of the City」：Jay-Zの「The Blueprint」収録曲。KanyeがニュージャージーのアパートでIKEAのベッドを組み立てた翌日に制作したと語っている。"},
+        {en:"...and I said 'yo Jay I could rap.' And I spit this rap... \"Mayonnaise colored Benz, I push miracle whips.\" And I saw his eyes light up when I said that line.",ja:"「ジェイ、俺はラップできる」と言って……「マヨネーズ色のベンツ、ミラクルウィップを走らせる」というラップを吐いた。そのラインを言った時、彼の目が輝くのを見た",ann:null},
+        {en:"Everybody out there listen here: I played them \"Jesus Walks\" and they didn't sign me.",ja:"聞いてくれ：「ジーザス・ウォークス」を聴かせたのに誰もサインしなかった",ann:null}
+      ]}
+    ]
+  }},
+];
+
+
+const OTHER_ALBUMS = [
+  {id:"grad",num:"03",title:"Graduation",year:"2007",artist:"Kanye West",label:"Roc-A-Fella / Def Jam",releaseDate:"2007年9月11日",shortTitle:"GRAD",
+   desc:"50 Centの『Curtis』との同日発売対決（Battle of the Champs）で話題を呼んだ第3作。Daft Punkのサンプリング「Stronger」を筆頭に、エレクトロ・ポップとスタジアムロックのスケール感でヒップホップの地平を広げた。",
+   tracks:[
+    {num:"01",title:"Good Morning",feat:null},
+    {num:"02",title:"Champion",feat:null},
+    {num:"03",title:"Stronger",feat:"feat. Daft Punk"},
+    {num:"04",title:"I Wonder",feat:null},
+    {num:"05",title:"Good Life",feat:"feat. T-Pain"},
+    {num:"06",title:"Can't Tell Me Nothing",feat:null},
+    {num:"07",title:"Barry Bonds",feat:"feat. Lil Wayne"},
+    {num:"08",title:"Drunk and Hot Girls",feat:"feat. Mos Def"},
+    {num:"09",title:"Flashing Lights",feat:"feat. Dwele"},
+    {num:"10",title:"Everything I Am",feat:"feat. DJ Premier"},
+    {num:"11",title:"The Glory",feat:null},
+    {num:"12",title:"Homecoming",feat:"feat. Chris Martin"},
+    {num:"13",title:"Big Brother",feat:null},
+  ]},
+  {id:"s808",num:"04",title:"808s & Heartbreak",year:"2008",artist:"Kanye West",label:"Roc-A-Fella / Def Jam",releaseDate:"2008年11月24日",shortTitle:"808s",
+   desc:"Auto-Tuneを全面使用した実験的転換点。母・Donda Westの急逝（2007年）と婚約者との別れを受けて制作。孤独・喪失・機械的感情を表現し、後のドレイク、The Weeknd世代に絶大な影響を与えた。",
+   tracks:[
+    {num:"01",title:"Say You Will",feat:null},
+    {num:"02",title:"Welcome to Heartbreak",feat:"feat. Kid Cudi"},
+    {num:"03",title:"Heartless",feat:null},
+    {num:"04",title:"Amazing",feat:"feat. Young Jeezy"},
+    {num:"05",title:"Love Lockdown",feat:null},
+    {num:"06",title:"Paranoid",feat:"feat. Mr. Hudson"},
+    {num:"07",title:"RoboCop",feat:null},
+    {num:"08",title:"Street Lights",feat:null},
+    {num:"09",title:"Bad News",feat:null},
+    {num:"10",title:"See You in My Nightmares",feat:"feat. Lil Wayne"},
+    {num:"11",title:"Coldest Winter",feat:null},
+    {num:"12",title:"Pinocchio Story",feat:null},
+  ]},
+  {id:"mbdtf",num:"05",title:"My Beautiful Dark Twisted Fantasy",year:"2010",artist:"Kanye West",label:"Roc-A-Fella / Def Jam",releaseDate:"2010年11月22日",shortTitle:"MBDTF",
+   desc:"テイラー・スウィフト事件（2009 VMA）後の自主追放中にハワイで制作した大作。Jay-Z、ニッキー・ミナージュ、リック・ロスら多数のゲストを迎えた壮大なオーケストラルヒップホップ。多くの批評家がKanyeの最高傑作に挙げる。",
+   tracks:[
+    {num:"01",title:"Dark Fantasy",feat:null},
+    {num:"02",title:"Gorgeous",feat:"feat. Kid Cudi & Raekwon"},
+    {num:"03",title:"POWER",feat:null},
+    {num:"04",title:"All of the Lights (Interlude)",feat:null},
+    {num:"05",title:"All of the Lights",feat:"feat. Rihanna & Kid Cudi"},
+    {num:"06",title:"Monster",feat:"feat. Jay-Z, Rick Ross, Nicki Minaj & Bon Iver"},
+    {num:"07",title:"So Appalled",feat:"feat. Jay-Z, Pusha T, Cyhi The Prynce, Swizz Beatz & RZA"},
+    {num:"08",title:"Devil in a New Dress",feat:"feat. Rick Ross"},
+    {num:"09",title:"Runaway",feat:"feat. Pusha T"},
+    {num:"10",title:"Hell of a Life",feat:null},
+    {num:"11",title:"Blame Game",feat:"feat. John Legend"},
+    {num:"12",title:"Lost in the World",feat:"feat. Bon Iver"},
+    {num:"13",title:"Who Will Survive in America",feat:null},
+  ]},
+  {id:"wtt",num:"06",title:"Watch the Throne",year:"2011",artist:"JAY-Z & Kanye West",label:"Roc-A-Fella / Def Jam",releaseDate:"2011年8月8日",shortTitle:"WTT",
+   desc:"JAY-ZとKanyeのコラボレーションアルバム。黒人の富・権力・アイデンティティをテーマにした豪華絢爛な大作。「Niggas in Paris」「Otis」が話題を呼んだ。iTunesとTidal限定でのデジタル先行配信。",
+   tracks:[
+    {num:"01",title:"No Church in the Wild",feat:"feat. Frank Ocean & The-Dream"},
+    {num:"02",title:"Lift Off",feat:"feat. Beyoncé"},
+    {num:"03",title:"Niggas in Paris",feat:null},
+    {num:"04",title:"Otis",feat:"feat. Otis Redding"},
+    {num:"05",title:"Gotta Have It",feat:null},
+    {num:"06",title:"New Day",feat:null},
+    {num:"07",title:"That's My Bitch",feat:null},
+    {num:"08",title:"Welcome to the Jungle",feat:null},
+    {num:"09",title:"Who Gon Stop Me",feat:null},
+    {num:"10",title:"Murder to Excellence",feat:null},
+    {num:"11",title:"Sweet Baby Jesus",feat:"feat. Frank Ocean"},
+    {num:"12",title:"Made in America",feat:"feat. Frank Ocean"},
+    {num:"13",title:"Why I Love You",feat:"feat. Mr. Hudson"},
+  ]},
+  {id:"yeezus",num:"07",title:"Yeezus",year:"2013",artist:"Kanye West",label:"Def Jam",releaseDate:"2013年6月18日",shortTitle:"YEEZUS",
+   desc:"インダストリアル・エレクトロ・パンクの影響を受けた最も過激な作品。全10曲。アートワークなし（透明ケース）・プロモーションなしという前衛的なリリース。Rick RubinとDaft Punkが仕上げに関与。",
+   tracks:[
+    {num:"01",title:"On Sight",feat:null},
+    {num:"02",title:"Black Skinhead",feat:null},
+    {num:"03",title:"I Am a God",feat:"feat. God"},
+    {num:"04",title:"New Slaves",feat:null},
+    {num:"05",title:"Hold My Liquor",feat:"feat. Chief Keef & Justin Vernon"},
+    {num:"06",title:"I'm In It",feat:"feat. Assassin"},
+    {num:"07",title:"Blood on the Leaves",feat:null},
+    {num:"08",title:"Guilt Trip",feat:"feat. Kid Cudi"},
+    {num:"09",title:"Send It Up",feat:"feat. King L"},
+    {num:"10",title:"Bound 2",feat:"feat. Charlie Wilson"},
+  ]},
+  {id:"tlop",num:"08",title:"The Life of Pablo",year:"2016",artist:"Kanye West",label:"GOOD Music / Def Jam",releaseDate:"2016年2月14日",shortTitle:"TLOP",
+   desc:"Kanye初のTIDAL限定リリース（後に各サービスで配信）。公開後も更新・楽曲追加が続く「生きているアルバム」。Pablo Picasso・Saint Paul・Pablo Escobarという3人のパブロへの参照が軸となる。",
+   tracks:[
+    {num:"01",title:"Ultralight Beam",feat:"feat. Chance the Rapper, Kelly Price & Kirk Franklin"},
+    {num:"02",title:"Father Stretch My Hands Pt. 1",feat:"feat. Kid Cudi"},
+    {num:"03",title:"Pt. 2",feat:"feat. Travis Scott & Desiigner"},
+    {num:"04",title:"Famous",feat:"feat. Rihanna & Swizz Beatz"},
+    {num:"05",title:"Feedback",feat:null},
+    {num:"06",title:"Low Lights",feat:null},
+    {num:"07",title:"Highlights",feat:"feat. Young Thug & The-Dream"},
+    {num:"08",title:"Freestyle 4",feat:"feat. Travis Scott"},
+    {num:"09",title:"I Love Kanye",feat:null},
+    {num:"10",title:"Waves",feat:"feat. Chris Brown"},
+    {num:"11",title:"FML",feat:"feat. The Weeknd"},
+    {num:"12",title:"Real Friends",feat:"feat. Ty Dolla $ign"},
+    {num:"13",title:"Wolves",feat:"feat. Vic Mensa & Sia"},
+    {num:"14",title:"Frank's Track",feat:null},
+    {num:"15",title:"Siiiiiiiiilver Surffffffffffffer Intermission",feat:null},
+    {num:"16",title:"30 Hours",feat:null},
+    {num:"17",title:"No More Parties in LA",feat:"feat. Kendrick Lamar"},
+    {num:"18",title:"Facts (Charlie Heat Version)",feat:null},
+    {num:"19",title:"Fade",feat:"feat. Post Malone & Ty Dolla $ign"},
+  ]},
+  {id:"ye",num:"09",title:"ye",year:"2018",artist:"Kanye West",label:"GOOD Music / Def Jam",releaseDate:"2018年6月1日",shortTitle:"ye",
+   desc:"双極性障害の公表直後にワイオミング州で制作・発表した7曲のミニアルバム。精神的健康・家族への贖罪・信仰を率直に語る。「I hate being Bi-Polar its awesome」というアルバムカバーが象徴的。",
+   tracks:[
+    {num:"01",title:"I Thought About Killing You",feat:null},
+    {num:"02",title:"Yikes",feat:null},
+    {num:"03",title:"All Mine",feat:null},
+    {num:"04",title:"Wouldn't Leave",feat:null},
+    {num:"05",title:"No Mistakes",feat:"feat. Charlie Wilson & Chief Keef"},
+    {num:"06",title:"Ghost Town",feat:"feat. 070 Shake, Ty Dolla $ign & John Legend"},
+    {num:"07",title:"Violent Crimes",feat:null},
+  ]},
+  {id:"ksg",num:"10",title:"KIDS SEE GHOSTS",year:"2018",artist:"Kanye West & Kid Cudi",label:"GOOD Music / Def Jam",releaseDate:"2018年6月8日",shortTitle:"KSG",
+   desc:"Kid Cudiとのコラボレーション。7曲・23分ながらトラウマ・癒し・超自然をテーマにした密度の高い作品。yeの1週間後に発表。アートワークは村上隆によるもの。",
+   tracks:[
+    {num:"01",title:"Feel the Love",feat:"feat. Pusha T"},
+    {num:"02",title:"Fire",feat:"feat. André 3000"},
+    {num:"03",title:"4th Dimension",feat:"feat. Louis Prima"},
+    {num:"04",title:"Freeee (Ghost Town Pt. 2)",feat:"feat. Ty Dolla $ign"},
+    {num:"05",title:"Kids See Ghosts",feat:null},
+    {num:"06",title:"Reborn",feat:null},
+    {num:"07",title:"Cudi Montage",feat:null},
+  ]},
+  {id:"jik",num:"11",title:"JESUS IS KING",year:"2019",artist:"Kanye West",label:"GOOD Music / Def Jam",releaseDate:"2019年10月25日",shortTitle:"JIK",
+   desc:"Sunday Service Choirをバックに信仰・贖罪・福音をテーマにしたゴスペルヒップホップ作品。グラミー賞最優秀コンテンポラリー・クリスチャン・ミュージック・アルバム賞受賞（2020年）。",
+   tracks:[
+    {num:"01",title:"Every Hour",feat:"feat. Sunday Service Choir"},
+    {num:"02",title:"Closed on Sunday",feat:null},
+    {num:"03",title:"Follow God",feat:null},
+    {num:"04",title:"Selah",feat:null},
+    {num:"05",title:"God Is",feat:null},
+    {num:"06",title:"Hands On",feat:"feat. Fred Hammond"},
+    {num:"07",title:"Use This Gospel",feat:"feat. Clipse & Kenny G"},
+    {num:"08",title:"Jesus Is Lord",feat:null},
+    {num:"09",title:"Water",feat:"feat. Ant Clemons"},
+    {num:"10",title:"On God",feat:null},
+    {num:"11",title:"Closed on Sunday",feat:null},
+  ]},
+  {id:"donda",num:"12",title:"Donda",year:"2021",artist:"Kanye West",label:"GOOD Music / Def Jam",releaseDate:"2021年8月29日",shortTitle:"DONDA",
+   desc:"亡き母Donda Westに捧げた大作。27曲・1時間26分。3回のリスニングパーティーを経て長期にわたる制作の末リリース。ゴスペル・ラップ・R&Bが融合した Kanyeの最大規模の作品。",
+   tracks:[
+    {num:"01",title:"Donda Chant",feat:null},
+    {num:"02",title:"Jail",feat:"feat. JAY-Z"},
+    {num:"03",title:"God Breathed",feat:null},
+    {num:"04",title:"Off the Grid",feat:"feat. Playboi Carti & Fivio Foreign"},
+    {num:"05",title:"Hurricane",feat:"feat. The Weeknd & Lil Baby"},
+    {num:"06",title:"Praise God",feat:"feat. Travis Scott & Baby Keem"},
+    {num:"07",title:"Jonah",feat:"feat. Vory & Lil Durk"},
+    {num:"08",title:"Ok Ok",feat:"feat. Rooga, Fivio Foreign & Lil Yachty"},
+    {num:"09",title:"Junya",feat:"feat. Playboi Carti"},
+    {num:"10",title:"Believe What I Say",feat:null},
+    {num:"11",title:"24",feat:"feat. Vory"},
+    {num:"12",title:"Remote Control",feat:"feat. Young Thug"},
+    {num:"13",title:"Moon",feat:"feat. Don Toliver & Kid Cudi"},
+    {num:"14",title:"Heaven and Hell",feat:null},
+    {num:"15",title:"Donda",feat:null},
+    {num:"16",title:"Keep My Spirit Alive",feat:"feat. Westside Gunn, Conway the Machine & KayCyy"},
+    {num:"17",title:"Jesus Lord",feat:"feat. Jay Electronica"},
+    {num:"18",title:"New Again",feat:"feat. Chris Brown"},
+    {num:"19",title:"Tell the Vision",feat:"feat. Pop Smoke & Pusha T"},
+    {num:"20",title:"Lord I Need You",feat:null},
+    {num:"21",title:"Pure Souls",feat:"feat. Roddy Ricch"},
+    {num:"22",title:"Come to Life",feat:null},
+    {num:"23",title:"No Child Left Behind",feat:"feat. Vory"},
+    {num:"24",title:"Jail pt 2",feat:"feat. DaBaby & Marilyn Manson"},
+    {num:"25",title:"Ok Ok pt 2",feat:"feat. Shenseea & Migos"},
+    {num:"26",title:"Junya pt 2",feat:"feat. Playboi Carti"},
+    {num:"27",title:"Jesus Lord pt 2",feat:"feat. Jay Electronica & The LOX"},
+  ]},
+  {id:"v1",num:"13",title:"VULTURES 1",year:"2024",artist:"¥$ (Ye & Ty Dolla $ign)",label:"GOOD Music / Def Jam",releaseDate:"2024年2月10日",shortTitle:"¥$ 1",
+   desc:"Ye（Kanye West）とTy Dolla $ignによるコラボレーションユニット「¥$」名義の第1弾。Ye名義変更後初の本格作品。挑発的な歌詞と折衷的なサウンドが特徴。",
+   tracks:[
+    {num:"01",title:"Stars",feat:null},
+    {num:"02",title:"Vultures",feat:null},
+    {num:"03",title:"Paid",feat:null},
+    {num:"04",title:"Hoodrat",feat:"feat. Bump J & Lil Durk"},
+    {num:"05",title:"Talking / Once Again",feat:null},
+    {num:"06",title:"Either Way",feat:"feat. Chris Brown"},
+    {num:"07",title:"Good (Don't Die)",feat:"feat. Bump J & Lil Durk"},
+    {num:"08",title:"Problematic",feat:null},
+    {num:"09",title:"Carnival",feat:"feat. Rich The Kid & Playboi Carti"},
+    {num:"10",title:"¥$",feat:null},
+    {num:"11",title:"Slide",feat:"feat. Quavo"},
+    {num:"12",title:"King",feat:null},
+    {num:"13",title:"Back to Me",feat:"feat. Quavo"},
+    {num:"14",title:"FML",feat:null},
+    {num:"15",title:"Do It",feat:null},
+    {num:"16",title:"Burn",feat:"feat. Travis Scott"},
+  ]},
+  {id:"v2",num:"14",title:"VULTURES 2",year:"2024",artist:"¥$ (Ye & Ty Dolla $ign)",label:"GOOD Music / Def Jam",releaseDate:"2024年8月2日",shortTitle:"¥$ 2",
+   desc:"¥$（Ye & Ty Dolla $ign）の第2弾。Vultures 1からさらに実験的な方向性を進めた作品。",
+   tracks:[
+    {num:"01",title:"Field Trip",feat:null},
+    {num:"02",title:"Bomb",feat:null},
+    {num:"03",title:"WW3",feat:null},
+    {num:"04",title:"Lifestyle",feat:null},
+    {num:"05",title:"Beg Forgiveness",feat:null},
+    {num:"06",title:"Watch Me",feat:null},
+    {num:"07",title:"Condo",feat:null},
+    {num:"08",title:"Witness",feat:null},
+    {num:"09",title:"Gun to My Head",feat:null},
+    {num:"10",title:"Do It",feat:null},
+    {num:"11",title:"Lonely Roads",feat:null},
+    {num:"12",title:"Sky City",feat:null},
+  ]},
+  {id:"donda2",num:"15",title:"Donda 2",year:"2022",artist:"Kanye West",label:"GOOD Music（Stem Player限定）",releaseDate:"2022年2月23日",shortTitle:"DONDA 2",
+   desc:"Stem Player専用リリース。ストリーミングサービスには配信されなかった作品。母への追悼テーマを引き継ぎながら、より実験的なサウンドを探求する。",
+   tracks:[
+    {num:"01",title:"True Love",feat:"feat. XXXTentacion"},
+    {num:"02",title:"Broken Road",feat:"feat. Don Toliver & Donnell Trumpet"},
+    {num:"03",title:"Louie Bags",feat:"feat. Migos"},
+    {num:"04",title:"Security",feat:"feat. Fivio Foreign"},
+    {num:"05",title:"Happy",feat:null},
+    {num:"06",title:"E.V.I.L.",feat:"feat. Alicia Keys"},
+    {num:"07",title:"Flowers",feat:null},
+    {num:"08",title:"Pablo",feat:null},
+    {num:"09",title:"Sci-Fi",feat:"feat. Kid Cudi"},
+    {num:"10",title:"Mtndef",feat:"feat. Playboi Carti"},
+    {num:"11",title:"Get Lost",feat:null},
+    {num:"12",title:"First Time in a Long Time",feat:null},
+    {num:"13",title:"Beg Forgiveness",feat:"feat. Chris Brown & Maroon 5"},
+    {num:"14",title:"Too Easy",feat:null},
+  ]},
+  {id:"bully",num:"16",title:"BULLY",year:"2025",artist:"Kanye West",label:"GOOD Music",releaseDate:"2025年6月20日",shortTitle:"BULLY",
+   desc:"Yeの2025年最新作。全18曲収録。",
+   tracks:[
+    {num:"01",title:"KING",feat:null},
+    {num:"02",title:"THIS A MUST",feat:null},
+    {num:"03",title:"FATHER",feat:"feat. Travis Scott"},
+    {num:"04",title:"ALL THE LOVE",feat:"feat. Andre Troutman"},
+    {num:"05",title:"PUNCH DRUNK",feat:null},
+    {num:"06",title:"WHATEVER WORKS",feat:null},
+    {num:"07",title:"MAMA'S FAVORITE",feat:"feat. Nine Vicious"},
+    {num:"08",title:"SISTERS AND BROTHERS",feat:null},
+    {num:"09",title:"BULLY",feat:"feat. CeeLo Green"},
+    {num:"10",title:"HIGHS AND LOWS",feat:null},
+    {num:"11",title:"I CAN'T WAIT",feat:null},
+    {num:"12",title:"WHITE LINES",feat:"feat. Andre Troutman"},
+    {num:"13",title:"CIRCLES",feat:null},
+    {num:"14",title:"PREACHER MAN",feat:null},
+    {num:"15",title:"BEAUTY AND THE BEAST",feat:null},
+    {num:"16",title:"DAMN",feat:null},
+    {num:"17",title:"LAST BREATH",feat:"feat. Peso Pluma"},
+    {num:"18",title:"THIS ONE HERE",feat:null},
+  ]},
+];
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+// view: "home" | "lr-overview" | "lr-song:{id}" | "cd-overview" | "cd-track:{num}"
+let view = "home";
+const albumOpen = { lr: true, cd: false, grad:false, s808:false, mbdtf:false, wtt:false, yeezus:false, tlop:false, ye:false, ksg:false, jik:false, donda:false, v1:false, v2:false, donda2:false, bully:false };
+
+// ══════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════
+function esc(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function applyGlossary(text) {
+  let r = esc(text||'');
+  Object.keys(GLOSSARY).sort((a,b)=>b.length-a.length).forEach(term => {
+    const e = term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+    r = r.replace(new RegExp(`(?<![\\w>])(${e})(?![\\w<])`,'g'),
+      `<span class="gl-term" data-term="${term.replace(/"/g,'&quot;')}">$1</span>`);
+  });
+  return r;
+}
+
+
+// ══════════════════════════════════════════
+// OTHER ALBUMS HELPERS
+// ══════════════════════════════════════════
+function renderOtherAlbumsSidebar() {
+  return OTHER_ALBUMS.map(alb => {
+    const aOpen = albumOpen[alb.id] || false;
+    const ovView = 'other-overview:' + alb.id;
+    const trackHTML = alb.tracks.map(t => {
+      const vStr = 'other-track:' + alb.id + ':' + t.num;
+      const act = view === vStr;
+      return '<button class="track-btn no-lyrics' + (act?' active':'') + '" data-view="' + vStr + '">' +
+        '<span class="track-num">' + esc(t.num) + '</span>' +
+        '<span class="track-info"><div class="track-name">' + esc(t.title) + '</div>' +
+        (t.feat ? '<div class="track-feat">' + esc(t.feat) + '</div>' : '') +
+        '</span></button>';
+    }).join('');
+    return '<div class="album-item">' +
+      '<button class="album-toggle' + (aOpen?' open':'') + '" data-album="' + alb.id + '">' +
+        '<span class="album-chevron">▶</span>' +
+        '<span class="album-info">' +
+          '<div class="album-name">' + esc(alb.title) + '</div>' +
+          '<div class="album-year">' + alb.year + ' · ' + alb.tracks.length + '曲（準備中）</div>' +
+        '</span></button>' +
+      '<div class="album-tracks' + (aOpen?' open':'') + '">' +
+        '<button class="track-btn' + (view===ovView?' active':'') + '" data-view="' + ovView + '" style="padding-left:22px;font-size:10px;color:var(--dim);letter-spacing:2px;text-transform:uppercase;">' +
+          '<span></span><span>アルバム概要</span></button>' +
+        trackHTML +
+      '</div></div>';
+  }).join('');
+}
+
+function renderOtherAlbumOverview(alb) {
+  return `
+    <div class="album-hdr-main">
+      <div class="album-art">
+        <div class="album-art-ph">${esc(alb.shortTitle)}</div>
+      </div>
+      <div class="album-body">
+        <div class="hdr-track">${esc(alb.artist)} · ${esc(alb.label)} · ${alb.year}</div>
+        <h1 class="hdr-title">${esc(alb.title)}</h1>
+        <div class="hdr-meta">
+          <div class="hdr-meta-item"><b>アーティスト</b>${esc(alb.artist)}</div>
+          <div class="hdr-meta-item"><b>リリース</b>${esc(alb.releaseDate)}</div>
+          <div class="hdr-meta-item"><b>収録曲</b>${alb.tracks.length}曲</div>
+        </div>
+        <div class="hdr-desc">${esc(alb.desc)}</div>
+      </div>
+    </div>
+    <div class="coming-soon-wrap">
+      <div class="cs-rule"></div>
+      <div class="cs-title">収録曲（和訳・注釈制作中）</div>
+      <div class="cs-tracklist">
+        ${alb.tracks.map(t=>`
+          <div class="cs-track" style="cursor:pointer" onclick="navigate('other-track:${alb.id}:${t.num}')">
+            <span class="cs-num">${esc(t.num)}</span>
+            <span>
+              <div class="cs-name">${esc(t.title)}</div>
+              ${t.feat?`<div class="cs-feat-sm">${esc(t.feat)}</div>`:''}
+            </span>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+// ══════════════════════════════════════════
+// SIDEBAR
+// ══════════════════════════════════════════
+function renderSidebar() {
+  const nav = document.getElementById('album-nav');
+
+  // Late Registration
+  const lrActive = view.startsWith('lr-');
+  const lrOpen = albumOpen.lr;
+  const lrTrackHTML = LR_ALL_TRACKS.map(t => {
+    const hasLyrics = !!t.hasLyrics;
+    const viewStr = hasLyrics ? `lr-song:${t.songId}` : `lr-track:${t.num}`;
+    const active = view === viewStr;
+    return `<button class="track-btn${!hasLyrics?' no-lyrics':''}${active?' active':''}" data-view="${viewStr}">
+      <span class="track-num">${esc(t.num)}</span>
+      <span class="track-info">
+        <div class="track-name">${esc(t.title)}</div>
+        ${t.feat?`<div class="track-feat">${esc(t.feat)}</div>`:''}
+      </span>
+    </button>`;
+  }).join('');
+
+  // College Dropout
+  const cdActive = view.startsWith('cd-');
+  const cdOpen = albumOpen.cd;
+  const cdTrackHTML = CD_TRACKS.map(t => {
+    const active = view === `cd-track:${t.num}`;
+    return `<button class="track-btn no-lyrics${active?' active':''}" data-view="cd-track:${t.num}">
+      <span class="track-num">${esc(t.num)}</span>
+      <span class="track-info">
+        <div class="track-name">${esc(t.title)}</div>
+        ${t.feat?`<div class="track-feat">${esc(t.feat)}</div>`:''}
+      </span>
+    </button>`;
+  }).join('');
+
+  nav.innerHTML = `
+    <div class="album-item">
+      <button class="album-toggle${cdOpen?' open':''}" data-album="cd">
+        <span class="album-chevron">▶</span>
+        <span class="album-info">
+          <div class="album-name">The College Dropout</div>
+          <div class="album-year">2004 · 21曲（全曲和訳済）</div>
+        </span>
+      </button>
+      <div class="album-tracks${cdOpen?' open':''}">
+        <button class="track-btn${view==='cd-overview'?' active':''}" data-view="cd-overview" style="padding-left:22px;font-size:10px;color:var(--dim);letter-spacing:2px;text-transform:uppercase;">
+          <span></span><span>アルバム概要</span>
+        </button>
+        ${cdTrackHTML}
+      </div>
+    </div>
+    <div class="album-item">
+      <button class="album-toggle${lrOpen?' open':''}" data-album="lr">
+        <span class="album-chevron">▶</span>
+        <span class="album-info">
+          <div class="album-name">Late Registration</div>
+          <div class="album-year">2005 · 21曲（全曲和訳済）</div>
+        </span>
+      </button>
+      <div class="album-tracks${lrOpen?' open':''}">
+        <button class="track-btn${view==='lr-overview'?' active':''}" data-view="lr-overview" style="padding-left:22px;font-size:10px;color:var(--dim);letter-spacing:2px;text-transform:uppercase;">
+          <span></span><span>アルバム概要</span>
+        </button>
+        ${lrTrackHTML}
+      </div>
+    </div>
+    ${renderOtherAlbumsSidebar()}`;
+
+  // Album toggle
+  nav.querySelectorAll('.album-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const album = btn.dataset.album;
+      const willOpen = !albumOpen[album];
+      Object.keys(albumOpen).forEach(k => { albumOpen[k] = false; });
+      albumOpen[album] = willOpen;
+      renderSidebar();
+    });
+  });
+  // Track / overview buttons
+  nav.querySelectorAll('[data-view]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      view = btn.dataset.view;
+      // Auto-open the relevant album
+      if (view.startsWith('lr-')) albumOpen.lr = true;
+      if (view.startsWith('cd-')) albumOpen.cd = true;
+      if (view.startsWith('other-')) {
+        const _id = view.split(':')[1];
+        if (_id in albumOpen) albumOpen[_id] = true;
+      }
+      renderSidebar();
+      renderContent();
+      window.scrollTo(0,0);
+    });
+  });
+}
+
+// ══════════════════════════════════════════
+// CONTENT
+// ══════════════════════════════════════════
+function renderContent() {
+  const c = document.getElementById('content');
+  if (view === 'home') { c.innerHTML = renderHome(); }
+  else if (view === 'lr-overview') { c.innerHTML = renderLROverview(); }
+  else if (view.startsWith('lr-song:')) {
+    const id = view.replace('lr-song:','');
+    const song = LR_SONGS.find(s=>s.id===id);
+    c.innerHTML = song ? renderSong(song,'Late Registration','2. Late Registration') : '';
+  }
+  else if (view.startsWith('lr-track:')) {
+    const num = view.replace('lr-track:','');
+    const track = LR_ALL_TRACKS.find(t=>t.num===num);
+    c.innerHTML = track ? `
+      <div class="song-hdr">
+        <div class="hdr-track">Track ${esc(track.num)} — Late Registration</div>
+        <h1 class="hdr-title">${esc(track.title)}</h1>
+        ${track.feat?`<div class="hdr-feat">${esc(track.feat)}</div>`:''}
+        <div class="hdr-meta">
+          <div class="hdr-meta-item"><b>アルバム</b>Late Registration</div>
+          <div class="hdr-meta-item"><b>リリース</b>2005年</div>
+        </div>
+      </div>
+      <div class="coming-soon-wrap">
+        <div class="cs-rule"></div>
+        <div class="cs-title">和訳・注釈制作中</div>
+        <div class="cs-body">このトラックの和訳・注釈はまだ準備中です。完成次第このページに追加されます。</div>
+      </div>` : '';
+    applyTermPopListeners(); return;
+  }
+  else if (view === 'cd-overview') { c.innerHTML = renderCDOverview(); }
+  else if (view.startsWith('other-overview:')) {
+    const _oid = view.replace('other-overview:','');
+    const _alb = OTHER_ALBUMS.find(a=>a.id===_oid);
+    c.innerHTML = _alb ? renderOtherAlbumOverview(_alb) : '';
+  }
+  else if (view.startsWith('other-track:')) {
+    const _parts = view.replace('other-track:','').split(':');
+    const _oid = _parts[0], _num = _parts[1];
+    const _alb = OTHER_ALBUMS.find(a=>a.id===_oid);
+    const _track = _alb ? _alb.tracks.find(t=>t.num===_num) : null;
+    c.innerHTML = _track ? `
+      <div class="song-hdr">
+        <div class="hdr-track">Track ${esc(_track.num)} — ${esc(_alb.title)}</div>
+        <h1 class="hdr-title">${esc(_track.title)}</h1>
+        ${_track.feat?`<div class="hdr-feat">${esc(_track.feat)}</div>`:''}
+        <div class="hdr-meta">
+          <div class="hdr-meta-item"><b>アーティスト</b>${esc(_alb.artist)}</div>
+          <div class="hdr-meta-item"><b>アルバム</b>${esc(_alb.title)}</div>
+          <div class="hdr-meta-item"><b>リリース</b>${_alb.year}年</div>
+        </div>
+      </div>
+      <div class="coming-soon-wrap">
+        <div class="cs-rule"></div>
+        <div class="cs-title">和訳・注釈制作中</div>
+        <div class="cs-body">このトラックの和訳・注釈はまだ準備中です。完成次第このページに追加されます。</div>
+      </div>` : '';
+    applyTermPopListeners(); return;
+  }
+  else if (view.startsWith('cd-track:')) {
+    const num = view.replace('cd-track:','');
+    const track = CD_TRACKS.find(t=>t.num===num);
+    c.innerHTML = track ? renderCDTrack(track) : '';
+  }
+  applyTermPopListeners();
+}
+
+function renderHome() {
+  const artMap = {
+    'cd-overview':           '1. The College Dropout/College Dropout artwork.jpg',
+    'lr-overview':           '2. Late Registration/Late Registration artwork.jpg',
+    'other-overview:grad':   '3. Graduation/Graduation artwork.jpg',
+    'other-overview:s808':   '4. 808s & Heartbreak/808s & heartbreak artwork.jpg',
+    'other-overview:mbdtf':  '5. My Beautiful Dark Twisted Fantasy/My Beautiful Dark Twisted Fantasy artwork.jpg',
+    'other-overview:wtt':    '6. Watch The Throne/Watch The Throne artwork.jpg',
+    'other-overview:yeezus': '7. Yeezus/Yeezus artwork.png',
+    'other-overview:tlop':   '8. The Life Of Pablo/The Life Of Pablo artwork.jpg',
+    'other-overview:ye':     '9. ye/ye artwork.jpg',
+    'other-overview:ksg':    '10. KIDS SEE GHOSTS/KIDS SEE GHOSTS artwork.jpg',
+    'other-overview:jik':    '11. JESUS IS KING/JESUS IS KING artwork.png',
+    'other-overview:donda':  '12. DONDA/DONDA artwork.avif',
+    'other-overview:v1':     '13. VULTURES 1/VULTURES 1 artwork.jpg',
+    'other-overview:v2':     '14. VULTURES 2/VULTURES 2 artwork.png',
+    'other-overview:donda2': '15. DONDA 2/DONDA 2 artwork.webp',
+    'other-overview:bully':  '16. BULLY/BULLY artwork.webp',
+  };
+  const phBg = {
+  };
+  const _all = [
+    {view:'cd-overview',   num:'01', title:'The College Dropout', year:'2004', tracks:21, done:true,  artText:'THE\nCOLLEGE\nDROPOUT'},
+    {view:'lr-overview',   num:'02', title:'Late Registration',   year:'2005', tracks:21, done:true,  artText:'LATE\nREG'},
+    ...OTHER_ALBUMS.map(a=>({view:'other-overview:'+a.id, num:a.num, title:a.title, year:a.year, tracks:a.tracks.length, done:false, artText:a.shortTitle}))
+  ];
+  const doneCount = _all.filter(a=>a.done).reduce((s,a)=>s+a.tracks,0);
+  const totalCount = _all.reduce((s,a)=>s+a.tracks,0);
+  const cards = _all.map(a=>{
+    const artSrc = artMap[a.view];
+    const artStyle = artSrc
+      ? 'background-image:url("' + artSrc + '");background-size:cover;background-position:center;'
+      : 'background:#1a1a1a;';
+    const phText = !artSrc ? '<span class="home-card-ph-text">' + esc(a.artText||a.title) + '</span>' : '';
+    return '<button class="home-card" data-view="' + a.view + '">'
+      + '<div class="home-card-art" style="' + artStyle + '">' + phText + '</div>'
+      + '<div class="home-card-overlay">'
+      + '<div class="home-card-num">' + a.num + ' · ' + a.year + '</div>'
+      + '<div class="home-card-title">' + esc(a.title) + '</div>'
+      + '<div class="home-card-badge ' + (a.done?'done':'wip') + '">' + (a.done?'全曲和訳済':'準備中') + '</div>'
+      + '</div>'
+      + '</button>';
+  }).join('');
+  return '<div class="home-hero">'
+    + '<div class="home-hero-eye">KANYE WEST · 和訳解説</div>'
+    + '<h1 class="home-hero-title">全ディスコグラフィー、<br>日本語で。</h1>'
+    + '<p class="home-hero-body">カニエ・ウェストの英語歌詞を日本語に。時代背景・人物・スラング・サンプリング元まで——音楽を深く読み解くための注釈付き和訳サイト。</p>'
+    + '<div class="home-hero-stats">'
+    + '<div class="home-stat"><div class="home-stat-num">16</div><div class="home-stat-label">アルバム</div></div>'
+    + '<div class="home-stat"><div class="home-stat-num">' + doneCount + '</div><div class="home-stat-label">和訳済曲</div></div>'
+    + '<div class="home-stat"><div class="home-stat-num">' + totalCount + '</div><div class="home-stat-label">収録曲（全）</div></div>'
+    + '</div>'
+    + '</div>'
+    + '<div class="home-discog-section">'
+    + '<div class="home-discog-hdr">ディスコグラフィー</div>'
+    + '<div class="home-grid">' + cards + '</div>'
+    + '</div>';
+}
+
+function renderLROverview() {
+  return `
+    <div class="album-hdr-main">
+      <div class="album-art">
+        <img src="late-registration-artwork.jpg" alt="Late Registration"
+             onerror="this.outerHTML='<div class=\\'album-art-ph\\'>LATE REG</div>'">
+      </div>
+      <div class="album-body">
+        <div class="hdr-track">Roc-A-Fella / Def Jam · 2005</div>
+        <h1 class="hdr-title">Late Registration</h1>
+        <div class="hdr-meta">
+          <div class="hdr-meta-item"><b>アーティスト</b>Kanye West</div>
+          <div class="hdr-meta-item"><b>リリース</b>2005年8月30日</div>
+          <div class="hdr-meta-item"><b>和訳収録</b>6曲（Track 07–12）</div>
+        </div>
+        <div class="hdr-desc">デビュー作に続くKanyeの第2作。Jon Brionとの共同プロデュースによる壮大なオーケストラル・ヒップホップ。医療格差、クラック禍、信仰、中毒など、より深く内省的なテーマを扱う。グラミー賞最優秀アルバム賞受賞。</div>
+      </div>
+    </div>
+    <div class="coming-soon-wrap">
+      <div class="cs-rule"></div>
+      <div class="cs-title">収録曲（和訳済）</div>
+      <div class="cs-tracklist">
+        ${LR_SONGS.map(s=>`
+          <div class="cs-track" style="cursor:pointer" onclick="navigate('lr-song:${s.id}')">
+            <span class="cs-num">${esc(s.num)}</span>
+            <span>
+              <div class="cs-name">${esc(s.title)}</div>
+              ${s.feat?`<div class="cs-feat-sm">${esc(s.feat)}</div>`:''}
+            </span>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function renderCDOverview() {
+  return `
+    <div class="album-hdr-main">
+      <div class="album-art">
+        <div class="album-art-ph">THE<br>COLLEGE<br>DROPOUT</div>
+      </div>
+      <div class="album-body">
+        <div class="hdr-track">Roc-A-Fella / Def Jam · 2004</div>
+        <h1 class="hdr-title">The College Dropout</h1>
+        <div class="hdr-meta">
+          <div class="hdr-meta-item"><b>アーティスト</b>Kanye West</div>
+          <div class="hdr-meta-item"><b>リリース</b>2004年2月10日</div>
+          <div class="hdr-meta-item"><b>収録曲</b>21曲</div>
+        </div>
+        <div class="hdr-desc">Kanyeのデビューアルバム。「Jesus Walks」「Through The Wire」「Slow Jamz」などを収録。大学中退を決断しプロデューサーからラッパーへ転身するまでの葛藤、信仰、アメリカの教育システムへの疑問を描く。グラミー賞3部門受賞。</div>
+      </div>
+    </div>
+    <div class="coming-soon-wrap">
+      <div class="cs-rule"></div>
+      <div class="cs-title">収録曲（和訳・注釈制作中）</div>
+      <div class="cs-tracklist">
+        ${CD_TRACKS.map(t=>`
+          <div class="cs-track">
+            <span class="cs-num">${esc(t.num)}</span>
+            <span>
+              <div class="cs-name">${esc(t.title)}</div>
+              ${t.feat?`<div class="cs-feat-sm">${esc(t.feat)}</div>`:''}
+            </span>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function renderCDTrack(track) {
+  if (track.hasLyrics && track.data) {
+    return renderSong(track.data, 'The College Dropout', '');
+  }
+  return `
+    <div class="song-hdr">
+      <div class="hdr-track">Track ${esc(track.num)} — The College Dropout</div>
+      <h1 class="hdr-title">${esc(track.title)}</h1>
+      ${track.feat?`<div class="hdr-feat">${esc(track.feat)}</div>`:''}
+      <div class="hdr-meta">
+        <div class="hdr-meta-item"><b>アルバム</b>The College Dropout</div>
+        <div class="hdr-meta-item"><b>リリース</b>2004年</div>
+      </div>
+    </div>
+    <div class="coming-soon-wrap">
+      <div class="cs-rule"></div>
+      <div class="cs-title">和訳・注釈制作中</div>
+      <div class="cs-body">このトラックの和訳・注釈はまだ準備中です。完成次第このページに追加されます。</div>
+    </div>`;
+}
+
+function renderSong(song, albumName, albumFolder) {
+  let html = `
+    <div class="song-hdr">
+      <div class="hdr-track">Track ${esc(song.num)} — ${esc(albumName)}</div>
+      <h1 class="hdr-title">${esc(song.title)}</h1>
+      ${song.feat?`<div class="hdr-feat">${esc(song.feat)}</div>`:''}
+      <div class="hdr-meta">
+        <div class="hdr-meta-item"><b>プロデューサー</b>${esc(song.producer)}</div>
+        <div class="hdr-meta-item"><b>アルバム</b>${esc(albumName)}</div>
+        <div class="hdr-meta-item"><b>レーベル</b>${esc(song.label||'Roc-A-Fella / Def Jam')}</div>
+        <div class="hdr-meta-item"><b>リリース</b>${esc(song.year||'2005年')}</div>
+        ${song.sample?`<div class="hdr-meta-item"><b>サンプル</b>${esc(song.sample)}</div>`:''}
+      </div>
+      <div class="hdr-desc">${esc(song.desc)}</div>
+    </div>`;
+
+  if (song.sampleSources && song.sampleSources.length > 0) {
+    html += `
+      <div class="sample-section">
+        <button class="sample-toggle" onclick="this.closest('.sample-section').classList.toggle('open')">
+          <span class="sample-toggle-label">Samples</span>
+          <span class="sample-toggle-chevron">▶</span>
+        </button>
+        <div class="sample-body">
+          <div class="sample-heading"><span class="sample-label">サンプル元</span></div>
+          ${song.sampleSources.map((src, i) => `
+            <div class="sample-item">
+              <div class="sample-tracks">
+                <div class="sample-track">
+                  <div class="sample-role">使用曲</div>
+                  <div class="sample-track-info">
+                    <img class="sample-art" src="${esc(song.artwork||'late-registration-artwork.jpg')}" alt="${esc(albumName)}"
+                         onerror="this.style.display='none'">
+                    <div class="sample-meta">
+                      <div class="sample-track-name">${esc(song.title)}</div>
+                      <div class="sample-artist">Kanye West${song.feat?' '+esc(song.feat):''}</div>
+                      <div class="sample-album">${esc(albumName)}<br>${esc(song.label||'Roc-A-Fella / Def Jam')} · ${(song.year||'2005').replace('年','')}</div>
+                    </div>
+                  </div>
+                  <div class="sample-ts">
+                    <span class="sample-ts-label">登場位置</span>
+                    <span class="sample-ts-time">0:00</span>
+                    <a class="sample-ts-link" href="${esc(src.url)}" target="_blank">▶ 登場位置を聴く</a>
+                  </div>
+                </div>
+                <div class="sample-connector"><div class="sample-arrow">←</div></div>
+                <div class="sample-track">
+                  <div class="sample-role">サンプル元${song.sampleSources.length>1?' ('+(i+1)+'/'+song.sampleSources.length+')':''}</div>
+                  <div class="sample-track-info">
+                    <div class="sample-art-ph">ORIG</div>
+                    <div class="sample-meta">
+                      <div class="sample-track-name">${esc(src.title)}</div>
+                      <div class="sample-artist">${esc(src.artist)}</div>
+                      <div class="sample-album">${src.album?esc(src.album)+'<br>':''}${src.year?src.year+'年':''}</div>
+                    </div>
+                  </div>
+                  <div class="sample-ts">
+                    <span class="sample-ts-label">登場位置</span>
+                    <span class="sample-ts-time">0:00</span>
+                    <a class="sample-ts-link" href="${esc(src.url)}" target="_blank">▶ 登場位置を聴く</a>
+                  </div>
+                </div>
+              </div>
+            </div>`).join('')}
+          ${song.whosampledUrl?`<div class="sample-footer"><span>情報提供：WhoSampled</span><a class="sample-footer-link" href="${esc(song.whosampledUrl)}" target="_blank">whosampled.com で詳細を見る</a></div>`:''}
+        </div>
+      </div>`;
+  }
+
+  html += `<div class="lyrics-wrap">`;
+  song.sections.forEach(sec => {
+    html += `<div class="sec-header"><div class="sec-rule"></div><div class="sec-label-text">${esc(sec.label)}</div><div class="sec-rule"></div></div>`;
+    if (sec.note) html += `<div class="sec-note">${esc(sec.note)}</div>`;
+    sec.lines.forEach(line => {
+      html += `<div class="lyric-block">
+        <div class="en-line">${applyGlossary(line.en)}</div>
+        ${line.ja?`<div class="ja-line">${esc(line.ja)}</div>`:''}
+        ${line.ann?`<div class="ann-line"><span class="ann-star">＊</span>${esc(line.ann)}</div>`:''}
+      </div><div class="spacer"></div>`;
+    });
+  });
+  html += `</div>`;
+  return html;
+}
+
+// ══════════════════════════════════════════
+// GLOSSARY POPUP
+// ══════════════════════════════════════════
+function applyTermPopListeners() {
+  const pop = document.getElementById('term-pop');
+  document.querySelectorAll('.gl-term').forEach(el => {
+    el.addEventListener('click', e => {
+      const g = GLOSSARY[el.dataset.term];
+      if (!g) return;
+      pop.innerHTML = `<div class="tp-type">${esc(g.type)}</div><div class="tp-name">${esc(el.dataset.term)}</div>${esc(g.desc)}`;
+      pop.style.display = 'block';
+      const rect = el.getBoundingClientRect();
+      let left = rect.left + window.scrollX;
+      if (left + 290 > window.innerWidth) left = window.innerWidth - 300;
+      pop.style.top = (rect.bottom + 8 + window.scrollY) + 'px';
+      pop.style.left = left + 'px';
+      e.stopPropagation();
+    });
+  });
+  document.addEventListener('click', () => { pop.style.display = 'none'; });
+}
+
+// ── home-row buttons (rendered via innerHTML, so use delegation) ──
+document.getElementById('content').addEventListener('click', e => {
+  const btn = e.target.closest('[data-view]');
+  if (btn && !btn.closest('#album-nav')) {
+    navigate(btn.dataset.view);
+  }
+});
+
+const ALBUM_COLORS = {
+  cd:     { accent:'#b5803a', annBg:'#fdf7ee', annText:'#8a5e18' },
+  lr:     { accent:'#c0392b', annBg:'#fdf6f5', annText:'#a04030' },
+  grad:   { accent:'#4a7fd4', annBg:'#f0f4fc', annText:'#2a4a8a' },
+  s808:   { accent:'#5b9cc4', annBg:'#f0f6fc', annText:'#1f5a80' },
+  mbdtf:  { accent:'#8c1919', annBg:'#fdf0f0', annText:'#6a1010' },
+  wtt:    { accent:'#b8922e', annBg:'#fdf8ec', annText:'#7a600e' },
+  yeezus: { accent:'#6e5e4e', annBg:'#f8f6f4', annText:'#4e3e2e' },
+  tlop:   { accent:'#c96a1a', annBg:'#fdf4ec', annText:'#8a4008' },
+  ye:     { accent:'#4a7240', annBg:'#f0f5f0', annText:'#2a5020' },
+  ksg:    { accent:'#7a3ac8', annBg:'#f4f0fc', annText:'#4a1a8a' },
+  jik:    { accent:'#b88c18', annBg:'#fdf8e4', annText:'#7a5c08' },
+  donda:  { accent:'#646464', annBg:'#f5f5f5', annText:'#404040' },
+  v1:     { accent:'#1e5aa0', annBg:'#eef2fa', annText:'#0e3a70' },
+  v2:     { accent:'#5a2e8c', annBg:'#f4f0fc', annText:'#3a1a6a' },
+  donda2: { accent:'#3a3a8c', annBg:'#eeeefa', annText:'#1a1a6a' },
+  bully:  { accent:'#8c3a1a', annBg:'#faf0ee', annText:'#5e1a06' },
+};
+
+function applyAlbumTheme(albumId) {
+  const c = ALBUM_COLORS[albumId] || ALBUM_COLORS.lr;
+  const r = document.documentElement.style;
+  r.setProperty('--red', c.accent);
+  r.setProperty('--ann-bg', c.annBg);
+  r.setProperty('--ann-text', c.annText);
+}
+
+function navigate(v) {
+  view = v;
+  if (view.startsWith('lr-')) { albumOpen.lr = true; applyAlbumTheme('lr'); }
+  else if (view.startsWith('cd-')) { albumOpen.cd = true; applyAlbumTheme('cd'); }
+  else if (view.startsWith('other-')) {
+    const _id = view.split(':')[1];
+    if (_id in albumOpen) albumOpen[_id] = true;
+    applyAlbumTheme(_id);
+  } else {
+    applyAlbumTheme('lr');
+  }
+  renderSidebar();
+  renderContent();
+  window.scrollTo(0,0);
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+renderSidebar();
+renderContent();
+</script>
+</body>
+</html>
