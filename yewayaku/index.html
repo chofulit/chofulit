@@ -20,7 +20,10 @@
   --sidebar-w: 256px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { max-width: 100%; overflow-x: hidden; }
 body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; min-height: 100vh; display: flex; }
+#main { min-width: 0; max-width: 100%; }
+.hero-nobr { white-space: nowrap; }
 
 /* ══ SIDEBAR ══ */
 #sidebar {
@@ -319,7 +322,12 @@ body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-se
   .home-hero-stats { gap: 28px; flex-wrap: wrap; }
   .home-stat-num { font-size: 30px; }
   .home-discog-hdr { padding: 0 20px 16px; }
-  .home-grid { grid-template-columns: repeat(2, 1fr); }
+  /* モバイルでは本文を通常折り返しに（横スクロール防止） */
+  .home-hero-body { max-width: 100%; }
+  .hero-nobr { white-space: normal; }
+  .hero-br { display: none; }
+  /* アルバムは1行2枚でぴったり */
+  .home-grid { grid-template-columns: repeat(2, 1fr); gap: 2px; width: 100%; }
   .home-card-overlay { transform: translateY(0); background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0) 100%); }
 
   /* Glossary popup fits screen */
@@ -1733,12 +1741,12 @@ const CD_TRACKS = [
     desc:"アルバムのオープニングスキット。教師役のDeRay Davisが「卒業式にみんなが喜ぶきれいな曲を作ってくれ」とKanyeに頼む場面。「The College Dropout（大学中退者）」というタイトルを持つアルバムが、この1分にも満たない対話から始まることに皮肉が込められている——学校のシステムに向けた反旗を翻す前に、まずそのシステム内の人物が語りかけてくる。",
     sections:[
       {label:"[Intro: DeRay Davis]",note:"DeRay Davis（デレイ・デイヴィス）：シカゴ出身のコメディアン・俳優。The College Dropoutで「権威ある教師・社会の声」役を一貫して演じており、Spaceship、School Spirit Skit、Lil Jimmy Skitなどに登場する。",lines:[
-        {en:"Kanye, can I talk to you for a minute?",ja:"カニエ、ちょっといいか？",ann:null},
+        {en:"Kanye, can I talk to you for a minute?",ja:"カニエ、ちょっと話せるか？",ann:null},
         {en:"Me and the other faculty members was wonderin'",ja:"俺と他の先生たちで話してたんだが",ann:null},
-        {en:"Could you do a lil' som—",ja:"ちょっと何かやってくれないか——",ann:null},
-        {en:"Somethin' beautiful, somethin' that the kids is gon' love when they hear it",ja:"きれいなもの、子供たちが聞いたら喜ぶようなもの",ann:null},
-        {en:"That's gon' make them start jumpin' up and down, and sharin' candy and stuff",ja:"飛び跳ねて、お菓子を分け合うようなやつ",ann:null},
-        {en:"Think you could probably do somethin', for the kids, for graduation to sing?",ja:"子供たちのために、卒業式で歌えるようなの、何か作れるか？",ann:null}
+        {en:"Could you do a lil' som—",ja:"ちょっとこう、なんか——",ann:null},
+        {en:"Somethin' beautiful, somethin' that the kids is gon' love when they hear it",ja:"きれいで、子どもたちが聴いたら喜ぶような何かを。",ann:null},
+        {en:"That's gon' make them start jumpin' up and down, and sharin' candy and stuff",ja:"みんなが跳ね回ったり、キャンディを分け合ったりするような曲を。",ann:null},
+        {en:"Think you could probably do somethin', for the kids, for graduation to sing?",ja:"卒業式で子どもたちが歌えるような、そんな曲を作れないか？",ann:null}
       ]}
     ]
   }},
@@ -1764,99 +1772,100 @@ const CD_TRACKS = [
     desc:"シカゴ南部のゲットーで育つ子供たちが麻薬売買に身を投じる現実を、聖歌隊の声を背景にユーモアと怒りで描いたアルバムのリードトラック。「大学も仕事もない」状況で薬物取引が唯一のキャリアになる社会構造を批判する。コーラスに子供の聖歌隊を使うことで、次世代への問いかけを込めた。",
     sections:[
       {label:"[Intro]",note:null,lines:[
-        {en:"Oh, yeah",ja:"ああ、そうだ",ann:null},
-        {en:"I got the perfect song for the kids to sing",ja:"子供たちが歌うのにぴったりな曲がある",ann:null},
-        {en:"And all my people that's",ja:"そして俺の仲間たち全員、",ann:null}
+        {en:"Oh, yeah",ja:"おお、イェー。",ann:null},
+        {en:"I got the perfect song for the kids to sing",ja:"子どもたちが歌うのにぴったりな曲があるんだ。",ann:null},
+        {en:"And all my people that's",ja:"それに俺の仲間にも——",ann:null}
       ]},
       {label:"[Chorus]",note:null,lines:[
-        {en:"Drug dealin' just to get by",ja:"なんとか生き残るために麻薬を売る",ann:null},
-        {en:"Stack your money 'til it get sky high",ja:"金を空まで積み上げろ",ann:null},
-        {en:"We wasn't s'posed to make it past twenty-five",ja:"俺たちは25を越えられないはずだった",ann:null},
-        {en:"Joke's on you, we still alive",ja:"お前への皮肉だ、俺たちはまだ生きてる",ann:null},
-        {en:"Throw your hands up in the sky and say",ja:"両手を空に上げて言え",ann:null},
-        {en:"\"We don't care what people say\"",ja:"「人々が何を言おうと俺たちは気にしない」",ann:null}
+        {en:"Drug dealin' just to get by",ja:"生き延びるためにドラッグを売る。",ann:null},
+        {en:"Stack your money 'til it get sky high",ja:"金を積み上げろ、空に届くほどまで。",ann:null},
+        {en:"We wasn't s'posed to make it past twenty-five",ja:"俺たちは25歳まで生きられないって言われてた。",ann:null},
+        {en:"Joke's on you, we still alive",ja:"でもざまぁみろ、まだ生きてるぜ。",ann:null},
+        {en:"Throw your hands up in the sky and say",ja:"手を空に掲げて、こう言え。",ann:null},
+        {en:"\"We don't care what people say\"",ja:"「他人が何を言おうと気にしねぇ」",ann:null}
       ]},
       {label:"[Verse 1: Kanye West]",note:"シカゴ南部（South Side）：Kanyeが幼少期を過ごした地域。黒人居住区が集中し、1990〜2000年代にかけて高い貧困率・犯罪率が続いた。公立学校の質の低さと進路選択肢の狭さが、ドラッグビジネスへの参入を構造的に生み出している現実を本曲は描く。",lines:[
-        {en:"If this is your first time hearin' this",ja:"これを初めて聞くなら",ann:null},
-        {en:"You are about to experience somethin' so cold, man",ja:"お前はとんでもなくヤバいものを体験しようとしてる",ann:null},
-        {en:"We never had nothin' handed, took nothin' for granted",ja:"俺たちは何も与えられず、何も当然とは思わなかった",ann:null},
-        {en:"Took nothin' from no man, man, I'm my own man",ja:"誰からも何も奪わなかった、俺は自分自身の男だ",ann:null},
-        {en:"But as a shorty, I looked up to the dope man",ja:"でもガキの頃は、麻薬売人を尊敬してた",ann:null},
-        {en:"Only adult man I knew that wasn't broke, man",ja:"俺が知ってた、金がない状態じゃなかった唯一の大人の男だった",ann:null},
-        {en:"Flicking Starter coats, man—man, you don't know, man",ja:"スターターコートをはためかせて——お前にはわからない",ann:"Starter coats（スターターコート）：1990年代にスポーツチームのロゴが入ったナイロン製ジャケット。ゲットーの若者の間で流行し、高価なブランド品の象徴として扱われた。"},
-        {en:"We don't care what people say",ja:"人々が何を言おうと俺たちは気にしない",ann:null},
-        {en:"This is for my niggas outside all winter",ja:"これは冬中外にいる仲間のためだ",ann:null},
-        {en:"'Cause this summer, they ain't finna say, \"Next summer, I'm finna\"",ja:"なぜなら今年の夏、彼らは「来年の夏には〜するつもり」とは言わないから",ann:null},
-        {en:"Sittin' in the hood like community colleges",ja:"コミュニティカレッジみたいにゲットーに座ってる",ann:"Community College（コミュニティカレッジ）：アメリカの2年制公立大学。学費が低く入学要件も緩やか。前進できずにいる状況を皮肉る比喩。"},
-        {en:"This dope money here is Lil' Trey's scholarship",ja:"この麻薬マネーがリル・トレイの奨学金だ",ann:null},
-        {en:"'Cause ain't no tuition for having no ambition",ja:"なぜなら野心がないことへの学費はないから",ann:null},
-        {en:"And ain't no loans for sittin' your ass at home",ja:"家でぶらぶらしてることへのローンもない",ann:null},
-        {en:"So we forced to sell crack, rap, and get a job",ja:"だからクラックを売るか、ラップするか、仕事を得るしかない",ann:null},
-        {en:"You gotta do somethin', man, your ass is grown",ja:"何かしなきゃならない、お前はもう大人だ",ann:null}
+        {en:"If this is your first time hearin' this",ja:"これを初めて聴くなら、",ann:null},
+        {en:"You are about to experience somethin' so cold, man",ja:"今からめちゃくちゃ\"クール（冷たい／最高）\"な体験をするぜ。",ann:"\"cold\"はスラングで「すごい・最高にイケてる」という意味。ここでは「社会の冷たさ」と「自分のカッコよさ」を二重にかけている。"},
+        {en:"We never had nothin' handed, took nothin' for granted",ja:"俺たちは何も与えられなかったし、何一つ当たり前だと思ってこなかった。",ann:null},
+        {en:"Took nothin' from no man, man, I'm my own man",ja:"誰からも奪わず、俺は俺自身の力で立ってきた。",ann:null},
+        {en:"But as a shorty, I looked up to the dope man",ja:"でもガキの頃は、ドープマン（麻薬売人）を見上げてたんだ。",ann:null},
+        {en:"Only adult man I knew that wasn't broke, man",ja:"俺の知ってる大人で、貧乏じゃなかったのはそいつだけだった。",ann:null},
+        {en:"Flicking Starter coats, man—man, you don't know, man",ja:"スターターコートをひらひらさせて——お前にはわからねぇよ。",ann:"Starter coats（スターターコート）：1990年代にスポーツチームのロゴが入ったナイロン製ジャケット。ゲットーの若者の間で流行し、高価なブランド品の象徴として扱われた。"},
+        {en:"We don't care what people say",ja:"でも俺たちは、人が何を言おうと気にしねぇ。",ann:null},
+        {en:"This is for my niggas outside all winter",ja:"これは冬中外にいる仲間のためだ。",ann:null},
+        {en:"'Cause this summer, they ain't finna say, \"Next summer, I'm finna\"",ja:"今年の夏こそ、「来年の夏こそやる」なんて言い訳はしねぇんだ。",ann:null},
+        {en:"Sittin' in the hood like community colleges",ja:"コミュニティカレッジみたいにフードでくすぶってる。",ann:"Community College（コミュニティカレッジ）：アメリカの2年制公立大学。学費が低く入学要件も緩やか。前進できずにいる状況を皮肉る比喩。"},
+        {en:"This dope money here is Lil' Trey's scholarship",ja:"このドラッグの金が、リル・トレイの奨学金ってわけだ。",ann:"\"Lil' Trey\"は架空の若者。コミュニティを代表する存在として描かれている。"},
+        {en:"'Cause ain't no tuition for having no ambition",ja:"野心のない奴には、学費なんて払われねぇ。",ann:null},
+        {en:"And ain't no loans for sittin' your ass at home",ja:"家でぶらぶらしてても、ローンなんか組めやしない。",ann:null},
+        {en:"So we forced to sell crack, rap, and get a job",ja:"だから俺たちは、クラックを売るか、ラップするか、仕事するかしかねぇんだ。",ann:null},
+        {en:"You gotta do somethin', man, your ass is grown",ja:"何かしなきゃダメだ、もうお前は大人なんだから。",ann:null}
       ]},
       {label:"[Chorus: Kanye West with Choir]",note:null,lines:[
-        {en:"Drug dealin' just to get by",ja:"なんとか生き残るために麻薬を売る",ann:null},
-        {en:"Stack your money 'til it get sky high",ja:"金を空まで積み上げろ",ann:null},
-        {en:"Kids, sing! Kids, sing!",ja:"子供たちよ、歌え！",ann:null},
-        {en:"We wasn't s'posed to make it past twenty-five",ja:"俺たちは25を越えられないはずだった",ann:null},
-        {en:"Joke's on you, we still alive",ja:"お前への皮肉だ、俺たちはまだ生きてる",ann:null},
-        {en:"Throw your hands up in the sky and say",ja:"両手を空に上げて言え",ann:null},
-        {en:"\"We don't care what people say\"",ja:"「人々が何を言おうと俺たちは気にしない」",ann:null}
+        {en:"Drug dealin' just to get by",ja:"生き延びるためにドラッグを売る。",ann:null},
+        {en:"Stack your money 'til it get sky high",ja:"金を積み上げろ、空に届くほどまで。",ann:null},
+        {en:"Kids, sing! Kids, sing!",ja:"子どもたちよ、歌え！　歌え！",ann:null},
+        {en:"We wasn't s'posed to make it past twenty-five",ja:"俺たちは25歳まで生きられないって言われてた。",ann:null},
+        {en:"Joke's on you, we still alive",ja:"でもざまぁみろ、まだ生きてるぜ。",ann:null},
+        {en:"Throw your hands up in the sky and say",ja:"手を空に掲げて、こう言え。",ann:null},
+        {en:"\"We don't care what people say\"",ja:"「他人が何を言おうと気にしねぇ」",ann:null}
       ]},
       {label:"[Verse 2]",note:null,lines:[
-        {en:"This second verse is for my dogs working nine to five that still hustle",ja:"この2番は、9時から5時まで働きながらまだ頑張ってる仲間のためだ",ann:null},
-        {en:"'Cause a nigga can't shine off $6.55",ja:"なぜなら6ドル55セントじゃ輝けないから",ann:"$6.55は当時のイリノイ州の最低賃金（時給）。低賃金労働では生活が成り立たない現実を示す。"},
-        {en:"And everybody sellin' makeup, Jacob's",ja:"みんなメイクアップを売ったり、ジェイコブに行ったり",ann:"Jacob's＝Jacob & Co.（ジェイコブ・アンド・コー）。ヒップホップ界御用達のニューヨークの高級宝石商。"},
-        {en:"And bootleg tapes just to get they cake up",ja:"ブートレグテープを売ったりして金を稼ごうとしてる",ann:null},
-        {en:"We put shit on layaway, then come back",ja:"ものを後払いで予約して、また取りに来る",ann:"Layaway（後払い予約）：代金を分割払いで支払い終えた後に商品を受け取れる購入方式。クレジットカードが使えない低所得層が利用した。"},
-        {en:"We claim other people kids on our income tax",ja:"他人の子供を自分の確定申告に申告する",ann:"貧困コミュニティでは課税控除を最大化するため、親族の子供を扶養申告するケースが存在した社会的現実。"},
-        {en:"We take that money, cop work, then push packs to get paid",ja:"その金を取って、商品を仕入れて、小分けにして売る",ann:null},
-        {en:"And we don't care what people say",ja:"そして人々が何を言おうと俺たちは気にしない",ann:null},
-        {en:"Mama say she wanna move South",ja:"ママは南部に引っ越したいと言う",ann:null},
-        {en:"Scratching lottery tickets, eyes on a new house",ja:"宝くじをこすりながら、新しい家を見つめてる",ann:null},
-        {en:"'Round the same time, Doe ran up in dude house",ja:"同じ頃、ドウは別の奴の家に押し入った",ann:null},
-        {en:"Couldn't get a job, so since he couldn't get work, he figured he'd take work",ja:"仕事が見つからないから、働けないなら奪うしかないと思った",ann:null},
-        {en:"The drug game bulimic, it's hard to get weight",ja:"麻薬ゲームは過食症みたいなもの、量（ブツ）を確保するのが難しい",ann:"weightは麻薬の「量」とボディの「体重」の掛け言葉。過食症（bulimic）＝吐いてしまう＝量が手元に残らない、という比喩。"},
-        {en:"So niggas' money is homo, it's hard to get straight",ja:"だから仲間の金もまともにならない、真っ当に生きるのが難しい",ann:"straightは「金がきれいに整う」と「堅気（まっとう）になる」の二重の意味。"},
-        {en:"But we gon' keep bakin' 'til the day we get cake",ja:"でも稼げる日まで焼き続ける（努力し続ける）",ann:null},
-        {en:"And we don't care what people say",ja:"そして人々が何を言おうと俺たちは気にしない",ann:null},
-        {en:"My niggas—",ja:"俺の仲間よ—",ann:null}
+        {en:"This second verse is for my dogs working nine to five that still hustle",ja:"この2番は、朝9時から夕方5時まで働いて、それでも副業（ハッスル）を続けてる仲間たちのために送る。",ann:null},
+        {en:"'Cause a nigga can't shine off $6.55",ja:"時給6ドル55セントじゃ、輝けやしねぇから。",ann:"$6.55は当時のイリノイ州の最低賃金（時給）。低賃金労働では生活が成り立たない現実を示す。"},
+        {en:"And everybody sellin' makeup, Jacob's",ja:"みんな化粧品や\"ジェイコブ\"（高級ジュエリー）を売ってる。",ann:"Jacob's＝Jacob & Co.（ジェイコブ・アンド・コー）。ヒップホップ界御用達のニューヨークの高級宝石商。"},
+        {en:"And bootleg tapes just to get they cake up",ja:"ブートレグテープを売ったりして、稼ごうとしてる。",ann:null},
+        {en:"We put shit on layaway, then come back",ja:"\"取り置き払い（分割払い）\"で物を買って、また店に戻って支払う。",ann:"Layaway（後払い予約）：代金を分割払いで支払い終えた後に商品を受け取れる購入方式。クレジットカードが使えない低所得層が利用した。"},
+        {en:"We claim other people kids on our income tax",ja:"他人の子どもを確定申告に書いてしまう。",ann:"貧困コミュニティでは課税控除を最大化するため、親族の子供を扶養申告するケースが存在した社会的現実。"},
+        {en:"We take that money, cop work, then push packs to get paid",ja:"その金で\"ブツ\"を仕入れて、小分けに売って稼ぐんだ。",ann:"\"work\"を「雇用」と「ドラッグの仕入れ」の二重意味で使っている。"},
+        {en:"And we don't care what people say",ja:"でも俺たちは、人が何を言おうと気にしねぇ。",ann:null},
+        {en:"Mama say she wanna move South",ja:"ママは南部に引っ越したいと言う。",ann:null},
+        {en:"Scratching lottery tickets, eyes on a new house",ja:"宝くじを削りながら、新しい家を夢見てる。",ann:null},
+        {en:"'Round the same time, Doe ran up in dude house",ja:"同じ頃、ドウは別の奴の家に押し入った。",ann:null},
+        {en:"Couldn't get a job, so since he couldn't get work, he figured he'd take work",ja:"仕事が見つからなかったから、「仕事（=金）を取る（=奪う）」ことにしたんだ。",ann:null},
+        {en:"The drug game bulimic, it's hard to get weight",ja:"ドラッグ業界は拒食症みたいなもんで、\"重さ（仕入れ）\"を手に入れるのが難しい。",ann:"weightは麻薬の「量」とボディの「体重」の掛け言葉。過食症（bulimic）＝吐いてしまう＝量が手元に残らない、という比喩。"},
+        {en:"So niggas' money is homo, it's hard to get straight",ja:"だから仲間の金もまともにならねぇ、真っ当に生きるのが難しい。",ann:"straightは「金がきれいに整う」と「堅気（まっとう）になる」の二重の意味。"},
+        {en:"But we gon' keep bakin' 'til the day we get cake",ja:"でも俺たちは\"ケーキ（=金）\"を手に入れる日まで\"焼き続ける\"ぜ。",ann:null},
+        {en:"And we don't care what people say",ja:"でも俺たちは、人が何を言おうと気にしねぇ。",ann:null},
+        {en:"My niggas—",ja:"俺の仲間よ——",ann:null}
       ]},
-      {label:"[Chorus: Kanye West & Choir]",note:null,lines:[
-        {en:"Drug dealin' just to get by",ja:"なんとか生き残るために麻薬を売る",ann:null},
-        {en:"Stack your money 'til it get sky high",ja:"金を空まで積み上げろ",ann:null},
-        {en:"Kids, sing! Kids, sing!",ja:"子供たちよ、歌え！",ann:null},
-        {en:"We wasn't s'posed to make it past twenty-five",ja:"俺たちは25を越えられないはずだった",ann:null},
-        {en:"Joke's on you, we still alive",ja:"お前への皮肉だ、俺たちはまだ生きてる",ann:null},
-        {en:"Throw your hands up in the sky and say",ja:"両手を空に上げて言え",ann:null},
-        {en:"\"We don't care what people say\"",ja:"「人々が何を言おうと俺たちは気にしない」",ann:null}
+      {label:"[Chorus: Kanye West & Choir, Kanye West]",note:null,lines:[
+        {en:"Drug dealin' just to get by",ja:"生き延びるためにドラッグを売る。",ann:null},
+        {en:"Stack your money 'til it get sky high",ja:"金を積み上げろ、空に届くくらいまで。",ann:null},
+        {en:"Kids, sing! Kids, sing!",ja:"子どもたちよ、歌え！　歌え！",ann:null},
+        {en:"We wasn't s'posed to make it past twenty-five",ja:"俺たちは25歳まで生きられないって言われてた。",ann:null},
+        {en:"Joke's on you, we still alive (Alive)",ja:"でも笑えるのはお前らの方だ。俺たちはまだ生きてる。",ann:null},
+        {en:"Throw your hands up in the sky and say",ja:"手を空に掲げて、こう言え。",ann:null},
+        {en:"\"We don't care what people say\"",ja:"「他人が何を言おうと気にしねぇ」",ann:null}
       ]},
       {label:"[Verse 3]",note:null,lines:[
-        {en:"You know the kids gon' act a fool",ja:"子供たちが馬鹿な行動をするのはわかってる",ann:null},
-        {en:"When you stop the programs for after school",ja:"放課後のプログラムをなくしたら",ann:null},
-        {en:"And they DCFS, some of 'em dyslexic",ja:"DCFSの管轄で、一部は識字障害がある",ann:"DCFS（Illinois Department of Children and Family Services）：イリノイ州の児童家庭サービス局。貧困・虐待家庭の子供を管理・保護する機関。"},
-        {en:"They favorite 50 Cent song \"12 Questions\"",ja:"彼らのお気に入りの50 Centの曲は「12 Questions」",ann:"50 Cent（フィフティ・セント）：ニューヨーク出身のラッパー。2003年「In Da Club」で大ブレイク。「12 Questions」は架空のタイトル。"},
-        {en:"We scream: \"Rocks, blows, weed, park,\" see, now we smart",ja:"「ロックス、ブロウ、ウィード、パーク」と叫ぶ、そうだ、俺たちは賢い",ann:"rocks（クラック）、blows（コカイン）、weed（大麻）など、子供たちが学校の勉強より先にドラッグの隠語を覚えてしまう環境への皮肉。"},
-        {en:"We ain't retards the way teachers thought",ja:"先生が思ってたような知恵おくれじゃない",ann:null},
-        {en:"Hold up, hold fast, we make more cash",ja:"ちょっと待て、持ちこたえろ、俺たちはもっと稼ぐ",ann:null},
-        {en:"Now, tell my mama I belong in that slow class",ja:"ママに言ってみろ、俺が特別支援クラスに属してるって",ann:null},
-        {en:"It's bad enough we on welfare",ja:"福祉を受けてるだけで十分つらいのに",ann:null},
-        {en:"You tryna put me on the school bus with the space for the wheelchair",ja:"車椅子スペースのあるスクールバスに乗せようとしてる",ann:null},
-        {en:"I'm tryna get the car with the chromey wheels here",ja:"俺はクロームのホイールがついた車を手に入れようとしてる",ann:null},
-        {en:"You tryna cut our lights out like we don't live here",ja:"俺たちがここに住んでないみたいに電気を切ろうとしてる",ann:null},
-        {en:"Look what was handed us, fathers abandoned us",ja:"俺たちに与えられたものを見ろ、父親たちは俺たちを捨てた",ann:null},
-        {en:"When we get them hammers, go on, call the ambulance",ja:"俺たちが銃を手にしたら、どうぞ、救急車を呼べ",ann:"hammersは銃のスラング。"},
-        {en:"Sometimes, I feel no one in this world understands us",ja:"時々、この世で俺たちを理解してる人は誰もいないと感じる",ann:null},
-        {en:"But we don't care what people say",ja:"でも人々が何を言おうと俺たちは気にしない",ann:null}
+        {en:"You know the kids gon' act a fool",ja:"子どもたちがやらかすのは当然だろ。",ann:null},
+        {en:"When you stop the programs for after school",ja:"放課後プログラム（居場所）をなくしちまったらな。",ann:null},
+        {en:"And they DCFS, some of 'em dyslexic",ja:"児童福祉局（DCFS）の世話になってる子もいれば、中には識字障害（ディスレクシア）の子もいる。",ann:"DCFS（Illinois Department of Children and Family Services）：イリノイ州の児童家庭サービス局。貧困・虐待家庭の子供を管理・保護する機関。"},
+        {en:"They favorite 50 Cent song \"12 Questions\"",ja:"お気に入りの50 Centの曲は「12 Questions」。",ann:"50 Cent（フィフティ・セント）：ニューヨーク出身のラッパー。2003年「In Da Club」で大ブレイク。「12 Questions」は架空のタイトル。"},
+        {en:"We scream: \"Rocks, blows, weed, park,\" see, now we smart",ja:"俺たちは「ロック（コカイン）、ブロー（ヘロイン）、ウィード（マリファナ）」なんて叫んでる。な？これで\"賢く\"なっただろ？",ann:"rocks（クラック）、blows（コカイン）、weed（大麻）など、子供たちが学校の勉強より先にドラッグの隠語を覚えてしまう環境への皮肉。"},
+        {en:"We ain't retards the way teachers thought",ja:"先生が思ってたような頭の悪い奴らじゃねぇ。",ann:null},
+        {en:"Hold up, hold fast, we make more cash",ja:"待てよ、しっかり掴めよ、俺たちはもっと稼いでるぜ。",ann:null},
+        {en:"Now, tell my mama I belong in that slow class",ja:"だから母ちゃんに言ってやれよ、「俺は\"遅いクラス\"がお似合い」だってな。",ann:"「落ちこぼれ＝障がい扱い」という差別的な制度を皮肉る。特別支援クラスに押し込まれる黒人・貧困層の子どもたちの実態。"},
+        {en:"It's bad enough we on welfare",ja:"福祉を受けてるだけでも十分きついのに。",ann:null},
+        {en:"You tryna put me on the school bus with the space for the wheelchair",ja:"おまけに障がい者用スペースのあるスクールバスに乗せようとするのかよ。",ann:null},
+        {en:"I'm tryna get the car with the chromey wheels here",ja:"俺はクロームのホイールがついた車を手に入れようとしてるんだよ。",ann:null},
+        {en:"You tryna cut our lights out like we don't live here",ja:"なのにお前ら（行政）は、まるで俺たちが住んでないみたいに電気を止める。",ann:null},
+        {en:"Look what was handed us, fathers abandoned us",ja:"俺たちに与えられたものを見てみろよ。父親たちは俺たちを捨てた。",ann:null},
+        {en:"When we get them hammers, go on, call the ambulance",ja:"だから銃（ハンマー）を手にした時は、救急車を呼ぶ準備しとけ。",ann:"hammersは銃のスラング。"},
+        {en:"Sometimes, I feel no one in this world understands us",ja:"時々、この世界の誰も俺たちを理解してくれないと感じるんだ。",ann:null},
+        {en:"But we don't care what people say",ja:"でも俺たちは、人が何を言おうと気にしねぇ。",ann:null},
+        {en:"My niggas—",ja:"俺の仲間よ——",ann:null}
       ]},
-      {label:"[Chorus: Kanye West & Choir]",note:null,lines:[
-        {en:"Drug dealin' just to get by",ja:"なんとか生き残るために麻薬を売る",ann:null},
-        {en:"Stack your money 'til it get sky high",ja:"金を空まで積み上げろ",ann:null},
-        {en:"Kids, sing! Kids, sing!",ja:"子供たちよ、歌え！",ann:null},
-        {en:"We wasn't s'posed to make it past twenty-five",ja:"俺たちは25を越えられないはずだった",ann:null},
-        {en:"Joke's on you, we still alive",ja:"お前への皮肉だ、俺たちはまだ生きてる",ann:null},
-        {en:"Throw your hands up in the sky and say",ja:"両手を空に上げて言え",ann:null},
-        {en:"\"We don't care what people say\"",ja:"「人々が何を言おうと俺たちは気にしない」",ann:null}
+      {label:"[Chorus: Kanye West & Choir, Kanye West]",note:null,lines:[
+        {en:"Drug dealin' just to get by",ja:"生き延びるためにドラッグを売る。",ann:null},
+        {en:"Stack your money 'til it get sky high",ja:"金を積み上げろ、空に届くくらいまで。",ann:null},
+        {en:"Kids, sing! Kids, sing!",ja:"子どもたちよ、歌え！　歌え！",ann:null},
+        {en:"We wasn't s'posed to make it past twenty-five",ja:"俺たちは25歳まで生きられないって言われてた。",ann:null},
+        {en:"Joke's on you, we still alive",ja:"でもざまぁみろ、俺たちはまだ生きてる。",ann:null},
+        {en:"Throw your hands up in the sky and say",ja:"手を空に掲げて、こう言え。",ann:null},
+        {en:"\"We don't care what people say\"",ja:"「他人が何を言おうと気にしねぇ」",ann:null}
       ]}
     ]
   }},
@@ -4182,7 +4191,7 @@ function renderHome() {
   return '<div class="home-hero">'
     + '<div class="home-hero-eye">KANYE WEST · 和訳解説</div>'
     + '<h1 class="home-hero-title">全ディスコグラフィーを、<br>日本語で。</h1>'
-    + '<p class="home-hero-body"><span style="white-space:nowrap">カニエ・ウェストの英語歌詞を日本語に。時代背景・人物・スラング・サンプリング元まで——</span><br>音楽を深く読み解くための注釈付き和訳サイト。</p>'
+    + '<p class="home-hero-body"><span class="hero-nobr">カニエ・ウェストの英語歌詞を日本語に。時代背景・人物・スラング・サンプリング元まで——</span><br class="hero-br">音楽を深く読み解くための注釈付き和訳サイト。</p>'
     + '<div class="home-hero-stats">'
     + '<div class="home-stat"><div class="home-stat-num">16</div><div class="home-stat-label">アルバム</div></div>'
     + '<div class="home-stat"><div class="home-stat-num">' + doneCount + '</div><div class="home-stat-label">和訳済曲</div></div>'
