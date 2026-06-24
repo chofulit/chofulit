@@ -348,6 +348,30 @@ body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-se
 .song-nav-track { font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.35; }
 .song-nav-num { font-size: 11px; color: var(--mid); font-weight: 600; }
 .song-nav-empty { flex: 1 1 0; }
+
+/* ── 制作ノート・会員向け追加コンテンツ（extras） ── */
+.extras-section { max-width: 820px; margin: 8px 64px 0; padding: 28px 0 4px; border-top: 1px solid var(--border); }
+.extras-hdr { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; color: var(--red); margin-bottom: 18px; }
+.extras-block { margin-bottom: 22px; }
+.extras-block-label { font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.extras-note { font-size: 14px; line-height: 1.8; color: var(--mid); white-space: pre-wrap; }
+.extras-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.extras-link { font-size: 13px; color: var(--red); text-decoration: none; border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; transition: border-color .18s; }
+.extras-link:hover { border-color: var(--red); }
+@media (max-width: 820px) { .extras-section { margin: 8px 20px 0; } }
+
+/* ── Nerdプラン限定：サンプル元ロック表示 ── */
+.sample-locked { max-width: 820px; margin: 0; padding: 36px 40px 40px; background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); text-align: center; }
+.lock-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #fff; background: var(--red); padding: 5px 12px; border-radius: 999px; margin-bottom: 16px; }
+.lock-icon { font-size: 28px; margin-bottom: 8px; }
+.lock-title { font-size: 17px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+.lock-body { font-size: 14px; line-height: 1.8; color: var(--mid); max-width: 520px; margin: 0 auto 20px; }
+.lock-cta { font-family: inherit; font-size: 14px; font-weight: 700; color: #fff; background: var(--red); border: none; border-radius: 10px; padding: 13px 26px; cursor: pointer; transition: opacity .18s; }
+.lock-cta:hover { opacity: .88; }
+.lock-note { font-size: 11px; color: var(--dim); margin-top: 14px; }
+.plan-preview-bar { max-width: 820px; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 11px; color: var(--dim); padding: 8px 28px; background: var(--bg2); border-top: 1px solid var(--border); }
+.plan-preview-revert { font-family: inherit; font-size: 11px; color: var(--red); background: none; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+@media (max-width: 820px) { .sample-locked { padding: 28px 20px 32px; } .plan-preview-bar { padding: 8px 20px; } }
 </style>
 </head>
 <body>
@@ -4334,7 +4358,11 @@ function renderSong(song, albumName, albumFolder) {
       <div class="hdr-desc">${esc(song.desc)}</div>
     </div>`;
 
-  if (song.sampleSources && song.sampleSources.length > 0) {
+  if (song.sampleSources && song.sampleSources.length > 0 && !canViewSamples()) {
+    // サンプル元は Nerd プラン限定
+    html += lockedSamplePanel(song.sampleSources.length);
+  } else if (song.sampleSources && song.sampleSources.length > 0) {
+    html += `<div class="plan-preview-bar">Nerdプランとして表示中（プレビュー）<button class="plan-preview-revert" onclick="setPlan('free')">無料表示に戻す</button></div>`;
     html += `
       <div class="sample-section">
         <button class="sample-toggle" onclick="this.closest('.sample-section').classList.toggle('open')">
@@ -4413,7 +4441,58 @@ function renderSong(song, albumName, albumFolder) {
     });
   });
   html += `</div>`;
+
+  // 制作裏話・会員向け追加コンテンツ（任意。song.extras がある曲だけ表示）
+  html += renderSongExtras(song);
+
   return html;
+}
+
+// ══════════════════════════════════════════
+// 有料化の「器」（足場）— 今は全曲無料表示のまま
+// ・song.tier === 'premium' で将来その曲を有料扱いにできる（既定: 'free'）
+// ・song.extras = { translatorNote, samplePlaylist, links:[{label,url}] } を
+//   足すと、その曲だけ追加コンテンツが表示される（会員特典の受け皿）
+// ══════════════════════════════════════════
+function isPremium(song) { return !!song && song.tier === 'premium'; }
+
+// ── 会員プラン（プロトタイプ。本番の制限は将来サーバー側で実装）──
+// プラン: 'free'（無料） / 'nerd'（Nerd＝サンプル元タブが見られる） / 'pro'
+function getPlan() { try { return localStorage.getItem('kwd_plan') || 'free'; } catch(e) { return 'free'; } }
+function setPlan(p) { try { localStorage.setItem('kwd_plan', p); } catch(e) {} renderContent(); }
+// サンプル元タブは Nerd プラン限定（PRO も上位として閲覧可）
+function canViewSamples() { const p = getPlan(); return p === 'nerd' || p === 'pro'; }
+
+// Nerd 限定のロック表示（非会員に出すティザー）
+function lockedSamplePanel(count) {
+  return `
+    <div class="sample-locked">
+      <div class="lock-badge">Nerd プラン限定</div>
+      <div class="lock-icon">🔒</div>
+      <div class="lock-title">サンプル元 ${count} 件</div>
+      <div class="lock-body">この曲のサンプリング元（原曲・使用箇所のタイムスタンプ・YouTube試聴・系統）は <b>Nerd プラン</b> の会員だけが閲覧できます。</div>
+      <button class="lock-cta" onclick="setPlan('nerd')">Nerd プランで見る（プレビュー）</button>
+      <div class="lock-note">※現在はプロトタイプです。ボタンを押すとこの端末でだけ会員状態を切り替えて表示を確認できます。</div>
+    </div>`;
+}
+
+function renderSongExtras(song) {
+  const ex = song && song.extras;
+  if (!ex) return '';
+  let h = `<div class="extras-section"><div class="extras-hdr">制作ノート・関連コンテンツ</div>`;
+  if (ex.translatorNote) {
+    h += `<div class="extras-block"><div class="extras-block-label">訳者ノート</div><div class="extras-note">${esc(ex.translatorNote)}</div></div>`;
+  }
+  if (ex.samplePlaylist) {
+    h += `<div class="extras-block"><div class="extras-block-label">サンプル元プレイリスト</div>${ytEmbed(ex.samplePlaylist, song.title + ' samples', 'extras-pl')}</div>`;
+  }
+  if (Array.isArray(ex.links) && ex.links.length) {
+    h += `<div class="extras-block"><div class="extras-block-label">関連リンク</div><div class="extras-links">`
+      + ex.links.map(l=>`<a class="extras-link" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join('')
+      + `</div></div>`;
+  }
+  h += `</div>`;
+  return h;
 }
 
 // 全アルバムを収録順に並べたチェーンを構築。各曲に遷移先(target)を持たせる。
