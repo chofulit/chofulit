@@ -1,0 +1,15 @@
+# macOS / エディタ生成物
+.DS_Store
+._*
+
+# Claude Code のローカル設定
+.claude/
+
+# 元素材（本番には出さない。HTMLには data URI で埋め込み済み）
+素材/
+motoi/*.jpg
+motoi/*.JPG
+motoi/*.jpeg
+motoi/*.JPEG
+motoi/*.png
+motoi/*.PNG
