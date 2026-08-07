@@ -508,6 +508,7 @@
       aspect-ratio: 1;
       overflow: hidden;
       background: #111;
+      position: relative; /* サイズ選択オーバーレイ(.goods-pick)の基準 */
     }
     .goods-img {
       width: 100%;
@@ -536,23 +537,67 @@
       opacity: 0.4;
       flex-shrink: 0;
     }
-    /* サイズ違い(スウェット M/L)用。Payment Link が別なので1カード内に2リンク置く */
-    .goods-sizes {
-      display: flex;
-      gap: 0.75rem;
+    /* --- サイズ違い(スウェット M/L)のサイズ選択 ---
+       Payment Link にバリエーション機能が無く M/L が別リンクになるため、
+       画像の面積そのものを当たり判定にする(左半分=M / 右半分=L)。
+       文字リンクだけだと当たり判定が小さすぎる、というCEO指摘への対応。 */
+    .goods-sizes-hint {
+      font-size: 0.5rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      opacity: 0.4;
       flex-shrink: 0;
+      white-space: nowrap;
     }
-    .goods-size {
+    .goods-pick {
+      position: absolute;
+      top: 0;
+      width: 50%;   /* 画像の左右半分ずつ = 大きな当たり判定 */
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 0.5rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
       text-decoration: none;
       color: var(--fg);
-      white-space: nowrap;
-      opacity: 0.5;
-      transition: opacity 0.3s;
+      background: rgba(10, 10, 10, 0.55);
+      opacity: 0;
+      transition: opacity 0.3s, background 0.3s;
     }
-    .goods-size:hover { opacity: 1; }
+    .goods-pick--m { left: 0; }
+    .goods-pick--l { right: 0; }
+    /* 文字が 0.5rem・weight300 のままだと(カードのopacity 0.6と相まって)読めないので、
+       枠付きのピルにして「押せる物」だと分かるようにする */
+    .goods-pick-label {
+      border: 1px solid rgba(240, 237, 232, 0.55);
+      padding: 0.45rem 0.75rem;
+      line-height: 1;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .goods-pick:hover,
+    .goods-pick:focus-visible { background: rgba(10, 10, 10, 0.78); }
+    .goods-pick:hover .goods-pick-label,
+    .goods-pick:focus-visible .goods-pick-label {
+      border-color: var(--fg);
+      background: rgba(240, 237, 232, 0.14);
+    }
+    .goods-pick:focus-visible { outline: 1px solid var(--fg); outline-offset: -4px; }
+    /* ホバーできる環境: カードにホバー、またはキーボードで中のリンクにフォーカスした時に出す */
+    @media (hover: hover) {
+      .goods-card:hover .goods-pick,
+      .goods-card:focus-within .goods-pick { opacity: 1; }
+    }
+    /* タッチ端末(hoverが無い): 常時表示。ホバー前提だとスマホで一切買えなくなるため */
+    @media (hover: none) {
+      .goods-pick { opacity: 1; }
+      .goods-sizes-hint { opacity: 0.6; }
+      /* タッチではホバーで明るくなることが無く、カードが opacity 0.6 のままだと
+         M/L が読めない。スウェットのカードだけ不透明にする(CDカードは従来どおり)。
+         画像自体はスクリム(0.55)で暗くなるので、見た目の明るさはCD側と揃う。 */
+      .goods-card[data-stripe-item="sweatshirt"] { opacity: 1; }
+    }
     @media (max-width: 768px) {
       .goods-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; max-width: 100%; }
     }
@@ -1061,8 +1106,10 @@
   <!-- STORES.jp -> Stripe 移行(2026-08-06 本番リンク投入):
        各リンクは Stripe Payment Link(本番/ライブ)。アカウント acct_1U0jwUPA3qZe5Faa(株式会社しどう配下)。
        スウェットは M/L でサイズ違い = Payment Links にバリエーション機能が無いため商品・リンクとも別。
-       そのため外側は <a> ではなく <div class="goods-card">、サイズごとに内側の <a class="goods-size"> が飛ぶ。
+       そのため外側は <a> ではなく <div class="goods-card">、画像の上に重ねた <a class="goods-pick"> が飛ぶ。
        (a の入れ子は不正なので div 化が必須。グリッド子要素は blockify されるのでレイアウト影響なし)
+       当たり判定は画像の左半分=M / 右半分=L。PCはホバー/フォーカスで出現、タッチ端末は常時表示
+       (hoverが無い端末でホバー前提にするとスマホで買えなくなるため @media (hover:none) で分岐)。
        data-stripe-item 属性=商品識別用(sweatshirt / cd-25yo-kid)。
        旧STORESリンク(参考): sweatshirt=chofulit.stores.jp/items/690dc962b3910e4b159c55b9
                              cd=chofulit.stores.jp/items/658d95370f090c138891f3b6 -->
@@ -1071,13 +1118,12 @@
     <div class="goods-card" data-stripe-item="sweatshirt">
       <div class="goods-img-wrap">
         <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAJYAlgDASIAAhEBAxEB/8QAHQABAAMBAAMBAQAAAAAAAAAAAAcICQYBBAUDAv/EAE4QAQABAwMCAgUGBw0FCAMAAAABAgMEBQYRBxIIIRMxQVFhCRQicZGhFRgyVmKBsSNCUlNykpOio8HD0dJXgpTC0xYXMzRzlbKzJVXh/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AKZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAuB4QPDbiavgYnUDqFgxewr0Rd0vSrtP0b1PsvXo9tM+umj2x5z5TESEG9KOhPUjqTRRl6Fos4+mVTx+Ec6r0OPP8mZiaq/8AciVgtueCC1FimvcW/K5uz+VawMCIpj6q66uZ/mwuLZtW7Fmi1at027dFMU0U0xxFMR5RERHqhHW/+uXS3Y+Vcwte3bh051ueK8XFpqybtE+6qm3E9s/yuAQ1e8Emzpt8Wd46/RX767NmqPsiI/a4He/gq3XgWbl/ae6NO1qKfOMfKtTi3Z+ETzVRM/XNKcsPxa9Gb+RFq7q+p4tMzx6S7ptzt/q8z9yVtkb62fvbEqytqbj07V6KY5rpx70TXb/lUTxVT+uIBlNvTaW5dmaxXpG6NFzNJzafP0eRb4iuP4VNXqrp+NMzD4+NZuZGRbsWqe65criimPfMzxC5Hyleq087L0WiY7o+d5VyPdH7nRT/AMysPRjS51nq3tLS4piqMnWcSiuJ/g+lpmr7okE/R4Jd58ee8Nv8/wDpXv8ASiPr/wBHNU6P5+k4Wq61p+pXdStXLtMYtFdPo6aJpjz7oj1zM+r3S1Ij1M/PlEdUnL61afp9NX0MDRbVMx7qq7lyufu7QVqB5j1wCdui3hn3L1P2Pb3Xp+v6Vp+NdyLlmi1k0XJrnsmImr6Mccc8x+p9Hqj4VdybA2Fqu79S3TouRi6dbprrtWrd2K6+6umiIjmOOeaoW28IGlxpPhz2jZmniq9jXMqr4+lu11x91UOZ8fWpfMfD5lYvdx+ENSxcbjn18VTd/wAMGc8+sE3eFjoVm9Wddr1DU6r2HtXT7kU5eRR5V5Ffr9Dbn38cTVV+9iY9swCO+nXTzeXUHU50/aWg5WpV0zEXblMRTZs8+2u5VxTT+ueZ9iyGzvBLreRZovbr3lhYFUxzVj4GNVkTHwmuqaY5+qJXJ2ptzQ9qaFj6Ht3TMbTdOx44t2LFHFMe+Z9s1T7ap5mfbL4/UDqVsXYVmmvdu5sDTK6qe6izXXNV6uPfTbpia5j48cAgCnwS7M9HxVvDcE3PfFqzEfZ2/wB7l92eCLNt2Kru1t8WMi7ET22NRw5txM/+pRNX/wAUu0+LPovOR6Kdb1GKOf8AxZ0y92/s5+5KOwt/7M33h1ZW0txYGrUURzcos3OLluP07dXFVP64gGYXU/pbvnpvnU4+7NCv4lq5V22cqiYuY97+Tcp8ufhPE/BxTYjceiaTuLRcnRtc0/H1DT8qiaL2Pfo7qK4/un3THnE+cM3fFT0Xv9Jd3269Pm7kbb1Oaq9PvV+dVqY/KsVz7aqeYmJ/fUzz64kEMu76H9M9T6rbzq2zpWdi4N6jEuZVV7IpqmiKaJpjj6Mc8zNUOEWy+TZ030u9916v28/NtNtY3dx6vS3e7/CB+X4km8vzx2//AEV7/I/Ek3l+eO3/AOivf5L03K6Lduq5XVFNNMTMzPqiIRv/AN/PR7/aHoP/ABH/APAVe/Ek3l+eO3/6K9/k+D1C8Je5tmbJ1fdOfuzRL2NpmLXkV27dq7FVfHqpjmOOZniPP3rf/wDfz0e/2h6D/wARP+SLPFd1m6e630I3Bou2t36VqepZ3oLNFjHuzVXNPpqKq544/g0yCgvHnws5trwcbw1vbum6zRurQ8enPxLWTFq5bvTVbi5RFXbPEccxzwrVp2NcztQx8O153L92m1T9dUxEftbEabi28HT8fCsxxbx7VNqiPhTERH7AZpdfOges9IdE07U9W3BpeofP8mqxbtY1FyKo7ae6ap7o449UfrhDi4Xyleqd+rbM0amr/wAKxlZVdP8ALqt0Uz/UqU9AS/0B6Da91f03Vc/StY0/TbWnXrdmr51RXPpKqqZq8u2PZER9qIGg/wAnlpcYXRHMz5pnv1DWb1yJ99NFFuiPvioELbj8HO69D2/qOtZe8NBnH0/Eu5V2KbV7ntt0TVPHl7oVhlqb4pdS/BPh83pld3b36ZXjxPPtvTFr/nZZz65B4AATv0W8M+5ep+x7W69P1/StPxruRcs0Wsmi5Nc9k8TV9GOOOefsQTHrhp94QNMjSvDntCz2dtV7Fryqvj6W7XXE/ZVAKk9T/CpuTYWw9V3dqW6tFv4um2ouV2rVu7FdfNVNMRHMcczNUK7T62jfj31L5j4es3F7u2dR1DFxo8/XxXN2f/rZyAA/XFs3MjJt49qObl2uKKY98zPEftBZXafg73huDa2la7b3TomNRqOFZy6bNy3emu3FyiK4pniOOYifNxfXvoBrXSLb2Bq+rbg0vUIzcv5tbs41FyKo4omqap7o44jiI/XDSbRMKjTdGwtOtxEUYuPbs0xHsimmKY/Yp78pXqnN3ZejUT6qcvKuR9c26Kf2VAiDoP4d9xdWtqZe4tM1vTdNx8fNqw+zKouTVXVTRRVMx2xxx9OI+1IX4km8vzx2/wD0V7/J3Xg86n9MtkdEcHS9e3jpen6nfy8jJyMa7VV30TNfbTzxT7aaKZ/WmL8YHo3/ALQdG/nV/wCkFY/xJN5fnjt/+ivf5H4km8vzx2//AEV7/JefFv2crFtZOPXFyzdoiu3VHqqpmOYn7Jc7vvf2z9jW8Svdu4MPSKcya4x5yKpj0k0cd3HET6u6PtgFOvxJN5fnjt/+ivf5IQ66dMs7pRvCxtrUtWwtSybmFRl1V4tNcU0RVVXTFM90RPP0Of1w0L/GB6N/7QdG/nV/6VE/F5u7SN6dctW1bQdQtahpdFjGsY2Ra57K4ptUzVxzx6qqqo/UCIgAAAAAAAAAAAAAAAAAAAAAAASz4U+m9HUvq5g6Zn2ZuaPgUznalHsrtUTHFv8A36pppn4d3uae2rdFq1Tbt0U0UUREU00xxERHqiI9yqnycG37eNsDce5qrcRfz9SpxKap9fo7NuKvL/euz9ixvUfcFO1Nga/uSqImdM06/lU0zHlVVRRM0x+ueIBVLxo+IPUsTV8vpvsfPrxIx+bWsahYr4uTXMeePbqj8mI/fTHnM/R8uJ5prVM1TMzMzM+cv2z8rIzs6/m5d6u9k5Fyq7euVzzVXXVPNVU/GZmZfgA97Q9Y1XQtUsapo2o5Wn51irutZGNdm3con4VR5vRAdp1V6l7n6l5mlZ26b1jIzNOwYwov27fZN6Irqr764jy7p7uJmIiPKPJ1/gw0udU8R214mObeLXfyq/h2Wa5j+t2ocWY+Tr0v531l1PUao+hg6Lc4nj1V3LtumPu7gX/9VP1QzH8ZGpzqniO3XcirmjHvWcWj4ejs0UzH87uacoX3P4ZOlO49xajr+q6bqV3O1HJuZORXGo3KYmuuqap4iPVHM+r2AzPeYaPfildGf/1Gqf8Aud0p8JfRmKon8D6nPE+qdTu/5glbpdpkaL022zpEU9vzLScWxMfGm1TE/fyrb8pPqUWtn7S0jv8APJ1C/k9vP8Xbinn+1W0oppooiimIimmOIiPZCivykepxe6hbY0iKuZxdKryJj3TduzH7LQK0bP0HP3RunTNu6Xb783Usq3jWYn1RVXVEcz8I9c/CJaw9N9o6TsXZWmbV0W1FGJgWYtxVxxVdr9ddyr9KqqZqn61FPk+9vWtW64XNWv0RVTo2mXsi3Mx6rtc02qf6tdf2NDJ9QIJ8XXW6ele2rOlaFVar3TqtFU43fEVRiWo8pv1U+2efKmJ8pmJmeYpmJzq1rVdS1rVcjVdWzsjOzsmubl7Iv3JruXKp9szPnLv/ABQbqvbv657o1Gu7NdjHza8HFj2U2bE+jp4+EzTNX11SjMB9baW49b2pr+Lr239Sv6fqOLX3Wr9mriY98THqqpn1TTPlMeUvkgNV/D71Gx+qPTHT9z026LGZzOPqFiifK1kUcd0R+jMTFUfCqHoeKXZlne/RHcOnTapry8THq1DCq486b1mJrjj41U91H1VIL+TT1C/Xp29dKqqmbFq9iZFEc+UVV03aap/XFFP2LgZVqi/jXbF2mKqLlE0VRPtiY4kGNk+tef5NrTZtbE3Vq/Zx851O1j88ev0Vru/xVHcy3FrLvWqfVRcqpj6onhox4DNNnA8PGn5M09v4Qz8rJ+viv0cT/ZglPqzqcaL0v3Tq3d2zh6PlXqZ/SptVcffwyPmqefXLXnqDtjE3nsvVdrZ2Vk4uLqePOPeu400xcppmY57e6Jj2cece1X78Snpx+cm6/wCmsf8ASBQfmffJzPvlfj8Snpx+cm6/6ax/0ldfFp0k2z0j17Q9L29qWq5tedi3MjI+fV26ppiK4pp7eymn3Vc88+qAcN0G0yNY60bN06qnuou61izXHvppuRVV91MtYo9TNLwRaZGo+I7b1dVPdRh0ZOVV8O2xXET/ADqoaWT5U+XuBnn8oPqnz7rvbwoq5jTtIx7Mx7qqqq7k/dXCuiVfFvqf4W8RW8cju5i1m04sfD0Nui3P30yioHmPXDTzwfaZGleHPaNns7a7+Ncyqvj6W7XXE/ZMMw4a59LtMjRemu2dIijsnD0nFsTHxptUxP38giLx96lGD4fcnFmrj8I6li43HPr4qm7/AIbOheL5SjU4tbR2jo/d/wCZz7+TMc/xduKY/wDtlR0AAHmPW1z6W6bGjdNds6TFHZ8z0jFsTHxptUxP38sn9o6fOr7q0nSojunNzrOPEe/vuU0/3tg6KaaaIppiIpjyiI9kAqb8pPqcWtl7T0fu88nUb2Txz/FWop/xVGlr/lJNT9Nv7a+j93PzXS7mRxz6pu3Zp/ZaVQAdf0V0ydZ6u7R0zt7qcjWsSiuP0fS0zV90S5BMngu0ydT8R22ImObeLVfyq/h2WK5j+tNINNI9TPv5RDVJzOteBp9M/QwNGs0zH6Vdy5XP3TS0D9VP1QzH8ZGpzqniN3Xc7omjHvWsWj4ejs0Uz/W7gRDzPvl7238K5qmu4GmW5ma8vJt2KY+NdcUx+16CQfDjpcax122XhTT3U/hixeqj3026vST91Eg1TxrVFixbs244ot0xRTHuiI4hSH5SfUqrm8dpaR3zxjafeye3n+MuRTz/AGS8UepnP4+tS+feIPKxe7n8H6bi43HPq5pm7/iAgDmffLwAAAAAAAAAAAAAAAAAAAAAAAAANFvAFVbq8P8AZiiY7qdUyor49/NM/smHc+KCzev+H7etFiJmqNKu1zx/Bp4qq+6JQT8m7uqzc0Tc2y7t3i/ZyKNTx6Jnzqorpi3c4+qaLf8APW11nT8XVtJzNLzrfpcXMsV49+j+FRXTNNUfZMgxyq9cvDsusnT7Wemm/M/bOr2q+LVc1YmRNPFOTYmZ7LlM/GPXHsmJj2ONAB7Wl6dn6pmU4em4WRmZFVM1RasW5rqmIiZmeI9kREzM+yIB6q53yamlxFvems1x5zOJi25/pK6v+VTFoJ8ndpcYnRXP1CqPp52tXqon300W7dEffFQLE63qFnStHzdUyImbOHj3L9zif3tFM1T90Kqfju7d/MXVv+Otf6U6+JDU/wAEdCN65sVdk/ge/Zpn3VXKfRx99cMqZ9YLw/jvbd/MXVv+Ntf6XT9K/FbpG/8AqBpO0MHZ2pYt/UrtVFN65l26qbcU0VVzMxEcz5Uyz2WA8Aum/PvEHi5Xbz+D9Nysnnj1c0xa/wAQGjHs5ZveO7U41DxE6pjxV3Rp+Hi4v1fucXJj7bktIZ9TKnxJapGsdeN6ZtNXdT+F79mmffFqfRx91AJ0+TYrtRu/d1uePS1afj1U/wAmLtXP3zSvDV6v1s4fAruqztvrzhYeTdi3Y1zFuabNVU+UXKpiu3+uaqIpj+U0f9cAyC39YvY2+dexsiJi9a1LJouRPriqLtUT974ixXjl6X5+1OpmTvHDxa6tC3Dd9N6WmnmmzlTH7pbqn2TVMTXHPr5qiPyZV1AB13Sfp9uHqTvHF23t7GqruXJirIyKqZ9Fi2ufpXLk+yI+2Z4iPOQW/wDk4dvX8LYG49yXrc0U6pn28ezMx+VRYonmqPh3XZj66ZWT3xq9rQNm61rl6qKben4F/KqmZ48qLdVX9z8enm1NL2RsvStq6PRNOHp2PFqiZj6Vc+uqur9KqqZqn4ygrx99QbO3el9OzsS/H4T3DXFNyimfpW8WiqKq6p93dVFNEe+O73Az8qqmq5NVU8zM8zLVHwzaZOkdA9lYdVPbM6TavzHum7zdn/5sr7VFVy7TRRHdXXPbEe+ZbB7W0+NI21pelU+VOFh2ceI+FFEU/wBwOQ66dV9E6R7aw9c1vBz863l5kYlu1hxR393ZVX3T3TEcRFP3whv8dnYH5q7n/m2P+o575SvU+3D2Xo9NU/TuZeTXH8mLdFM/1qlLQXz/AB2dgfmruf8Am2P+orL4pOqen9WuoOLuDSsLOwsLG063iUWsvt7+6K666p+jMxxPfHt9iJgFnfk5tPi/1g1jPqjmMXRK4pn3VV3rUfsiV+59SjnybFy1G8d3Wp49LVp9iqn39sXZ5++aV45BkR1K1GrV+oe49VrmZqzNVyr8/wC9dqn+9zz7e/dNytG3vrmk5tuq3k4eoX7F2mY44qpuVRL4gPrbM0yrWt36Po9FPdVnZ9jGpp9813Kaf72wNFMU0xTTEREeURHshm74IdkZO6+t+napVYqq03b/AP8AkMm5x9GLkcxZp59818Vce6ir3NI/VHvBRP5SLU4vdRNs6PFUT800qvImPdN27MfstQqmmbxobit7h8Qu4JsXPSWNN9Hp1uefVNqiIrj+kmtDIAAJJ8MGm/hbxAbKxO3u7dVt5Ex8LXN2f/g1Pj1cs5fARps53iFwsrt5/B2nZWTPl6uaItR/9jRqfVwDODx4an8/8RGp40VRVGn4WLix8P3P0kx9tyUDJD8Smp/hfr1vXMirviNXvWKZ99NqfRx91CPAFmvk6tLnK6x6rqVUfQwdFucTx6q7l23TH3RUrKuf8mppfFjems1x+VViYtufqi5XV+2kFyZ9TJDq9qdWs9VN16rNXdGVrGVdpn9GbtXH3cNX9yZ9Olbe1HU6p4pxMS7fmZ9kUUTV/cx6v3K7t6u7cqmquuZqqmfbM+cg/hO3gT0yNQ8ROk5E090afiZWVPw/cptxP23IQStZ8m7pkXuom5tXmnn5ppVGPE+6bt2J/ZakF7J9TLLxR6lGq+ILemVFXdFGp148Tz/FRFr/AJGplcxTTNVUxER5zMsft56j+F936zq3PPz3Pv5HPv77lVX94PkgAAAAAAAAAAAAAAAAAAAAAAAAA67o/vvU+m/UDTd2aXHpK8Wvtv2Jq4pyLNXlctz9ceqfZMRPsak9PN5aBvzamHuXbebTlYOTT9Vdqv8AfW66f3tdPqmP1xzExLIh2fSnqdvHplrU6ntTVKseLnHzjFux34+REeqK6Pb8JjiqPZMA076l9PNo9RdEjSd26PZz7NEzVZuczRdsVT++t1x50z6vhPHnEq6634IttX8quvR98arhWJnmm3k4dvImmPd3RVRz9j2dgeNLaWdj27O89v6ho+XxxXfwuMnHmffxMxXT9XFX1pJxPE50QyLMXP8Atvbtfo3cDJpqj+zBG23/AAT7Nxsim5re7tb1G3TPM28ezbxoq+EzPfPH1cJF3psXZHSboPvW7tHQMTTrn4CyqK8jzrv3ZqtzTHdcq5qnzmPLnj4PQ1zxY9F9Ot1VY2u5+q10x/4eHp13mfqm5FEfer31/wDFde37tPUdobc2z+DtLz6It38rNvd+RVRFUVcU0UfRo9UR5zV5cgrD++4/U048G2mRpfhx2pR28V5Fq9lV/H0l6uqJ/m8Mx+fPldLp14udh7U2DoG2p2vuK5VpenWMSuuj0HbXVRbimqqOa+eJmJn9YJP8dup/g/w7arjxV2zqGZi4sfH91i5MfZblm6sl4qPEPoPVrZOm7e0PR9W0+cfUYzL1WXNvtqim3XTER21T5818/qVtAW2+TX02bu793ax2+WNp9jG7uP4y5NXH9kqSsN4UOuu1+j+ia5i6xourZ+VqeTauRXiej7aaKKJiInuqieeaqgaH37lFmzXduT20UUzVVPuiPOWPO49Qq1XcGo6pX515mVdyKvrrrmr+9dDdXjM2dqO2NV0/A2zuGzmZOFes49y56HtouVUTTTM8V88RMxPkpDIP1wcrIwc2xm4l6uxkWLlN21doniqiumeaaon2TExEtOPDN1j0vqvsy1XcvWrO5MG3TTqmHzET3er01Ee23V6/0ZnifZM5gvp7X3BrW19bx9b2/qeTpuo41XdayLFfbVT74+MT6pieYmPWDXbcOi6TuHRsnR9b0/G1DT8qjsvY+RbiuiuPjE+2PXE+uJ84Vq3j4Ldkalm3Mjbe4tV0Giuefm9y3Tl2qPhTzNNfH11S5Lph407lnGtYXUPbleTXTEROoaV2xVV8arNUxHPvmmqI+CZtJ8U3RPOtRVd3Xdwa5jzt5OnX4mP100TH3gjfbvgj21jZdFzXt66pqNmmearWLiUY3d8O6aq5+yFjunmxNqdP9DjR9p6Nj6bjTMVXJo5quXqojjuuVzzVXP1z5ezhHWq+KXong2pqt7suZtcR5W8bTsiqZ/XVREfeh7qT41aKrF3E6f7YuU3KomKc7Vpj6PxizRM8/rq/UCy3WHqZtnpftS7rm4cqO+YmnEw7dUemy7nH5FEftq9VMev2ROY3VbfWt9Rt7526tduRORk1cW7NEz2Y9qPyLVH6MR9szMz5zL0d7bt3HvTXr2ubo1fJ1PPu+U3L1XlTT7KaaY8qaY/g0xEPhg6fpPpc611P2tpHb3Rmavi2ao/Rqu0xP3ctcYZL9Ft0aZsvqjoO6dYxMnLwtMyfnFdnH7fSVTFNXbx3TEflTTPr9i4MeNnYcRx/2T3L/Yf6wRV8ovqfznrBpGm01c04Wi0TMc+qq5duTP3RSrGkTxE9QMTqb1U1Hdmn4mTiYV+1YtWLORNPpKIot00zz2zMedXdPlPtR2AACZfB1vzF2H1s0/J1LIpx9M1S1VpuXdqnim3FyaZorn2REXKaOZ9kTMtM484YzrNdB/FnruzNLxtvbzwL24dJxqYt4+TbuRTl2KI9VMzV5XYiPKOZiY98+UAsF4gvDLtzqfrNe5NP1O5oGvXKYpyL1NmLtnJ4jiJro5iYq4iI7on1R5xKJdF8EGoTn0TrO/MWjEieaoxMCqq5VHuia6oiPr800aH4qeiupWqar25cjTLkxzNrM0+9FUfCZopqp+97+b4mOiOLam5Vvmxd4/e2cPIrmfstg7LpV082v002vRt/a+FNix3ekvXrlXdeyLnHE13KvbP2REeUREPj+IPqfpnSzp7l65k3LVepXqarOl4lU+d+/MeXl/Ap/Kqn3Rx65hDHUPxo7UwMa7Y2ToOdrGZxxRkZ0fN8emff2xM11fVxT9anXUrfu6Oom47mvbq1OvMypjtt0RHbasUc8xRbojypp/b65mZ8wc/n5eRn51/Ny71d7JyLlV27crnmquuqZmqqfjMzMvwAAAFtPk2NMm7vXdmsdv8A5bTrONzx/G3Zq/wl5JZ1+E/rntfo/o+u4+saNq2flankWa4rxPR9tNFumqIie6qJ55qqTb+OzsP809y/2H+sHUav4Seleqarl6nmX9x1ZOXfrv3aoz6fOuuqaqp/I98y9X8TrpH/ABm5P/cKf+m+D+OzsP8ANPcv9h/rPx2dh/mnuX+w/wBYIF8YnS/Z/SvcmhaPtWrUZry8O5k5PzvIi7PHf20ccUxx+TWsd8nhpcYfRPOz6onvz9ZvVxPvpot26I++KlUPFB1QwOrPUSxuLS8LNwsOxp9rEotZU09/NNVdVU/RmY4ma/f7Eu+H/wATuy+mvSjSNo5m3NeysvEm9XkXrHoeyuuu7VXzHdVE+qYjz9wLReJTU50noLvXMivsmdIvWaavdN2PRx99bKufWtf4hfFFtnqL0p1TZ+jaDreFk59dnm7kza7Ioou01zE9tUz59sQqeAvF8mvpsW9o7u1jt88jPsY3dx/F25q4/tVHVoPDJ4jNodKOm9e2tS0DWszMu593Lu3cX0XZPdFFMR9KqJ8oogF1+pepxo3TvcmrzX2fMtKysjn402qpj74ZEyuJ1h8Wu1N4dMtf2vpW3ddxczU8OrGt3b82fR0xVMRVz21TP5PPqhTufWDwAAAAAAAAAAAAAAAAAAAAAAAAAAAAcyAAAAAAAAAAAAAAAAAAAAAAAAAAADzzPveAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH//Z" alt="CHOFU LIT BLACK SWEATSHIRT" class="goods-img">
+        <a href="https://buy.stripe.com/8x26oJ8SQ0mLaQN0IR3ks03" target="_blank" rel="noopener" class="goods-pick goods-pick--m" data-stripe-item="sweatshirt-m" aria-label="CHOFU LIT BLACK SWEATSHIRT サイズM を購入"><span class="goods-pick-label">M</span></a>
+        <a href="https://buy.stripe.com/6oUaEZfhe8Th8IF3V33ks04" target="_blank" rel="noopener" class="goods-pick goods-pick--l" data-stripe-item="sweatshirt-l" aria-label="CHOFU LIT BLACK SWEATSHIRT サイズL を購入"><span class="goods-pick-label">L</span></a>
       </div>
       <div class="goods-info">
         <span class="goods-name">CHOFU LIT BLACK SWEATSHIRT</span>
-        <span class="goods-sizes">
-          <a href="https://buy.stripe.com/8x26oJ8SQ0mLaQN0IR3ks03" target="_blank" rel="noopener" class="goods-size" data-stripe-item="sweatshirt-m">M →</a>
-          <a href="https://buy.stripe.com/6oUaEZfhe8Th8IF3V33ks04" target="_blank" rel="noopener" class="goods-size" data-stripe-item="sweatshirt-l">L →</a>
-        </span>
+        <span class="goods-sizes-hint">M / L</span>
       </div>
     </div>
     <a href="https://buy.stripe.com/eVq28t6KI9Xl8IF63b3ks05" target="_blank" rel="noopener" class="goods-card" data-stripe-item="cd-25yo-kid">
