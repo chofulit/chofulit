@@ -1113,172 +1113,19 @@
   })();
 </script>
 
-<!-- ========== PWA: Service Worker 登録 + ホーム画面追加バナー ========== -->
-<style>
-  #pwa-banner {
-    position: fixed;
-    left: 1rem; right: 1rem; bottom: 1rem;
-    z-index: 9999;
-    display: none;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 2.2rem 1rem 1.1rem;
-    background: rgba(18,18,18,0.94);
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.55);
-    transform: translateY(140%);
-    transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
-  }
-  #pwa-banner.show { display: flex; }
-  #pwa-banner.in { transform: translateY(0); }
-  #pwa-banner .pb-icon {
-    width: 42px; height: 42px; border-radius: 10px; flex: 0 0 auto;
-  }
-  #pwa-banner .pb-body { flex: 1 1 auto; min-width: 0; }
-  #pwa-banner .pb-title {
-    font-family: 'Unbounded', sans-serif;
-    font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--fg); margin-bottom: 0.3rem;
-  }
-  #pwa-banner .pb-text {
-    font-size: 0.68rem; line-height: 1.55; color: var(--fg); opacity: 0.6;
-  }
-  #pwa-banner .pb-text b { color: var(--accent); font-weight: 400; }
-  #pwa-banner .pb-actions { display: flex; align-items: center; gap: 0.5rem; flex: 0 0 auto; }
-  #pwa-banner button {
-    font-family: inherit; cursor: pointer; border-radius: 999px;
-    letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.6rem;
-    transition: opacity 0.3s, background 0.3s;
-  }
-  #pwa-install {
-    padding: 0.6rem 1.1rem; border: none;
-    background: var(--accent); color: #0a0a0a;
-  }
-  #pwa-install:hover { opacity: 0.82; }
-  /* 閉じるボタンは右上に小さく逃がす（横並びだと狭い画面で崩れるため） */
-  #pwa-close {
-    position: absolute; top: 0.35rem; right: 0.45rem;
-    width: 26px; height: 26px; padding: 0; line-height: 1;
-    border: none; background: transparent;
-    color: var(--fg); opacity: 0.4; font-size: 0.75rem;
-  }
-  #pwa-close:hover { opacity: 1; }
-  @media (max-width: 520px) {
-    #pwa-banner { gap: 0.8rem; padding: 0.95rem 2rem 0.95rem 0.9rem; }
-    #pwa-banner .pb-icon { width: 38px; height: 38px; }
-    /* 見出しが2行に折れて縦に伸びるのを防ぐ */
-    #pwa-banner .pb-title { font-size: 0.58rem; letter-spacing: 0.1em; white-space: nowrap; }
-  }
-</style>
-
-<div id="pwa-banner" role="dialog" aria-label="ホーム画面に追加">
-  <img class="pb-icon" src="/icon-192.png" alt="">
-  <div class="pb-body">
-    <div class="pb-title">Add to Home Screen</div>
-    <div class="pb-text" id="pwa-text">ホーム画面に追加して、アプリとして開けます。</div>
-  </div>
-  <div class="pb-actions">
-    <button id="pwa-install" type="button">追加</button>
-    <button id="pwa-close" type="button" aria-label="閉じる">✕</button>
-  </div>
-</div>
-
+<!-- ========== PWA: Service Worker 登録 ========== -->
 <script>
 (function () {
   'use strict';
-
-  // ---- Service Worker 登録 ----
+  // ホーム画面追加の案内バナーは廃止（2026-08-08 Motoi判断）。
+  // iOS では Safari でしか追加できず、SNS の内蔵ブラウザから来た人に
+  // 「Safari で開き直す」一手間を強いるため、案内を出す価値が無いと判断した。
+  // manifest / Service Worker / アイコンは残す＝再訪問時の表示が速く、
+  // ブックマークやタブのアイコンが整う。訪問者に見える変化は無い。
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
       navigator.serviceWorker.register('/sw.js').catch(function () { /* 失敗しても通常サイトとして動く */ });
     });
-  }
-
-  // ---- ホーム画面追加バナー ----
-  var DISMISS_KEY = 'pwa-banner-dismissed';
-  var DISMISS_DAYS = 14;
-
-  var banner  = document.getElementById('pwa-banner');
-  var textEl  = document.getElementById('pwa-text');
-  var addBtn  = document.getElementById('pwa-install');
-  var closeBtn= document.getElementById('pwa-close');
-  if (!banner) return;
-
-  var ua = navigator.userAgent || '';
-  var isStandalone = window.matchMedia('(display-mode: standalone)').matches
-                  || window.navigator.standalone === true;
-  // iPadOS は UA に iPad を含まないので platform + タッチ数で判定する。
-  // ただし Android 端末も platform が MacIntel を返す場合があるため UA で除外する。
-  var isIPadOS = navigator.platform === 'MacIntel'
-              && navigator.maxTouchPoints > 1
-              && !/Android/.test(ua);
-  var isIOS = /iPad|iPhone|iPod/.test(ua) || isIPadOS;
-  // Instagram/LINE/Facebook等のアプリ内ブラウザ、iOS版Chrome では追加できない
-  var isInApp = /FBAN|FBAV|Instagram|Line\//.test(ua);
-  var isIOSChrome = /CriOS|FxiOS|EdgiOS/.test(ua);
-
-  function dismissed() {
-    try {
-      var t = parseInt(localStorage.getItem(DISMISS_KEY) || '0', 10);
-      return t && (Date.now() - t) < DISMISS_DAYS * 86400000;
-    } catch (e) { return false; }
-  }
-  function dismiss() {
-    try { localStorage.setItem(DISMISS_KEY, String(Date.now())); } catch (e) {}
-    hide();
-  }
-  function show() {
-    banner.classList.add('show');
-    // display を効かせてから transform を動かす
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { banner.classList.add('in'); });
-    });
-  }
-  function hide() {
-    banner.classList.remove('in');
-    setTimeout(function () { banner.classList.remove('show'); }, 450);
-  }
-
-  if (isStandalone || dismissed()) return;  // 既にアプリとして起動中／最近閉じた
-
-  closeBtn.addEventListener('click', dismiss);
-
-  // --- Android / デスクトップChrome: ネイティブのインストールプロンプト ---
-  var deferredPrompt = null;
-  window.addEventListener('beforeinstallprompt', function (e) {
-    e.preventDefault();
-    deferredPrompt = e;
-    textEl.textContent = 'ホーム画面に追加して、アプリとして開けます。';
-    setTimeout(show, 3000);
-  });
-
-  addBtn.addEventListener('click', function () {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(function () {
-        deferredPrompt = null;
-        dismiss();
-      });
-    } else {
-      dismiss(); // iOS は手順表示のみ。「追加」は了解ボタン扱い
-    }
-  });
-
-  window.addEventListener('appinstalled', function () { dismiss(); });
-
-  // --- iOS Safari: 自動プロンプトが存在しないので手順を出す ---
-  if (isIOS && !isInApp) {
-    if (isIOSChrome) {
-      textEl.innerHTML = '<b>Safari</b> で開くと、ホーム画面に追加してアプリとして使えます。';
-      addBtn.textContent = 'OK';
-    } else {
-      textEl.innerHTML = '下の<b>共有ボタン</b>をタップ →「<b>ホーム画面に追加</b>」';
-      addBtn.textContent = 'OK';
-    }
-    setTimeout(show, 3000);
   }
 })();
 </script>
